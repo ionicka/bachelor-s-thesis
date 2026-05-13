@@ -1,0 +1,12 @@
+H:\git\LexaCard\LexaCard.Core\bin\Debug\net9.0\LexaCard.Core.deps.json
+H:\git\LexaCard\LexaCard.Core\bin\Debug\net9.0\LexaCard.Core.dll
+H:\git\LexaCard\LexaCard.Core\bin\Debug\net9.0\LexaCard.Core.pdb
+H:\git\LexaCard\LexaCard.Core\obj\Debug\net9.0\LexaCard.Core.csproj.AssemblyReference.cache
+H:\git\LexaCard\LexaCard.Core\obj\Debug\net9.0\LexaCard.Core.GeneratedMSBuildEditorConfig.editorconfig
+H:\git\LexaCard\LexaCard.Core\obj\Debug\net9.0\LexaCard.Core.AssemblyInfoInputs.cache
+H:\git\LexaCard\LexaCard.Core\obj\Debug\net9.0\LexaCard.Core.AssemblyInfo.cs
+H:\git\LexaCard\LexaCard.Core\obj\Debug\net9.0\LexaCard.Core.csproj.CoreCompileInputs.cache
+H:\git\LexaCard\LexaCard.Core\obj\Debug\net9.0\LexaCard.Core.dll
+H:\git\LexaCard\LexaCard.Core\obj\Debug\net9.0\refint\LexaCard.Core.dll
+H:\git\LexaCard\LexaCard.Core\obj\Debug\net9.0\LexaCard.Core.pdb
+H:\git\LexaCard\LexaCard.Core\obj\Debug\net9.0\ref\LexaCard.Core.dll

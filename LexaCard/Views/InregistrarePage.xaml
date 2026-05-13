@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:LexaCard.ViewModels"
+             xmlns:conv="clr-namespace:LexaCard.Converters"
+             x:Class="LexaCard.Views.InregistrarePage"
+             x:DataType="vm:InregistrareViewModel"
+             Title="Cont nou"
+             BackgroundColor="#1A1A2E">
+
+    <ContentPage.Resources>
+        <conv:StringToBoolConverter x:Key="StringToBool" />
+        <conv:InvertBoolConverter   x:Key="InvertBool" />
+    </ContentPage.Resources>
+
+    <ScrollView>
+        <VerticalStackLayout Padding="32" Spacing="16" VerticalOptions="Center">
+
+            <Label Text="Cont nou"
+                   FontSize="32" FontAttributes="Bold"
+                   TextColor="White" HorizontalOptions="Center" />
+
+            <Frame BackgroundColor="#16213E" BorderColor="#0F3460"
+                   CornerRadius="16" Padding="24">
+                <VerticalStackLayout Spacing="14">
+
+                    <Label Text="Nume utilizator" TextColor="#8899BB" FontSize="13" />
+                    <Entry Text="{Binding NumeUtilizator}"
+                           Placeholder="numeUtilizator"
+                           BackgroundColor="#0F3460" TextColor="White"
+                           PlaceholderColor="#556688" />
+
+                    <Label Text="Email" TextColor="#8899BB" FontSize="13" />
+                    <Entry Text="{Binding Email}"
+                           Placeholder="email@exemplu.com" Keyboard="Email"
+                           BackgroundColor="#0F3460" TextColor="White"
+                           PlaceholderColor="#556688" />
+
+                    <Label Text="Parola" TextColor="#8899BB" FontSize="13" />
+                    <Entry Text="{Binding Parola}"
+                           Placeholder="Minim 6 caractere" IsPassword="True"
+                           BackgroundColor="#0F3460" TextColor="White"
+                           PlaceholderColor="#556688" />
+
+                    <Label Text="Confirma parola" TextColor="#8899BB" FontSize="13" />
+                    <Entry Text="{Binding ConfirmaParola}"
+                           Placeholder="Repeta parola" IsPassword="True"
+                           BackgroundColor="#0F3460" TextColor="White"
+                           PlaceholderColor="#556688" />
+
+                    <Label Text="{Binding MesajEroare}"
+                           TextColor="#FF6B6B" FontSize="13"
+                           IsVisible="{Binding MesajEroare,
+                                       Converter={StaticResource StringToBool}}" />
+
+                    <ActivityIndicator IsRunning="{Binding SeIncarca}"
+                                       IsVisible="{Binding SeIncarca}"
+                                       Color="#E94560"
+                                       HorizontalOptions="Center" />
+
+                    <Button Text="Creeaza cont"
+                            Command="{Binding InregistreazaCommand}"
+                            IsEnabled="{Binding SeIncarca,
+                                        Converter={StaticResource InvertBool}}"
+                            BackgroundColor="#E94560" TextColor="White"
+                            CornerRadius="12" HeightRequest="52"
+                            FontAttributes="Bold" FontSize="16" />
+
+                    <Button Text="Inapoi la login"
+                            Command="{Binding InapoiCommand}"
+                            BackgroundColor="Transparent" TextColor="#8899BB"
+                            BorderColor="#556688" BorderWidth="1"
+                            CornerRadius="12" HeightRequest="44" />
+
+                </VerticalStackLayout>
+            </Frame>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

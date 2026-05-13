@@ -1,0 +1,24 @@
+using LexaCard.Services;
+using LexaCard.Views;
+
+namespace LexaCard;
+
+public partial class App : Application
+{
+    private readonly ISessionStateService _session;
+
+    public App(ISessionStateService session)
+    {
+        InitializeComponent();
+        _session = session;
+        Routing.RegisterRoute(nameof(InregistrarePage), typeof(InregistrarePage));
+        MainPage = new AppShell();
+    }
+
+    protected override async void OnStart()
+    {
+        base.OnStart();
+        if (_session.EsteAutentificat)
+            await Shell.Current.GoToAsync("//main/FluxPage");
+    }
+}

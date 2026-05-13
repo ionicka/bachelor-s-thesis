@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:LexaCard.ViewModels"
+             x:Class="LexaCard.Views.SetariPage"
+             x:DataType="vm:SetariViewModel"
+             Title="Setari" BackgroundColor="#0D0D1A">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="20">
+
+            <Label Text="Contul meu" FontSize="24" FontAttributes="Bold"
+                   TextColor="White" />
+
+            <Frame BackgroundColor="#16213E" BorderColor="#0F3460"
+                   CornerRadius="16" Padding="20">
+                <VerticalStackLayout Spacing="8">
+                    <Label Text="{Binding NumeUtilizator}"
+                           FontSize="20" FontAttributes="Bold" TextColor="White" />
+                    <Label Text="{Binding Email}" TextColor="#8899BB" />
+                </VerticalStackLayout>
+            </Frame>
+
+            <Frame BackgroundColor="#16213E" BorderColor="#0F3460"
+                   CornerRadius="16" Padding="20">
+                <VerticalStackLayout Spacing="16">
+                    <Label Text="Setari studiu" FontSize="16"
+                           FontAttributes="Bold" TextColor="White" />
+
+                    <VerticalStackLayout Spacing="6">
+                        <Label Text="{Binding CarduriNoiPerZi,
+                                      StringFormat='Carduri noi per zi: {0}'}"
+                               TextColor="#8899BB" />
+                        <Slider Value="{Binding CarduriNoiPerZi}"
+                                Minimum="1" Maximum="50"
+                                ThumbColor="#E94560" MinimumTrackColor="#E94560" />
+                    </VerticalStackLayout>
+
+                    <VerticalStackLayout Spacing="6">
+                        <Label Text="{Binding MaxCarduriPerSesiune,
+                                      StringFormat='Max per sesiune: {0}'}"
+                               TextColor="#8899BB" />
+                        <Slider Value="{Binding MaxCarduriPerSesiune}"
+                                Minimum="5" Maximum="100"
+                                ThumbColor="#E94560" MinimumTrackColor="#E94560" />
+                    </VerticalStackLayout>
+
+                    <Button Text="Salveaza"
+                            Command="{Binding SalveazaSetarileCommand}"
+                            BackgroundColor="#E94560" TextColor="White"
+                            CornerRadius="12" HeightRequest="48" />
+                </VerticalStackLayout>
+            </Frame>
+
+            <Button Text="Deconectare"
+                    Command="{Binding DeconecteazaCommand}"
+                    BackgroundColor="Transparent" TextColor="#E94560"
+                    BorderColor="#E94560" BorderWidth="1"
+                    CornerRadius="12" HeightRequest="50" />
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

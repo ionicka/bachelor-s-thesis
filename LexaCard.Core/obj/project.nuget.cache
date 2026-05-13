@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "Hax17MMJ1N0=",
+  "success": true,
+  "projectFilePath": "H:\\git\\LexaCard\\LexaCard.Core\\LexaCard.Core.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\john\\.nuget\\packages\\bcrypt.net-next\\4.0.3\\bcrypt.net-next.4.0.3.nupkg.sha512"
+  ],
+  "logs": []
+}

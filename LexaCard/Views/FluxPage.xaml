@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:LexaCard.ViewModels"
+             xmlns:conv="clr-namespace:LexaCard.Converters"
+             x:Class="LexaCard.Views.FluxPage"
+             x:DataType="vm:FluxViewModel"
+             Shell.NavBarIsVisible="False"
+             BackgroundColor="#0D0D1A">
+
+    <ContentPage.Resources>
+        <conv:InvertBoolConverter   x:Key="InvertBool" />
+        <conv:StringToBoolConverter x:Key="StringToBool" />
+    </ContentPage.Resources>
+
+    <Grid RowDefinitions="Auto,*,Auto">
+
+        <!-- HEADER -->
+        <Grid Grid.Row="0" ColumnDefinitions="Auto,*,Auto" Padding="20,16,20,8">
+            <HorizontalStackLayout Grid.Column="0" Spacing="16">
+                <Label Text="{Binding NrCorect, StringFormat='V {0}'}"
+                       TextColor="#4CAF50" FontSize="15" FontAttributes="Bold"
+                       VerticalOptions="Center" />
+                <Label Text="{Binding NrGresit, StringFormat='X {0}'}"
+                       TextColor="#FF6B6B" FontSize="15" FontAttributes="Bold"
+                       VerticalOptions="Center" />
+            </HorizontalStackLayout>
+            <Label Grid.Column="1" Text="LexaCard"
+                   FontSize="18" FontAttributes="Bold" TextColor="White"
+                   HorizontalOptions="Center" VerticalOptions="Center" />
+            <Label Grid.Column="2"
+                   Text="{Binding CardCurent.NivelCunoastere, StringFormat='Niv {0}/7'}"
+                   TextColor="#8899BB" FontSize="13" VerticalOptions="Center" />
+        </Grid>
+
+        <!-- CONTINUT -->
+        <Grid Grid.Row="1">
+
+            <!-- Loader -->
+            <VerticalStackLayout IsVisible="{Binding SeIncarca}"
+                                 VerticalOptions="Center" HorizontalOptions="Center"
+                                 Spacing="16">
+                <ActivityIndicator IsRunning="True" Color="#E94560"
+                                   WidthRequest="48" HeightRequest="48" />
+                <Label Text="Se incarca..." TextColor="#8899BB" FontSize="14"
+                       HorizontalOptions="Center" />
+            </VerticalStackLayout>
+
+            <!-- Sesiune goala -->
+            <VerticalStackLayout IsVisible="{Binding SesiuneGoala}"
+                                 VerticalOptions="Center" HorizontalOptions="Center"
+                                 Spacing="20" Padding="32">
+                <Label Text="Felicitari!" FontSize="28" FontAttributes="Bold"
+                       TextColor="White" HorizontalOptions="Center" />
+                <Label Text="Ai terminat toate cardurile pentru azi!"
+                       FontSize="15" TextColor="#8899BB"
+                       HorizontalOptions="Center" HorizontalTextAlignment="Center" />
+                <HorizontalStackLayout HorizontalOptions="Center" Spacing="40">
+                    <VerticalStackLayout>
+                        <Label Text="{Binding NrCorect}" FontSize="36"
+                               FontAttributes="Bold" TextColor="#4CAF50"
+                               HorizontalOptions="Center" />
+                        <Label Text="Corecte" TextColor="#8899BB" FontSize="13"
+                               HorizontalOptions="Center" />
+                    </VerticalStackLayout>
+                    <VerticalStackLayout>
+                        <Label Text="{Binding NrGresit}" FontSize="36"
+                               FontAttributes="Bold" TextColor="#FF6B6B"
+                               HorizontalOptions="Center" />
+                        <Label Text="Gresite" TextColor="#8899BB" FontSize="13"
+                               HorizontalOptions="Center" />
+                    </VerticalStackLayout>
+                </HorizontalStackLayout>
+            </VerticalStackLayout>
+
+            <!-- Cardul principal -->
+            <ScrollView IsVisible="{Binding SesiuneGoala,
+                                    Converter={StaticResource InvertBool}}"
+                        Padding="16,4">
+                <VerticalStackLayout Spacing="12">
+
+                    <!-- Card termen -->
+                    <Frame BackgroundColor="#16213E" CornerRadius="20"
+                           Padding="0" BorderColor="#0F3460" HasShadow="False">
+                        <Frame.GestureRecognizers>
+                            <SwipeGestureRecognizer Direction="Up"
+                                Command="{Binding TreceLaUrmatorCardCommand}" />
+                        </Frame.GestureRecognizers>
+                        <VerticalStackLayout>
+                            <!-- Imagine -->
+                            <Image HeightRequest="200" Aspect="AspectFill"
+                                   IsVisible="{Binding CardCurent.CaleImagine,
+                                               Converter={StaticResource StringToBool}}">
+                                <Image.Source>
+                                    <UriImageSource
+                                        Uri="{Binding CardCurent.CaleImagine}"
+                                        CachingEnabled="True"
+                                        CacheValidity="1:00:00:00" />
+                                </Image.Source>
+                            </Image>
+                            <!-- Termen -->
+                            <VerticalStackLayout Padding="24,20" Spacing="6">
+                                <Label Text="{Binding CardCurent.Termen}"
+                                       FontSize="42" FontAttributes="Bold"
+                                       TextColor="White" LineBreakMode="WordWrap" />
+                                <Label Text="{Binding CardCurent.Pronuntie}"
+                                       FontSize="16" TextColor="#8899BB"
+                                       IsVisible="{Binding CardCurent.Pronuntie,
+                                                   Converter={StaticResource StringToBool}}" />
+                            </VerticalStackLayout>
+                        </VerticalStackLayout>
+                    </Frame>
+
+                    <!-- Definitie -->
+                    <Frame BackgroundColor="#16213E" CornerRadius="16"
+                           Padding="20" BorderColor="#0F3460">
+                        <VerticalStackLayout Spacing="8">
+                            <Label Text="DEFINITIE" TextColor="#E94560"
+                                   FontSize="11" FontAttributes="Bold"
+                                   CharacterSpacing="1.5" />
+                            <Label Text="{Binding CardCurent.Definitie}"
+                                   TextColor="White" FontSize="16"
+                                   LineHeight="1.5" LineBreakMode="WordWrap" />
+                        </VerticalStackLayout>
+                    </Frame>
+
+                    <!-- Propozitie -->
+                    <Frame BackgroundColor="#16213E" CornerRadius="16"
+                           Padding="20" BorderColor="#0F3460">
+                        <VerticalStackLayout Spacing="10">
+                            <Label Text="EXEMPLU IN CONTEXT" TextColor="#E94560"
+                                   FontSize="11" FontAttributes="Bold"
+                                   CharacterSpacing="1.5" />
+                            <Label Text="{Binding CardCurent.PropozitieBlur}"
+                                   TextColor="#AABBCC" FontSize="16"
+                                   FontAttributes="Italic" LineHeight="1.5"
+                                   LineBreakMode="WordWrap"
+                                   IsVisible="{Binding PropozitieRevelata,
+                                               Converter={StaticResource InvertBool}}" />
+                            <Label Text="{Binding CardCurent.PropozitieRevelata}"
+                                   TextColor="#98FB98" FontSize="16"
+                                   FontAttributes="Italic" LineHeight="1.5"
+                                   LineBreakMode="WordWrap"
+                                   IsVisible="{Binding PropozitieRevelata}" />
+                        </VerticalStackLayout>
+                    </Frame>
+
+                    <!-- Tastare -->
+                    <Frame BackgroundColor="#16213E" CornerRadius="16"
+                           Padding="20" BorderColor="#E94560"
+                           IsVisible="{Binding ModTastare}">
+                        <VerticalStackLayout Spacing="12">
+                            <Label Text="TASTEAZA CUVANTUL" TextColor="#E94560"
+                                   FontSize="11" FontAttributes="Bold"
+                                   CharacterSpacing="1.5" />
+                            <Entry Text="{Binding TextTastat}"
+                                   Placeholder="Scrie cuvantul aici..."
+                                   BackgroundColor="#0F3460" TextColor="White"
+                                   PlaceholderColor="#556688" FontSize="16"
+                                   ReturnCommand="{Binding RaspundeTastareCommand}" />
+                            <Button Text="Verifica raspunsul"
+                                    Command="{Binding RaspundeTastareCommand}"
+                                    BackgroundColor="#E94560" TextColor="White"
+                                    CornerRadius="12" HeightRequest="50"
+                                    FontAttributes="Bold" />
+                        </VerticalStackLayout>
+                    </Frame>
+
+                    <BoxView HeightRequest="80" BackgroundColor="Transparent" />
+
+                </VerticalStackLayout>
+            </ScrollView>
+
+        </Grid>
+
+        <!-- BUTOANE JOS -->
+        <Grid Grid.Row="2"
+              IsVisible="{Binding SesiuneGoala, Converter={StaticResource InvertBool}}"
+              Padding="16,8,16,24" BackgroundColor="#0D0D1A">
+
+            <!-- Inainte de revelatie -->
+            <Button Text="Reveleaza propozitia"
+                    Command="{Binding RevelazaPropozitiaCommand}"
+                    IsVisible="{Binding PropozitieRevelata,
+                                Converter={StaticResource InvertBool}}"
+                    BackgroundColor="#1A2744" TextColor="White"
+                    BorderColor="#2E75B6" BorderWidth="1"
+                    CornerRadius="16" HeightRequest="56"
+                    FontSize="16" FontAttributes="Bold" />
+
+            <!-- Dupa revelatie -->
+            <Grid IsVisible="{Binding PropozitieRevelata}"
+                  RowDefinitions="Auto,Auto" RowSpacing="10">
+
+                <Grid Grid.Row="0" ColumnDefinitions="*,12,*" HeightRequest="56">
+                    <Button Grid.Column="0" Text="Nu stiu"
+                            Command="{Binding RaspundeRecunoastereCommand}"
+                            CommandParameter="nu"
+                            BackgroundColor="#C0392B" TextColor="White"
+                            CornerRadius="16" FontSize="16" FontAttributes="Bold" />
+                    <Button Grid.Column="2" Text="Stiu!"
+                            Command="{Binding RaspundeRecunoastereCommand}"
+                            CommandParameter="sigur"
+                            BackgroundColor="#27AE60" TextColor="White"
+                            CornerRadius="16" FontSize="16" FontAttributes="Bold" />
+                </Grid>
+
+                <Button Grid.Row="1" Text="Stiu, dar cu ezitare"
+                        Command="{Binding RaspundeRecunoastereCommand}"
+                        CommandParameter="ezitare"
+                        BackgroundColor="#1A3A5C" TextColor="#7FB3D3"
+                        BorderColor="#2980B9" BorderWidth="1"
+                        CornerRadius="16" HeightRequest="46" FontSize="14" />
+            </Grid>
+
+        </Grid>
+
+    </Grid>
+</ContentPage>

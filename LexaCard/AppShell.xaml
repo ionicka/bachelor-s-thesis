@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Shell xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+       xmlns:views="clr-namespace:LexaCard.Views"
+       x:Class="LexaCard.AppShell"
+       Shell.FlyoutBehavior="Disabled">
+
+    <!-- Login (fara tab bar) -->
+    <ShellContent Title="Login"
+                  Route="LoginPage"
+                  Shell.TabBarIsVisible="False"
+                  ContentTemplate="{DataTemplate views:LoginPage}" />
+
+    <!-- Tab bar principal -->
+    <TabBar Route="main">
+        <ShellContent Title="Carduri"
+                      Route="FluxPage"
+                      ContentTemplate="{DataTemplate views:FluxPage}" />
+        <ShellContent Title="Statistici"
+                      Route="StatisticiPage"
+                      ContentTemplate="{DataTemplate views:StatisticiPage}" />
+        <ShellContent Title="Setari"
+                      Route="SetariPage"
+                      ContentTemplate="{DataTemplate views:SetariPage}" />
+    </TabBar>
+
+</Shell>
