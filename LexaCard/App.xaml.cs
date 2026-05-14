@@ -19,6 +19,7 @@ public partial class App : Application
     {
         base.OnStart();
         if (_session.EsteAutentificat)
-            await Shell.Current.GoToAsync("//main/FluxPage");
+            await Shell.Current.GoToAsync("//MainPage");
+        // Daca nu e autentificat ramane pe LoginPage (primul ShellContent)
     }
 }

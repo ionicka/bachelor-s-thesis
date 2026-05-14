@@ -22,7 +22,7 @@ public static class MauiProgram
             .UseMauiCommunityToolkit()
             .ConfigureFonts(fonts =>
             {
-                fonts.AddFont("OpenSans-Regular.ttf",  "OpenSansRegular");
+                fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                 fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
             });
 
@@ -35,24 +35,25 @@ public static class MauiProgram
         // ── Repositories ──────────────────────────────────────────
         builder.Services.AddScoped<ICardRepository>(_ =>
             new CardRepository(connStr));
-        builder.Services.AddScoped<IProgresRepository,    ProgresRepository>();
+        builder.Services.AddScoped<IProgresRepository, ProgresRepository>();
         builder.Services.AddScoped<IUtilizatorRepository, UtilizatorRepository>();
-        builder.Services.AddScoped<ISesiuneRepository,    SesiuneRepository>();
-        builder.Services.AddScoped<IRaspunsRepository,    RaspunsRepository>();
+        builder.Services.AddScoped<ISesiuneRepository, SesiuneRepository>();
+        builder.Services.AddScoped<IRaspunsRepository, RaspunsRepository>();
 
         // ── Services Core ─────────────────────────────────────────
-        builder.Services.AddScoped<ISrsService,     SrsService>();
-        builder.Services.AddScoped<ICardService,    CardService>();
-        builder.Services.AddScoped<IAuthService,    AuthService>();
+        builder.Services.AddScoped<ISrsService, SrsService>();
+        builder.Services.AddScoped<ICardService, CardService>();
+        builder.Services.AddScoped<IAuthService, AuthService>();
         builder.Services.AddScoped<ISesiuneService, SesiuneService>();
 
         // ── Services MAUI ─────────────────────────────────────────
-        builder.Services.AddSingleton<INavigationService,   NavigationService>();
+        builder.Services.AddSingleton<INavigationService, NavigationService>();
         builder.Services.AddSingleton<ISessionStateService, SessionStateService>();
 
         // ── ViewModels ────────────────────────────────────────────
         builder.Services.AddTransient<LoginViewModel>();
         builder.Services.AddTransient<InregistrareViewModel>();
+        builder.Services.AddTransient<MainViewModel>();
         builder.Services.AddTransient<FluxViewModel>();
         builder.Services.AddTransient<StatisticiViewModel>();
         builder.Services.AddTransient<SetariViewModel>();
@@ -60,6 +61,7 @@ public static class MauiProgram
         // ── Pages ─────────────────────────────────────────────────
         builder.Services.AddTransient<LoginPage>();
         builder.Services.AddTransient<InregistrarePage>();
+        builder.Services.AddTransient<MainPage>();
         builder.Services.AddTransient<FluxPage>();
         builder.Services.AddTransient<StatisticiPage>();
         builder.Services.AddTransient<SetariPage>();

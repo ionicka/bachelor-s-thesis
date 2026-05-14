@@ -10,7 +10,7 @@ using Npgsql;
 namespace LexaCard.Data.Repositories;
 
 // ═══════════════════════════════════════════════════════
-// CardRepository — DAPPER pentru citiri performante
+// CardRepository — DAPPER
 // ═══════════════════════════════════════════════════════
 
 public class CardRepository : ICardRepository
@@ -24,7 +24,6 @@ public class CardRepository : ICardRepository
     {
         await using var conn = new NpgsqlConnection(_connStr);
 
-        // PostgreSQL suporta ORDER BY inainte de LIMIT in subquery
         string sql = @"
             SELECT * FROM (
                 SELECT
@@ -48,9 +47,7 @@ public class CardRepository : ICardRepository
                 ORDER BY p.""DataUrmatoareiRevizuiri"" ASC
                 LIMIT @MaxR
             ) revizuire
-
             UNION ALL
-
             SELECT * FROM (
                 SELECT
                     c.""Id""               AS CuvantId,
@@ -67,8 +64,7 @@ public class CardRepository : ICardRepository
                     1  AS EsteNou
                 FROM cuvinte c
                 WHERE c.""Id"" NOT IN (
-                    SELECT ""CuvantId""
-                    FROM progres_cuvinte
+                    SELECT ""CuvantId"" FROM progres_cuvinte
                     WHERE ""UtilizatorId"" = @UId)
                 ORDER BY RANDOM()
                 LIMIT @MaxN
@@ -76,10 +72,7 @@ public class CardRepository : ICardRepository
 
         int maxR = (int)(max * 0.75);
         int maxN = max - maxR;
-
-        // Dapper nu suporta DateOnly direct — convertim la string
-        string aziStr = DateOnly.FromDateTime(DateTime.UtcNow)
-            .ToString("yyyy-MM-dd");
+        string aziStr = DateOnly.FromDateTime(DateTime.UtcNow).ToString("yyyy-MM-dd");
 
         var rows = await conn.QueryAsync<CardRaw>(sql, new
         {
@@ -89,6 +82,33 @@ public class CardRepository : ICardRepository
             MaxN = maxN
         });
 
+        return rows.Select(MapToDto).ToList();
+    }
+
+    public async Task<List<CardDto>> GetToateCuvinteleAsync(int utilizatorId)
+    {
+        await using var conn = new NpgsqlConnection(_connStr);
+
+        string sql = @"
+            SELECT
+                c.""Id""               AS CuvantId,
+                c.""Termen"",
+                c.""Definitie"",
+                c.""ExempluPropozitie"",
+                c.""CaleImagine"",
+                c.""Pronuntie"",
+                c.""Nivel"",
+                COALESCE(p.""NivelCunoastere"", 0)     AS NivelCunoastere,
+                COALESCE(p.""NrRaspunsuriCorecte"", 0) AS NrRaspunsuriCorecte,
+                COALESCE(p.""NrRaspunsuriGresite"", 0) AS NrRaspunsuriGresite,
+                0 AS EsteDeRevizuit,
+                CASE WHEN p.""Id"" IS NULL THEN 1 ELSE 0 END AS EsteNou
+            FROM cuvinte c
+            LEFT JOIN progres_cuvinte p
+                ON p.""CuvantId"" = c.""Id"" AND p.""UtilizatorId"" = @UId
+            ORDER BY RANDOM()";
+
+        var rows = await conn.QueryAsync<CardRaw>(sql, new { UId = utilizatorId });
         return rows.Select(MapToDto).ToList();
     }
 
@@ -135,13 +155,17 @@ public class CardRepository : ICardRepository
             .Replace("[TERMEN]", new string('_', r.Termen.Length));
         string rev = r.ExempluPropozitie.Replace("[TERMEN]", r.Termen);
 
+        // Casute: fiecare litera devine □, spatiile raman spatii
+        string casute = string.Concat(r.Termen.Select(c =>
+            c == ' ' ? "  " : "□"));
+
         var tip = r.NrRaspunsuriCorecte < 3
             ? TipRaspuns.Recunoastere
             : TipRaspuns.RemintireActiva;
 
         return new CardDto(
             r.CuvantId, r.Termen, r.Definitie,
-            blur, rev, r.CaleImagine, r.Pronuntie,
+            blur, rev, casute, r.CaleImagine, r.Pronuntie,
             (NivelCuvant)r.Nivel, (byte)r.NivelCunoastere,
             rata, r.EsteNou == 1, r.EsteDeRevizuit == 1, tip);
     }
@@ -175,8 +199,7 @@ public class ProgresRepository : IProgresRepository
     public async Task<ProgresCuvant?> GetAsync(int utilizatorId, int cuvantId) =>
         await _ctx.ProgresCuvinte
             .FirstOrDefaultAsync(p =>
-                p.UtilizatorId == utilizatorId &&
-                p.CuvantId == cuvantId);
+                p.UtilizatorId == utilizatorId && p.CuvantId == cuvantId);
 
     public async Task<ProgresCuvant> GetSauCreeazaAsync(int utilizatorId, int cuvantId)
     {
@@ -258,11 +281,7 @@ public class SesiuneRepository : ISesiuneRepository
 
     public async Task<SesiuneStudiu> IncepeAsync(int utilizatorId)
     {
-        var s = new SesiuneStudiu
-        {
-            UtilizatorId = utilizatorId,
-            DataSesiunii = DateTime.UtcNow
-        };
+        var s = new SesiuneStudiu { UtilizatorId = utilizatorId, DataSesiunii = DateTime.UtcNow };
         _ctx.SesiuniStudiu.Add(s);
         await _ctx.SaveChangesAsync();
         return s;

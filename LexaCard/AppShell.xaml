@@ -3,25 +3,25 @@
        xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
        xmlns:views="clr-namespace:LexaCard.Views"
        x:Class="LexaCard.AppShell"
-       Shell.FlyoutBehavior="Disabled">
+       Shell.FlyoutBehavior="Disabled"
+       Shell.NavBarIsVisible="False">
 
-    <!-- Login (fara tab bar) -->
-    <ShellContent Title="Login"
-                  Route="LoginPage"
+    <!-- Login -->
+    <ShellContent Route="LoginPage"
                   Shell.TabBarIsVisible="False"
+                  Shell.NavBarIsVisible="False"
                   ContentTemplate="{DataTemplate views:LoginPage}" />
 
-    <!-- Tab bar principal -->
-    <TabBar Route="main">
-        <ShellContent Title="Carduri"
-                      Route="FluxPage"
-                      ContentTemplate="{DataTemplate views:FluxPage}" />
-        <ShellContent Title="Statistici"
-                      Route="StatisticiPage"
-                      ContentTemplate="{DataTemplate views:StatisticiPage}" />
-        <ShellContent Title="Setari"
-                      Route="SetariPage"
-                      ContentTemplate="{DataTemplate views:SetariPage}" />
-    </TabBar>
+    <!-- Pagina principala cu custom navbar jos -->
+    <ShellContent Route="MainPage"
+                  Shell.TabBarIsVisible="False"
+                  Shell.NavBarIsVisible="False"
+                  ContentTemplate="{DataTemplate views:MainPage}" />
+
+    <!-- Flux vocabular full screen TikTok -->
+    <ShellContent Route="FluxPage"
+                  Shell.TabBarIsVisible="False"
+                  Shell.NavBarIsVisible="False"
+                  ContentTemplate="{DataTemplate views:FluxPage}" />
 
 </Shell>

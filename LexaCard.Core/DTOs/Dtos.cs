@@ -8,6 +8,7 @@ public record CardDto(
     string Definitie,
     string PropozitieBlur,
     string PropozitieRevelata,
+    string CasuteLitere,
     string? CaleImagine,
     string? Pronuntie,
     NivelCuvant Nivel,
@@ -41,6 +42,7 @@ public record StatisticiDto(
     int CuvinteInvatate,
     int CuvinteConsolidate,
     int CuvinteDeRevizuitAzi,
+    int CuvinteNoi,
     double RataSuccesGlobala,
     int ZileCurenteStreak,
     List<StatisticiZilniceDto> IstoricSaptamana

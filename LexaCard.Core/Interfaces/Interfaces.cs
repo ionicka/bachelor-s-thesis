@@ -7,6 +7,7 @@ namespace LexaCard.Core.Interfaces;
 public interface ICardRepository
 {
     Task<List<CardDto>> GetCarduriPentruAziAsync(int utilizatorId, int max = 20);
+    Task<List<CardDto>> GetToateCuvinteleAsync(int utilizatorId);
     Task<CardDto?> GetCardAsync(int utilizatorId, int cuvantId);
 }
 
@@ -54,6 +55,7 @@ public interface ISrsService
 public interface ICardService
 {
     Task<List<CardDto>> GetFluxAsync(int utilizatorId);
+    Task<List<CardDto>> GetToateCuvinteleAsync(int utilizatorId);
     Task<RezultatRaspunsDto> ProceseazaRaspunsAsync(
         int utilizatorId, RaspunsCardDto raspuns);
     Task<StatisticiDto> GetStatisticiAsync(int utilizatorId);

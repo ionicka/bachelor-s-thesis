@@ -16,15 +16,17 @@
     <Grid RowDefinitions="Auto,*,Auto">
 
         <!-- HEADER -->
-        <Grid Grid.Row="0" ColumnDefinitions="Auto,*,Auto" Padding="20,16,20,8">
-            <HorizontalStackLayout Grid.Column="0" Spacing="16">
-                <Label Text="{Binding NrCorect, StringFormat='V {0}'}"
-                       TextColor="#4CAF50" FontSize="15" FontAttributes="Bold"
-                       VerticalOptions="Center" />
-                <Label Text="{Binding NrGresit, StringFormat='X {0}'}"
-                       TextColor="#FF6B6B" FontSize="15" FontAttributes="Bold"
-                       VerticalOptions="Center" />
-            </HorizontalStackLayout>
+        <Grid Grid.Row="0" ColumnDefinitions="Auto,*,Auto" Padding="16,16,20,8">
+            <!-- Buton inapoi -->
+            <Button Grid.Column="0"
+                    Text="←"
+                    Command="{Binding MergeInapoiCommand}"
+                    BackgroundColor="Transparent"
+                    TextColor="White"
+                    FontSize="22"
+                    WidthRequest="44"
+                    HeightRequest="44"
+                    Padding="0" />
             <Label Grid.Column="1" Text="LexaCard"
                    FontSize="18" FontAttributes="Bold" TextColor="White"
                    HorizontalOptions="Center" VerticalOptions="Center" />
@@ -50,6 +52,7 @@
             <VerticalStackLayout IsVisible="{Binding SesiuneGoala}"
                                  VerticalOptions="Center" HorizontalOptions="Center"
                                  Spacing="20" Padding="32">
+                <Label Text="🎉" FontSize="64" HorizontalOptions="Center" />
                 <Label Text="Felicitari!" FontSize="28" FontAttributes="Bold"
                        TextColor="White" HorizontalOptions="Center" />
                 <Label Text="Ai terminat toate cardurile pentru azi!"
@@ -71,6 +74,25 @@
                                HorizontalOptions="Center" />
                     </VerticalStackLayout>
                 </HorizontalStackLayout>
+
+                <!-- Buton practica mai mult -->
+                <Button Text="Practica mai mult"
+                        Command="{Binding PracticaMailMultCommand}"
+                        Style="{StaticResource BtnPrincipal}"
+                        HeightRequest="52"
+                        HorizontalOptions="Fill"
+                        Margin="0,10,0,0" />
+
+                <!-- Buton inapoi la meniu -->
+                <Button Text="Inapoi la meniu"
+                        Command="{Binding MergeInapoiCommand}"
+                        BackgroundColor="Transparent"
+                        TextColor="#8899BB"
+                        BorderColor="#2E3A5C"
+                        BorderWidth="1"
+                        CornerRadius="16"
+                        HeightRequest="48"
+                        HorizontalOptions="Fill" />
             </VerticalStackLayout>
 
             <!-- Cardul principal -->
@@ -99,14 +121,31 @@
                                 </Image.Source>
                             </Image>
                             <!-- Termen -->
-                            <VerticalStackLayout Padding="24,20" Spacing="6">
+                            <VerticalStackLayout Padding="24,20" Spacing="8">
+
+                                <!-- Inainte de revelatie: casute cu numarul de litere -->
+                                <HorizontalStackLayout Spacing="5"
+                                    IsVisible="{Binding PropozitieRevelata,
+                                                Converter={StaticResource InvertBool}}"
+                                    FlexLayout.Wrap="Wrap">
+                                    <Label Text="{Binding CardCurent.CasuteLitere}"
+                                           FontSize="38" FontAttributes="Bold"
+                                           TextColor="White"
+                                           CharacterSpacing="2"
+                                           LineBreakMode="WordWrap" />
+                                </HorizontalStackLayout>
+
+                                <!-- Dupa revelatie: termenul real -->
                                 <Label Text="{Binding CardCurent.Termen}"
                                        FontSize="42" FontAttributes="Bold"
-                                       TextColor="White" LineBreakMode="WordWrap" />
+                                       TextColor="White" LineBreakMode="WordWrap"
+                                       IsVisible="{Binding PropozitieRevelata}" />
+
+                                <!-- Pronuntie (doar dupa revelatie) -->
                                 <Label Text="{Binding CardCurent.Pronuntie}"
                                        FontSize="16" TextColor="#8899BB"
-                                       IsVisible="{Binding CardCurent.Pronuntie,
-                                                   Converter={StaticResource StringToBool}}" />
+                                       IsVisible="{Binding PropozitieRevelata}" />
+
                             </VerticalStackLayout>
                         </VerticalStackLayout>
                     </Frame>
@@ -183,10 +222,8 @@
                     Command="{Binding RevelazaPropozitiaCommand}"
                     IsVisible="{Binding PropozitieRevelata,
                                 Converter={StaticResource InvertBool}}"
-                    BackgroundColor="#1A2744" TextColor="White"
-                    BorderColor="#2E75B6" BorderWidth="1"
-                    CornerRadius="16" HeightRequest="56"
-                    FontSize="16" FontAttributes="Bold" />
+                    Style="{StaticResource BtnDark}"
+                    HeightRequest="56" />
 
             <!-- Dupa revelatie -->
             <Grid IsVisible="{Binding PropozitieRevelata}"
@@ -196,21 +233,18 @@
                     <Button Grid.Column="0" Text="Nu stiu"
                             Command="{Binding RaspundeRecunoastereCommand}"
                             CommandParameter="nu"
-                            BackgroundColor="#C0392B" TextColor="White"
-                            CornerRadius="16" FontSize="16" FontAttributes="Bold" />
+                            Style="{StaticResource BtnRosu}" />
                     <Button Grid.Column="2" Text="Stiu!"
                             Command="{Binding RaspundeRecunoastereCommand}"
                             CommandParameter="sigur"
-                            BackgroundColor="#27AE60" TextColor="White"
-                            CornerRadius="16" FontSize="16" FontAttributes="Bold" />
+                            Style="{StaticResource BtnVerde}" />
                 </Grid>
 
                 <Button Grid.Row="1" Text="Stiu, dar cu ezitare"
                         Command="{Binding RaspundeRecunoastereCommand}"
                         CommandParameter="ezitare"
-                        BackgroundColor="#1A3A5C" TextColor="#7FB3D3"
-                        BorderColor="#2980B9" BorderWidth="1"
-                        CornerRadius="16" HeightRequest="46" FontSize="14" />
+                        Style="{StaticResource BtnAlbastru}"
+                        HeightRequest="46" />
             </Grid>
 
         </Grid>

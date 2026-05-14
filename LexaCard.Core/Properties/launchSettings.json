@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "LexaCard.Core": {
+      "commandName": "Project",
+      "debugEngines": "managed"
+    }
+  }
+}

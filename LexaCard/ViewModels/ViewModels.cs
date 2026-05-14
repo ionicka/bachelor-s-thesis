@@ -13,22 +13,22 @@ namespace LexaCard.ViewModels;
 // ═══════════════════════════════════════════════════════
 public partial class LoginViewModel : ObservableObject
 {
-    private readonly IAuthService         _auth;
+    private readonly IAuthService _auth;
     private readonly ISessionStateService _session;
-    private readonly ISesiuneService      _sesiuneService;
+    private readonly ISesiuneService _sesiuneService;
 
-    [ObservableProperty] string _email      = string.Empty;
-    [ObservableProperty] string _parola     = string.Empty;
+    [ObservableProperty] string _email = string.Empty;
+    [ObservableProperty] string _parola = string.Empty;
     [ObservableProperty] string _mesajEroare = string.Empty;
-    [ObservableProperty] bool   _seIncarca  = false;
+    [ObservableProperty] bool _seIncarca = false;
 
     public LoginViewModel(
         IAuthService auth,
         ISessionStateService session,
         ISesiuneService sesiuneService)
     {
-        _auth           = auth;
-        _session        = session;
+        _auth = auth;
+        _session = session;
         _sesiuneService = sesiuneService;
     }
 
@@ -37,7 +37,7 @@ public partial class LoginViewModel : ObservableObject
     {
         if (SeIncarca) return;
         MesajEroare = string.Empty;
-        SeIncarca   = true;
+        SeIncarca = true;
         try
         {
             var r = await _auth.LoginAsync(
@@ -49,7 +49,7 @@ public partial class LoginViewModel : ObservableObject
                 int sesId = await _sesiuneService
                     .IncepeSesuineAsync(r.Utilizator.Id);
                 _session.SetSesiune(sesId);
-                await Shell.Current.GoToAsync("//main/FluxPage");
+                await Shell.Current.GoToAsync("//MainPage");
             }
             else
             {
@@ -76,11 +76,11 @@ public partial class InregistrareViewModel : ObservableObject
     private readonly IAuthService _auth;
 
     [ObservableProperty] string _numeUtilizator = string.Empty;
-    [ObservableProperty] string _email          = string.Empty;
-    [ObservableProperty] string _parola         = string.Empty;
+    [ObservableProperty] string _email = string.Empty;
+    [ObservableProperty] string _parola = string.Empty;
     [ObservableProperty] string _confirmaParola = string.Empty;
-    [ObservableProperty] string _mesajEroare    = string.Empty;
-    [ObservableProperty] bool   _seIncarca      = false;
+    [ObservableProperty] string _mesajEroare = string.Empty;
+    [ObservableProperty] bool _seIncarca = false;
 
     public InregistrareViewModel(IAuthService auth) => _auth = auth;
 
@@ -88,14 +88,14 @@ public partial class InregistrareViewModel : ObservableObject
     async Task InregistreazaAsync()
     {
         MesajEroare = string.Empty;
-        SeIncarca   = true;
+        SeIncarca = true;
         try
         {
             var dto = new InregistrareDto
             {
                 NumeUtilizator = NumeUtilizator,
-                Email          = Email,
-                Parola         = Parola,
+                Email = Email,
+                Parola = Parola,
                 ConfirmaParola = ConfirmaParola
             };
             var (succes, eroare) = await _auth.InregistreazaAsync(dto);
@@ -123,26 +123,26 @@ public partial class InregistrareViewModel : ObservableObject
 // ═══════════════════════════════════════════════════════
 public partial class FluxViewModel : ObservableObject
 {
-    private readonly ICardService         _cardService;
+    private readonly ICardService _cardService;
     private readonly ISessionStateService _session;
 
     private List<CardDto> _carduri = new();
-    private int           _index   = 0;
-    private DateTime      _momentAfisare = DateTime.UtcNow;
+    private int _index = 0;
+    private DateTime _momentAfisare = DateTime.UtcNow;
 
     [ObservableProperty] CardDto? _cardCurent;
-    [ObservableProperty] bool     _propozitieRevelata = false;
-    [ObservableProperty] bool     _seIncarca          = false;
-    [ObservableProperty] bool     _modTastare         = false;
-    [ObservableProperty] string   _textTastat         = string.Empty;
-    [ObservableProperty] bool     _sesiuneGoala       = false;
-    [ObservableProperty] int      _nrCorect           = 0;
-    [ObservableProperty] int      _nrGresit           = 0;
+    [ObservableProperty] bool _propozitieRevelata = false;
+    [ObservableProperty] bool _seIncarca = false;
+    [ObservableProperty] bool _modTastare = false;
+    [ObservableProperty] string _textTastat = string.Empty;
+    [ObservableProperty] bool _sesiuneGoala = false;
+    [ObservableProperty] int _nrCorect = 0;
+    [ObservableProperty] int _nrGresit = 0;
 
     public FluxViewModel(ICardService cardService, ISessionStateService session)
     {
         _cardService = cardService;
-        _session     = session;
+        _session = session;
     }
 
     public async Task InitializeazaAsync()
@@ -150,11 +150,11 @@ public partial class FluxViewModel : ObservableObject
         if (_session.UtilizatorCurent == null) return;
 
         // Reseteaza starea
-        _carduri           = new();
-        _index             = 0;
-        SesiuneGoala       = false;
+        _carduri = new();
+        _index = 0;
+        SesiuneGoala = false;
         PropozitieRevelata = false;
-        CardCurent         = null;
+        CardCurent = null;
 
         SeIncarca = true;
         try
@@ -179,8 +179,8 @@ public partial class FluxViewModel : ObservableObject
     void TreceLaUrmatorCard()
     {
         PropozitieRevelata = false;
-        TextTastat         = string.Empty;
-        ModTastare         = false;
+        TextTastat = string.Empty;
+        ModTastare = false;
         _index++;
         if (_index < _carduri.Count) AfiseazaCard();
         else SesiuneGoala = true;
@@ -195,9 +195,9 @@ public partial class FluxViewModel : ObservableObject
         if (CardCurent == null) return;
         var calitate = calitateStr switch
         {
-            "sigur"   => CalitatRaspuns.Stiu_Sigur,
+            "sigur" => CalitatRaspuns.Stiu_Sigur,
             "ezitare" => CalitatRaspuns.Stiu_Ezitare,
-            _         => CalitatRaspuns.Nu_Stiu
+            _ => CalitatRaspuns.Nu_Stiu
         };
         await TrimiteRaspunsAsync(calitate, TipRaspuns.Recunoastere, null);
         TreceLaUrmatorCard();
@@ -215,7 +215,44 @@ public partial class FluxViewModel : ObservableObject
     }
 
     [RelayCommand]
-    void ToggleModTastare() => ModTastare = !ModTastare;
+    async Task MergeInapoiAsync() =>
+        await Shell.Current.GoToAsync("//MainPage");
+
+    [RelayCommand]
+    async Task PracticaMailMultAsync()
+    {
+        // Incarca toate cuvintele indiferent de data revizuirii
+        if (_session.UtilizatorCurent == null) return;
+        SeIncarca = true;
+        SesiuneGoala = false;
+        try
+        {
+            _carduri = await _cardService.GetFluxAsync(
+                _session.UtilizatorCurent.Id);
+
+            // Daca tot nu sunt carduri, incarca aleatoriu toate cuvintele
+            if (!_carduri.Any())
+            {
+                _carduri = await _cardService.GetToateCuvinteleAsync(
+                    _session.UtilizatorCurent.Id);
+            }
+
+            if (_carduri.Any())
+            {
+                _index = 0;
+                NrCorect = 0;
+                NrGresit = 0;
+                AfiseazaCard();
+            }
+            else
+            {
+                await Application.Current!.MainPage!
+                    .DisplayAlert("Info",
+                        "Nu exista cuvinte disponibile.", "OK");
+            }
+        }
+        finally { SeIncarca = false; }
+    }
 
     private async Task TrimiteRaspunsAsync(
         CalitatRaspuns calitate, TipRaspuns tip, string? text)
@@ -228,12 +265,12 @@ public partial class FluxViewModel : ObservableObject
                 _session.UtilizatorCurent.Id,
                 new RaspunsCardDto
                 {
-                    CuvantId       = CardCurent.CuvantId,
-                    Calitate       = calitate,
-                    TipRaspuns     = tip,
+                    CuvantId = CardCurent.CuvantId,
+                    Calitate = calitate,
+                    TipRaspuns = tip,
                     TimpRaspunsSec = timp,
-                    TextTastat     = text,
-                    SesiuneId      = _session.SesiuneCurenta
+                    TextTastat = text,
+                    SesiuneId = _session.SesiuneCurenta
                 });
             if (calitate != CalitatRaspuns.Nu_Stiu) NrCorect++;
             else NrGresit++;
@@ -245,8 +282,8 @@ public partial class FluxViewModel : ObservableObject
     {
         if (_index < _carduri.Count)
         {
-            CardCurent     = _carduri[_index];
-            ModTastare     = CardCurent.TipRaspunsRecomandat == TipRaspuns.RemintireActiva;
+            CardCurent = _carduri[_index];
+            ModTastare = CardCurent.TipRaspunsRecomandat == TipRaspuns.RemintireActiva;
             _momentAfisare = DateTime.UtcNow;
         }
     }
@@ -257,16 +294,16 @@ public partial class FluxViewModel : ObservableObject
 // ═══════════════════════════════════════════════════════
 public partial class StatisticiViewModel : ObservableObject
 {
-    private readonly ICardService         _cardService;
+    private readonly ICardService _cardService;
     private readonly ISessionStateService _session;
 
     [ObservableProperty] StatisticiDto? _statistici;
-    [ObservableProperty] bool           _seIncarca = false;
+    [ObservableProperty] bool _seIncarca = false;
 
     public StatisticiViewModel(ICardService cardService, ISessionStateService session)
     {
         _cardService = cardService;
-        _session     = session;
+        _session = session;
     }
 
     public async Task IncarcaAsync()
@@ -287,24 +324,24 @@ public partial class StatisticiViewModel : ObservableObject
 // ═══════════════════════════════════════════════════════
 public partial class SetariViewModel : ObservableObject
 {
-    private readonly IAuthService         _auth;
+    private readonly IAuthService _auth;
     private readonly ISessionStateService _session;
 
-    [ObservableProperty] string _numeUtilizator      = string.Empty;
-    [ObservableProperty] string _email               = string.Empty;
-    [ObservableProperty] int    _carduriNoiPerZi     = 10;
-    [ObservableProperty] int    _maxCarduriPerSesiune = 20;
+    [ObservableProperty] string _numeUtilizator = string.Empty;
+    [ObservableProperty] string _email = string.Empty;
+    [ObservableProperty] int _carduriNoiPerZi = 10;
+    [ObservableProperty] int _maxCarduriPerSesiune = 20;
 
     public SetariViewModel(IAuthService auth, ISessionStateService session)
     {
-        _auth    = auth;
+        _auth = auth;
         _session = session;
 
         if (session.UtilizatorCurent != null)
         {
-            NumeUtilizator       = session.UtilizatorCurent.NumeUtilizator;
-            Email                = session.UtilizatorCurent.Email;
-            CarduriNoiPerZi      = session.UtilizatorCurent.CarduriNoiPerZi;
+            NumeUtilizator = session.UtilizatorCurent.NumeUtilizator;
+            Email = session.UtilizatorCurent.Email;
+            CarduriNoiPerZi = session.UtilizatorCurent.CarduriNoiPerZi;
             MaxCarduriPerSesiune = session.UtilizatorCurent.MaxCarduriPerSesiune;
         }
     }

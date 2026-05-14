@@ -1,25 +1,38 @@
 ﻿using Microsoft.UI.Xaml;
 
-// To learn more about WinUI, the WinUI project structure,
-// and more about our project templates, see: http://aka.ms/winui-project-info.
+namespace LexaCard.WinUI;
 
-namespace LexaCard.WinUI
+public partial class App : MauiWinUIApplication
 {
-    /// <summary>
-    /// Provides application-specific behavior to supplement the default Application class.
-    /// </summary>
-    public partial class App : MauiWinUIApplication
+    public App()
     {
-        /// <summary>
-        /// Initializes the singleton application object.  This is the first line of authored code
-        /// executed, and as such is the logical equivalent of main() or WinMain().
-        /// </summary>
-        public App()
-        {
-            this.InitializeComponent();
-        }
-
-        protected override MauiApp CreateMauiApp() => MauiProgram.CreateMauiApp();
+        this.InitializeComponent();
     }
 
+    protected override MauiApp CreateMauiApp() => MauiProgram.CreateMauiApp();
+
+    protected override void OnLaunched(LaunchActivatedEventArgs args)
+    {
+        base.OnLaunched(args);
+
+        var mauiWindow = Microsoft.Maui.Controls.Application.Current?.Windows[0];
+        if (mauiWindow?.Handler?.PlatformView is Microsoft.UI.Xaml.Window nativeWindow)
+        {
+            var appWindow = Microsoft.UI.Windowing.AppWindow.GetFromWindowId(
+                Microsoft.UI.Win32Interop.GetWindowIdFromWindow(
+                    WinRT.Interop.WindowNative.GetWindowHandle(nativeWindow)));
+
+            // Dimensiune telefon
+            appWindow.Resize(new Windows.Graphics.SizeInt32(430, 920));
+
+            // Centreaza pe ecran
+            var display = Microsoft.UI.Windowing.DisplayArea.GetFromWindowId(
+                appWindow.Id,
+                Microsoft.UI.Windowing.DisplayAreaFallback.Nearest);
+
+            int x = (display.WorkArea.Width - 430) / 2;
+            int y = (display.WorkArea.Height - 920) / 2;
+            appWindow.Move(new Windows.Graphics.PointInt32(x, Math.Max(0, y)));
+        }
+    }
 }

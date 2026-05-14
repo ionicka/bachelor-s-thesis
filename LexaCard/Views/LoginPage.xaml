@@ -53,12 +53,8 @@
                             Command="{Binding LogheazaCommand}"
                             IsEnabled="{Binding SeIncarca,
                                         Converter={StaticResource InvertBool}}"
-                            BackgroundColor="#E94560"
-                            TextColor="White"
-                            CornerRadius="12"
-                            HeightRequest="52"
-                            FontAttributes="Bold"
-                            FontSize="16" />
+                            Style="{StaticResource BtnPrincipal}"
+                            HeightRequest="52" />
 
                     <ActivityIndicator IsRunning="{Binding SeIncarca}"
                                        IsVisible="{Binding SeIncarca}"
