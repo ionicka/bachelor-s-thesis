@@ -8,9 +8,10 @@ build_property.ProjectTypeGuids = 9A19103F-16F7-4668-BE54-9A1E7A4F7556
 build_property.InvariantGlobalization = 
 build_property.PlatformNeutralAssembly = 
 build_property.EnforceExtendedAnalyzerRules = 
+build_property.EntryPointFilePath = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = LexaCard
-build_property.ProjectDir = H:\git\LexaCard\LexaCard\
+build_property.ProjectDir = H:\git\licenta\LexaCard\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
 build_property.CsWinRTAotOptimizerEnabled = true
@@ -24,61 +25,61 @@ build_property.CsWinRTUseWindowsUIXamlProjections = false
 build_property.EffectiveAnalysisLevelStyle = 9.0
 build_property.EnableCodeStyleSeverity = 
 
-[H:/git/LexaCard/LexaCard/App.xaml]
+[H:/git/licenta/LexaCard/App.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = LexaCard.App.xaml
 build_metadata.AdditionalFiles.TargetPath = App.xaml
 build_metadata.AdditionalFiles.RelativePath = App.xaml
 
-[H:/git/LexaCard/LexaCard/AppShell.xaml]
+[H:/git/licenta/LexaCard/AppShell.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = LexaCard.AppShell.xaml
 build_metadata.AdditionalFiles.TargetPath = AppShell.xaml
 build_metadata.AdditionalFiles.RelativePath = AppShell.xaml
 
-[H:/git/LexaCard/LexaCard/MainPage.xaml]
+[H:/git/licenta/LexaCard/MainPage.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = LexaCard.MainPage.xaml
 build_metadata.AdditionalFiles.TargetPath = MainPage.xaml
 build_metadata.AdditionalFiles.RelativePath = MainPage.xaml
 
-[H:/git/LexaCard/LexaCard/Resources/Styles/Colors.xaml]
+[H:/git/licenta/LexaCard/Resources/Styles/Colors.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = LexaCard.Resources.Styles.Colors.xaml
 build_metadata.AdditionalFiles.TargetPath = Resources\Styles\Colors.xaml
 build_metadata.AdditionalFiles.RelativePath = Resources\Styles\Colors.xaml
 
-[H:/git/LexaCard/LexaCard/Resources/Styles/Styles.xaml]
+[H:/git/licenta/LexaCard/Resources/Styles/Styles.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = LexaCard.Resources.Styles.Styles.xaml
 build_metadata.AdditionalFiles.TargetPath = Resources\Styles\Styles.xaml
 build_metadata.AdditionalFiles.RelativePath = Resources\Styles\Styles.xaml
 
-[H:/git/LexaCard/LexaCard/Views/FluxPage.xaml]
+[H:/git/licenta/LexaCard/Views/FluxPage.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = LexaCard.Views.FluxPage.xaml
 build_metadata.AdditionalFiles.TargetPath = Views\FluxPage.xaml
 build_metadata.AdditionalFiles.RelativePath = Views\FluxPage.xaml
 
-[H:/git/LexaCard/LexaCard/Views/InregistrarePage.xaml]
+[H:/git/licenta/LexaCard/Views/InregistrarePage.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = LexaCard.Views.InregistrarePage.xaml
 build_metadata.AdditionalFiles.TargetPath = Views\InregistrarePage.xaml
 build_metadata.AdditionalFiles.RelativePath = Views\InregistrarePage.xaml
 
-[H:/git/LexaCard/LexaCard/Views/LoginPage.xaml]
+[H:/git/licenta/LexaCard/Views/LoginPage.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = LexaCard.Views.LoginPage.xaml
 build_metadata.AdditionalFiles.TargetPath = Views\LoginPage.xaml
 build_metadata.AdditionalFiles.RelativePath = Views\LoginPage.xaml
 
-[H:/git/LexaCard/LexaCard/Views/SetariPage.xaml]
+[H:/git/licenta/LexaCard/Views/SetariPage.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = LexaCard.Views.SetariPage.xaml
 build_metadata.AdditionalFiles.TargetPath = Views\SetariPage.xaml
 build_metadata.AdditionalFiles.RelativePath = Views\SetariPage.xaml
 
-[H:/git/LexaCard/LexaCard/Views/StatisticiPage.xaml]
+[H:/git/licenta/LexaCard/Views/StatisticiPage.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = LexaCard.Views.StatisticiPage.xaml
 build_metadata.AdditionalFiles.TargetPath = Views\StatisticiPage.xaml

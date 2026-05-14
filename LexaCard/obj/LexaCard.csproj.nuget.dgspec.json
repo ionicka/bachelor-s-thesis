@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "H:\\git\\LexaCard\\LexaCard\\LexaCard.csproj": {}
+    "H:\\git\\licenta\\LexaCard\\LexaCard.csproj": {}
   },
   "projects": {
-    "H:\\git\\LexaCard\\LexaCard.Core\\LexaCard.Core.csproj": {
+    "H:\\git\\licenta\\LexaCard.Core\\LexaCard.Core.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "H:\\git\\LexaCard\\LexaCard.Core\\LexaCard.Core.csproj",
+        "projectUniqueName": "H:\\git\\licenta\\LexaCard.Core\\LexaCard.Core.csproj",
         "projectName": "LexaCard.Core",
-        "projectPath": "H:\\git\\LexaCard\\LexaCard.Core\\LexaCard.Core.csproj",
+        "projectPath": "H:\\git\\licenta\\LexaCard.Core\\LexaCard.Core.csproj",
         "packagesPath": "C:\\Users\\john\\.nuget\\packages\\",
-        "outputPath": "H:\\git\\LexaCard\\LexaCard.Core\\obj\\",
+        "outputPath": "H:\\git\\licenta\\LexaCard.Core\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -46,7 +46,7 @@
           "auditLevel": "low",
           "auditMode": "direct"
         },
-        "SdkAnalysisLevel": "10.0.200"
+        "SdkAnalysisLevel": "10.0.300"
       },
       "frameworks": {
         "net9.0": {
@@ -74,18 +74,18 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.203/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.300/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "H:\\git\\LexaCard\\LexaCard.Data\\LexaCard.Data.csproj": {
+    "H:\\git\\licenta\\LexaCard.Data\\LexaCard.Data.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "H:\\git\\LexaCard\\LexaCard.Data\\LexaCard.Data.csproj",
+        "projectUniqueName": "H:\\git\\licenta\\LexaCard.Data\\LexaCard.Data.csproj",
         "projectName": "LexaCard.Data",
-        "projectPath": "H:\\git\\LexaCard\\LexaCard.Data\\LexaCard.Data.csproj",
+        "projectPath": "H:\\git\\licenta\\LexaCard.Data\\LexaCard.Data.csproj",
         "packagesPath": "C:\\Users\\john\\.nuget\\packages\\",
-        "outputPath": "H:\\git\\LexaCard\\LexaCard.Data\\obj\\",
+        "outputPath": "H:\\git\\licenta\\LexaCard.Data\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -108,8 +108,8 @@
             "framework": "net9.0",
             "targetAlias": "net9.0",
             "projectReferences": {
-              "H:\\git\\LexaCard\\LexaCard.Core\\LexaCard.Core.csproj": {
-                "projectPath": "H:\\git\\LexaCard\\LexaCard.Core\\LexaCard.Core.csproj"
+              "H:\\git\\licenta\\LexaCard.Core\\LexaCard.Core.csproj": {
+                "projectPath": "H:\\git\\licenta\\LexaCard.Core\\LexaCard.Core.csproj"
               }
             }
           }
@@ -124,7 +124,7 @@
           "auditLevel": "low",
           "auditMode": "direct"
         },
-        "SdkAnalysisLevel": "10.0.200"
+        "SdkAnalysisLevel": "10.0.300"
       },
       "frameworks": {
         "net9.0": {
@@ -156,18 +156,18 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.203/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.300/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "H:\\git\\LexaCard\\LexaCard\\LexaCard.csproj": {
+    "H:\\git\\licenta\\LexaCard\\LexaCard.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "H:\\git\\LexaCard\\LexaCard\\LexaCard.csproj",
+        "projectUniqueName": "H:\\git\\licenta\\LexaCard\\LexaCard.csproj",
         "projectName": "LexaCard",
-        "projectPath": "H:\\git\\LexaCard\\LexaCard\\LexaCard.csproj",
+        "projectPath": "H:\\git\\licenta\\LexaCard\\LexaCard.csproj",
         "packagesPath": "C:\\Users\\john\\.nuget\\packages\\",
-        "outputPath": "H:\\git\\LexaCard\\LexaCard\\obj\\",
+        "outputPath": "H:\\git\\licenta\\LexaCard\\obj\\",
         "projectStyle": "PackageReference",
         "crossTargeting": true,
         "fallbackFolders": [
@@ -194,11 +194,11 @@
             "framework": "net9.0-android35.0",
             "targetAlias": "net9.0-android",
             "projectReferences": {
-              "H:\\git\\LexaCard\\LexaCard.Core\\LexaCard.Core.csproj": {
-                "projectPath": "H:\\git\\LexaCard\\LexaCard.Core\\LexaCard.Core.csproj"
+              "H:\\git\\licenta\\LexaCard.Core\\LexaCard.Core.csproj": {
+                "projectPath": "H:\\git\\licenta\\LexaCard.Core\\LexaCard.Core.csproj"
               },
-              "H:\\git\\LexaCard\\LexaCard.Data\\LexaCard.Data.csproj": {
-                "projectPath": "H:\\git\\LexaCard\\LexaCard.Data\\LexaCard.Data.csproj"
+              "H:\\git\\licenta\\LexaCard.Data\\LexaCard.Data.csproj": {
+                "projectPath": "H:\\git\\licenta\\LexaCard.Data\\LexaCard.Data.csproj"
               }
             }
           },
@@ -206,11 +206,11 @@
             "framework": "net9.0-ios26.4",
             "targetAlias": "net9.0-ios",
             "projectReferences": {
-              "H:\\git\\LexaCard\\LexaCard.Core\\LexaCard.Core.csproj": {
-                "projectPath": "H:\\git\\LexaCard\\LexaCard.Core\\LexaCard.Core.csproj"
+              "H:\\git\\licenta\\LexaCard.Core\\LexaCard.Core.csproj": {
+                "projectPath": "H:\\git\\licenta\\LexaCard.Core\\LexaCard.Core.csproj"
               },
-              "H:\\git\\LexaCard\\LexaCard.Data\\LexaCard.Data.csproj": {
-                "projectPath": "H:\\git\\LexaCard\\LexaCard.Data\\LexaCard.Data.csproj"
+              "H:\\git\\licenta\\LexaCard.Data\\LexaCard.Data.csproj": {
+                "projectPath": "H:\\git\\licenta\\LexaCard.Data\\LexaCard.Data.csproj"
               }
             }
           },
@@ -218,11 +218,11 @@
             "framework": "net9.0-maccatalyst26.4",
             "targetAlias": "net9.0-maccatalyst",
             "projectReferences": {
-              "H:\\git\\LexaCard\\LexaCard.Core\\LexaCard.Core.csproj": {
-                "projectPath": "H:\\git\\LexaCard\\LexaCard.Core\\LexaCard.Core.csproj"
+              "H:\\git\\licenta\\LexaCard.Core\\LexaCard.Core.csproj": {
+                "projectPath": "H:\\git\\licenta\\LexaCard.Core\\LexaCard.Core.csproj"
               },
-              "H:\\git\\LexaCard\\LexaCard.Data\\LexaCard.Data.csproj": {
-                "projectPath": "H:\\git\\LexaCard\\LexaCard.Data\\LexaCard.Data.csproj"
+              "H:\\git\\licenta\\LexaCard.Data\\LexaCard.Data.csproj": {
+                "projectPath": "H:\\git\\licenta\\LexaCard.Data\\LexaCard.Data.csproj"
               }
             }
           },
@@ -230,11 +230,11 @@
             "framework": "net9.0-windows10.0.19041",
             "targetAlias": "net9.0-windows10.0.19041.0",
             "projectReferences": {
-              "H:\\git\\LexaCard\\LexaCard.Core\\LexaCard.Core.csproj": {
-                "projectPath": "H:\\git\\LexaCard\\LexaCard.Core\\LexaCard.Core.csproj"
+              "H:\\git\\licenta\\LexaCard.Core\\LexaCard.Core.csproj": {
+                "projectPath": "H:\\git\\licenta\\LexaCard.Core\\LexaCard.Core.csproj"
               },
-              "H:\\git\\LexaCard\\LexaCard.Data\\LexaCard.Data.csproj": {
-                "projectPath": "H:\\git\\LexaCard\\LexaCard.Data\\LexaCard.Data.csproj"
+              "H:\\git\\licenta\\LexaCard.Data\\LexaCard.Data.csproj": {
+                "projectPath": "H:\\git\\licenta\\LexaCard.Data\\LexaCard.Data.csproj"
               }
             }
           }
@@ -249,7 +249,7 @@
           "auditLevel": "low",
           "auditMode": "direct"
         },
-        "SdkAnalysisLevel": "10.0.200"
+        "SdkAnalysisLevel": "10.0.300"
       },
       "frameworks": {
         "net9.0-android": {
@@ -275,7 +275,7 @@
             "Microsoft.NET.ILLink.Tasks": {
               "suppressParent": "All",
               "target": "Package",
-              "version": "[9.0.15, )",
+              "version": "[9.0.16, )",
               "autoReferenced": true
             },
             "Npgsql.EntityFrameworkCore.PostgreSQL": {
@@ -316,7 +316,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.203/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.300/PortableRuntimeIdentifierGraph.json"
         },
         "net9.0-ios": {
           "framework": "net9.0-ios26.4",
@@ -341,7 +341,7 @@
             "Microsoft.NET.ILLink.Tasks": {
               "suppressParent": "All",
               "target": "Package",
-              "version": "[9.0.15, )",
+              "version": "[9.0.16, )",
               "autoReferenced": true
             },
             "Npgsql.EntityFrameworkCore.PostgreSQL": {
@@ -378,7 +378,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.203/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.300/PortableRuntimeIdentifierGraph.json"
         },
         "net9.0-maccatalyst": {
           "framework": "net9.0-maccatalyst26.4",
@@ -403,7 +403,7 @@
             "Microsoft.NET.ILLink.Tasks": {
               "suppressParent": "All",
               "target": "Package",
-              "version": "[9.0.15, )",
+              "version": "[9.0.16, )",
               "autoReferenced": true
             },
             "Npgsql.EntityFrameworkCore.PostgreSQL": {
@@ -441,7 +441,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.203/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.300/PortableRuntimeIdentifierGraph.json"
         },
         "net9.0-windows10.0.19041.0": {
           "framework": "net9.0-windows10.0.19041",
@@ -493,7 +493,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.203\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.300\\RuntimeIdentifierGraph.json"
         }
       },
       "runtimes": {

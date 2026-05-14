@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("LexaCard.Core")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+db26c685a775091ade80c29c8a8c05b6d28a511a")]
 [assembly: System.Reflection.AssemblyProductAttribute("LexaCard.Core")]
 [assembly: System.Reflection.AssemblyTitleAttribute("LexaCard.Core")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

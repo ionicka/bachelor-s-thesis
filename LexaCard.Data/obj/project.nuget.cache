@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "zcN6dYTJoKc=",
+  "dgSpecHash": "Y3/dFHNtvQA=",
   "success": true,
-  "projectFilePath": "H:\\git\\LexaCard\\LexaCard.Data\\LexaCard.Data.csproj",
+  "projectFilePath": "H:\\git\\licenta\\LexaCard.Data\\LexaCard.Data.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\john\\.nuget\\packages\\bcrypt.net-next\\4.0.3\\bcrypt.net-next.4.0.3.nupkg.sha512",
     "C:\\Users\\john\\.nuget\\packages\\dapper\\2.1.35\\dapper.2.1.35.nupkg.sha512",

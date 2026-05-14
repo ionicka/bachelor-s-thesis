@@ -43,7 +43,7 @@ public class CardRepository : ICardRepository
                 FROM progres_cuvinte p
                 INNER JOIN cuvinte c ON c.""Id"" = p.""CuvantId""
                 WHERE p.""UtilizatorId"" = @UId
-                  AND p.""DataUrmatoareiRevizuiri"" <= @Azi
+                  AND p.""DataUrmatoareiRevizuiri"" <= @Azi::date
                   AND p.""NivelCunoastere"" < 7
                 ORDER BY p.""DataUrmatoareiRevizuiri"" ASC
                 LIMIT @MaxR
@@ -77,10 +77,14 @@ public class CardRepository : ICardRepository
         int maxR = (int)(max * 0.75);
         int maxN = max - maxR;
 
+        // Dapper nu suporta DateOnly direct — convertim la string
+        string aziStr = DateOnly.FromDateTime(DateTime.UtcNow)
+            .ToString("yyyy-MM-dd");
+
         var rows = await conn.QueryAsync<CardRaw>(sql, new
         {
-            UId  = utilizatorId,
-            Azi  = DateOnly.FromDateTime(DateTime.UtcNow),
+            UId = utilizatorId,
+            Azi = aziStr,
             MaxR = maxR,
             MaxN = maxN
         });
@@ -105,7 +109,7 @@ public class CardRepository : ICardRepository
                 COALESCE(p.""NrRaspunsuriCorecte"", 0) AS NrRaspunsuriCorecte,
                 COALESCE(p.""NrRaspunsuriGresite"", 0) AS NrRaspunsuriGresite,
                 CASE WHEN p.""Id"" IS NULL THEN 1 ELSE 0 END AS EsteNou,
-                CASE WHEN p.""DataUrmatoareiRevizuiri"" <= @Azi THEN 1 ELSE 0 END AS EsteDeRevizuit
+                CASE WHEN p.""DataUrmatoareiRevizuiri"" <= @Azi::date THEN 1 ELSE 0 END AS EsteDeRevizuit
             FROM cuvinte c
             LEFT JOIN progres_cuvinte p
                 ON p.""CuvantId"" = c.""Id"" AND p.""UtilizatorId"" = @UId
@@ -113,9 +117,9 @@ public class CardRepository : ICardRepository
 
         var row = await conn.QueryFirstOrDefaultAsync<CardRaw>(sql, new
         {
-            UId      = utilizatorId,
+            UId = utilizatorId,
             CuvantId = cuvantId,
-            Azi      = DateOnly.FromDateTime(DateTime.UtcNow)
+            Azi = DateOnly.FromDateTime(DateTime.UtcNow).ToString("yyyy-MM-dd")
         });
 
         return row == null ? null : MapToDto(row);
@@ -123,13 +127,13 @@ public class CardRepository : ICardRepository
 
     private static CardDto MapToDto(CardRaw r)
     {
-        int total   = r.NrRaspunsuriCorecte + r.NrRaspunsuriGresite;
+        int total = r.NrRaspunsuriCorecte + r.NrRaspunsuriGresite;
         double rata = total == 0 ? 0
             : Math.Round((double)r.NrRaspunsuriCorecte / total * 100, 1);
 
         string blur = r.ExempluPropozitie
             .Replace("[TERMEN]", new string('_', r.Termen.Length));
-        string rev  = r.ExempluPropozitie.Replace("[TERMEN]", r.Termen);
+        string rev = r.ExempluPropozitie.Replace("[TERMEN]", r.Termen);
 
         var tip = r.NrRaspunsuriCorecte < 3
             ? TipRaspuns.Recunoastere
@@ -144,18 +148,18 @@ public class CardRepository : ICardRepository
 
     private class CardRaw
     {
-        public int     CuvantId            { get; set; }
-        public string  Termen              { get; set; } = "";
-        public string  Definitie           { get; set; } = "";
-        public string  ExempluPropozitie   { get; set; } = "";
-        public string? CaleImagine         { get; set; }
-        public string? Pronuntie           { get; set; }
-        public int     Nivel               { get; set; }
-        public int     NivelCunoastere     { get; set; }
-        public int     NrRaspunsuriCorecte { get; set; }
-        public int     NrRaspunsuriGresite { get; set; }
-        public int     EsteDeRevizuit      { get; set; }
-        public int     EsteNou             { get; set; }
+        public int CuvantId { get; set; }
+        public string Termen { get; set; } = "";
+        public string Definitie { get; set; } = "";
+        public string ExempluPropozitie { get; set; } = "";
+        public string? CaleImagine { get; set; }
+        public string? Pronuntie { get; set; }
+        public int Nivel { get; set; }
+        public int NivelCunoastere { get; set; }
+        public int NrRaspunsuriCorecte { get; set; }
+        public int NrRaspunsuriGresite { get; set; }
+        public int EsteDeRevizuit { get; set; }
+        public int EsteNou { get; set; }
     }
 }
 

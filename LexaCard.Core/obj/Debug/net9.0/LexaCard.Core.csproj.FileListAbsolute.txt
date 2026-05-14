@@ -10,3 +10,16 @@ H:\git\LexaCard\LexaCard.Core\obj\Debug\net9.0\LexaCard.Core.dll
 H:\git\LexaCard\LexaCard.Core\obj\Debug\net9.0\refint\LexaCard.Core.dll
 H:\git\LexaCard\LexaCard.Core\obj\Debug\net9.0\LexaCard.Core.pdb
 H:\git\LexaCard\LexaCard.Core\obj\Debug\net9.0\ref\LexaCard.Core.dll
+H:\git\licenta\LexaCard.Core\bin\Debug\net9.0\LexaCard.Core.deps.json
+H:\git\licenta\LexaCard.Core\bin\Debug\net9.0\LexaCard.Core.dll
+H:\git\licenta\LexaCard.Core\bin\Debug\net9.0\LexaCard.Core.pdb
+H:\git\licenta\LexaCard.Core\obj\Debug\net9.0\LexaCard.Core.csproj.AssemblyReference.cache
+H:\git\licenta\LexaCard.Core\obj\Debug\net9.0\LexaCard.Core.GeneratedMSBuildEditorConfig.editorconfig
+H:\git\licenta\LexaCard.Core\obj\Debug\net9.0\LexaCard.Core.AssemblyInfoInputs.cache
+H:\git\licenta\LexaCard.Core\obj\Debug\net9.0\LexaCard.Core.AssemblyInfo.cs
+H:\git\licenta\LexaCard.Core\obj\Debug\net9.0\LexaCard.Core.csproj.CoreCompileInputs.cache
+H:\git\licenta\LexaCard.Core\obj\Debug\net9.0\LexaCard.Core.sourcelink.json
+H:\git\licenta\LexaCard.Core\obj\Debug\net9.0\LexaCard.Core.dll
+H:\git\licenta\LexaCard.Core\obj\Debug\net9.0\refint\LexaCard.Core.dll
+H:\git\licenta\LexaCard.Core\obj\Debug\net9.0\LexaCard.Core.pdb
+H:\git\licenta\LexaCard.Core\obj\Debug\net9.0\ref\LexaCard.Core.dll

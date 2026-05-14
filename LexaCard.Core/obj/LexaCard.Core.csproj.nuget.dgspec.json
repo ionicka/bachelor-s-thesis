@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "H:\\git\\LexaCard\\LexaCard.Core\\LexaCard.Core.csproj": {}
+    "H:\\git\\licenta\\LexaCard.Core\\LexaCard.Core.csproj": {}
   },
   "projects": {
-    "H:\\git\\LexaCard\\LexaCard.Core\\LexaCard.Core.csproj": {
+    "H:\\git\\licenta\\LexaCard.Core\\LexaCard.Core.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "H:\\git\\LexaCard\\LexaCard.Core\\LexaCard.Core.csproj",
+        "projectUniqueName": "H:\\git\\licenta\\LexaCard.Core\\LexaCard.Core.csproj",
         "projectName": "LexaCard.Core",
-        "projectPath": "H:\\git\\LexaCard\\LexaCard.Core\\LexaCard.Core.csproj",
+        "projectPath": "H:\\git\\licenta\\LexaCard.Core\\LexaCard.Core.csproj",
         "packagesPath": "C:\\Users\\john\\.nuget\\packages\\",
-        "outputPath": "H:\\git\\LexaCard\\LexaCard.Core\\obj\\",
+        "outputPath": "H:\\git\\licenta\\LexaCard.Core\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -46,7 +46,7 @@
           "auditLevel": "low",
           "auditMode": "direct"
         },
-        "SdkAnalysisLevel": "10.0.200"
+        "SdkAnalysisLevel": "10.0.300"
       },
       "frameworks": {
         "net9.0": {
@@ -74,7 +74,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.203/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.300/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
