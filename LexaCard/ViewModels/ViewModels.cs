@@ -138,6 +138,8 @@ public partial class FluxViewModel : ObservableObject
     [ObservableProperty] bool _sesiuneGoala = false;
     [ObservableProperty] int _nrCorect = 0;
     [ObservableProperty] int _nrGresit = 0;
+    [ObservableProperty] string _mesajFeedback = string.Empty;
+    [ObservableProperty] string _colorFeedback = "Transparent";
 
     public FluxViewModel(ICardService cardService, ISessionStateService session)
     {
@@ -145,22 +147,35 @@ public partial class FluxViewModel : ObservableObject
         _session = session;
     }
 
+    private bool _sesiuneIncarcata = false;
+
     public async Task InitializeazaAsync()
     {
         if (_session.UtilizatorCurent == null) return;
 
-        // Reseteaza starea
+        // Daca sesiunea e deja incarcata (nu resetata), nu reincarca
+        if (_sesiuneIncarcata)
+            return;
+
         _carduri = new();
         _index = 0;
         SesiuneGoala = false;
         PropozitieRevelata = false;
         CardCurent = null;
+        MesajFeedback = string.Empty;
+        ColorFeedback = "Transparent";
+        NrCorect = 0;
+        NrGresit = 0;
 
         SeIncarca = true;
         try
         {
-            _carduri = await _cardService.GetFluxAsync(
-                _session.UtilizatorCurent.Id);
+            int cuvinteNoi = _session.CuvinteNoiSesiune;
+            _carduri = await _cardService.GetSesiuneAsync(
+                _session.UtilizatorCurent.Id, cuvinteNoi);
+
+            // Marcam ca incarcata INDIFERENT de rezultat
+            _sesiuneIncarcata = true;
 
             if (_carduri.Any())
                 AfiseazaCard();
@@ -175,12 +190,27 @@ public partial class FluxViewModel : ObservableObject
         finally { SeIncarca = false; }
     }
 
+    public void ResetSesiune()
+    {
+        _sesiuneIncarcata = false;
+        _carduri = new();
+        _index = 0;
+        SesiuneGoala = false;
+        CardCurent = null;
+        NrCorect = 0;
+        NrGresit = 0;
+        MesajFeedback = string.Empty;
+        ColorFeedback = "Transparent";
+    }
+
     [RelayCommand]
     void TreceLaUrmatorCard()
     {
         PropozitieRevelata = false;
         TextTastat = string.Empty;
         ModTastare = false;
+        MesajFeedback = string.Empty;
+        ColorFeedback = "Transparent";
         _index++;
         if (_index < _carduri.Count) AfiseazaCard();
         else SesiuneGoala = true;
@@ -199,7 +229,25 @@ public partial class FluxViewModel : ObservableObject
             "ezitare" => CalitatRaspuns.Stiu_Ezitare,
             _ => CalitatRaspuns.Nu_Stiu
         };
+
+        // Arata feedback vizual
+        MesajFeedback = calitate switch
+        {
+            CalitatRaspuns.Stiu_Sigur => "✓ Excelent!",
+            CalitatRaspuns.Stiu_Ezitare => "~ Bine!",
+            _ => "✗ Data viitoare!"
+        };
+        ColorFeedback = calitate switch
+        {
+            CalitatRaspuns.Stiu_Sigur => "#4CAF50",
+            CalitatRaspuns.Stiu_Ezitare => "#2980B9",
+            _ => "#E94560"
+        };
+
         await TrimiteRaspunsAsync(calitate, TipRaspuns.Recunoastere, null);
+
+        // Pauza scurta pentru feedback apoi trece mai departe
+        await Task.Delay(600);
         TreceLaUrmatorCard();
     }
 
@@ -207,10 +255,24 @@ public partial class FluxViewModel : ObservableObject
     async Task RaspundeTastareAsync()
     {
         if (CardCurent == null) return;
-        await TrimiteRaspunsAsync(
-            CalitatRaspuns.Stiu_Sigur,
-            TipRaspuns.RemintireActiva,
-            TextTastat);
+
+        // Verifica daca textul tastat e corect
+        bool corect = !string.IsNullOrWhiteSpace(TextTastat) &&
+            TextTastat.Trim().ToLower() == CardCurent.Termen.Trim().ToLower();
+
+        MesajFeedback = corect ? "✓ Corect!" : $"✗ Era: {CardCurent.Termen}";
+        ColorFeedback = corect ? "#4CAF50" : "#E94560";
+
+        // Reveleaza propozitia cu cuvantul
+        PropozitieRevelata = true;
+
+        var calitate = corect
+            ? CalitatRaspuns.Tastat_Corect
+            : CalitatRaspuns.Nu_Stiu;
+
+        await TrimiteRaspunsAsync(calitate, TipRaspuns.RemintireActiva, TextTastat);
+
+        await Task.Delay(1200);
         TreceLaUrmatorCard();
     }
 
@@ -221,21 +283,14 @@ public partial class FluxViewModel : ObservableObject
     [RelayCommand]
     async Task PracticaMailMultAsync()
     {
-        // Incarca toate cuvintele indiferent de data revizuirii
         if (_session.UtilizatorCurent == null) return;
         SeIncarca = true;
         SesiuneGoala = false;
+        MesajFeedback = string.Empty;
         try
         {
-            _carduri = await _cardService.GetFluxAsync(
+            _carduri = await _cardService.GetToateCuvinteleAsync(
                 _session.UtilizatorCurent.Id);
-
-            // Daca tot nu sunt carduri, incarca aleatoriu toate cuvintele
-            if (!_carduri.Any())
-            {
-                _carduri = await _cardService.GetToateCuvinteleAsync(
-                    _session.UtilizatorCurent.Id);
-            }
 
             if (_carduri.Any())
             {
@@ -247,8 +302,7 @@ public partial class FluxViewModel : ObservableObject
             else
             {
                 await Application.Current!.MainPage!
-                    .DisplayAlert("Info",
-                        "Nu exista cuvinte disponibile.", "OK");
+                    .DisplayAlert("Info", "Nu exista cuvinte disponibile.", "OK");
             }
         }
         finally { SeIncarca = false; }

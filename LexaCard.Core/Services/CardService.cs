@@ -27,8 +27,20 @@ public class CardService : ICardService
         _srs = srs;
     }
 
-    public async Task<List<CardDto>> GetFluxAsync(int utilizatorId) =>
-        await _cardRepo.GetCarduriPentruAziAsync(utilizatorId, 20);
+    /// <summary>
+    /// Construieste sesiunea zilnica:
+    /// 1. Toate revizuirile programate pentru azi (prioritate maxima)
+    /// 2. X cuvinte noi (configurate de utilizator)
+    /// </summary>
+    public async Task<List<CardDto>> GetSesiuneAsync(int utilizatorId, int cuvinteNoi)
+    {
+        var revizuiri = await _cardRepo.GetRevizuiriAziAsync(utilizatorId);
+        var noi = await _cardRepo.GetCuvinteNoiAsync(utilizatorId, cuvinteNoi);
+
+        // Revizuirile vin primele, apoi cuvintele noi
+        var sesiune = revizuiri.Concat(noi).ToList();
+        return sesiune;
+    }
 
     public async Task<List<CardDto>> GetToateCuvinteleAsync(int utilizatorId) =>
         await _cardRepo.GetToateCuvinteleAsync(utilizatorId);
@@ -38,6 +50,7 @@ public class CardService : ICardService
     {
         var calitateFinal = dto.Calitate;
 
+        // Daca e modul tastare, verifica textul
         if (dto.TipRaspuns == TipRaspuns.RemintireActiva &&
             !string.IsNullOrWhiteSpace(dto.TextTastat))
         {
@@ -48,10 +61,10 @@ public class CardService : ICardService
                     : CalitatRaspuns.Nu_Stiu;
         }
 
-        var progres = await _progresRepo.GetSauCreeazaAsync(
-            utilizatorId, dto.CuvantId);
+        var progres = await _progresRepo.GetSauCreeazaAsync(utilizatorId, dto.CuvantId);
         var srs = _srs.CalculeazaUrmatoareaRevizuire(progres, calitateFinal);
 
+        // Actualizeaza progresul
         progres.NivelCunoastere = srs.NivelNou;
         progres.IntervalCurentZile = srs.IntervalNou;
         progres.DataUrmatoareiRevizuiri = srs.DataUrmatoareiRevizuiri;
@@ -64,6 +77,7 @@ public class CardService : ICardService
 
         await _progresRepo.SalveazaAsync(progres);
 
+        // Salveaza raspunsul detaliat
         await _raspunsRepo.SalveazaAsync(new RaspunsDetaliat
         {
             ProgresCuvantId = progres.Id,
@@ -77,7 +91,8 @@ public class CardService : ICardService
         });
 
         return new RezultatRaspunsDto(
-            srs.NivelNou, srs.IntervalNou,
+            srs.NivelNou,
+            srs.IntervalNou,
             srs.DataUrmatoareiRevizuiri,
             srs.NivelNou >= 7,
             GeneraMesaj(srs.NivelNou, calitateFinal));
@@ -91,7 +106,8 @@ public class CardService : ICardService
         int total = progrese.Count;
         int invatate = progrese.Count(p => p.NivelCunoastere >= 5);
         int consolidate = progrese.Count(p => p.NivelCunoastere >= 7);
-        int deRevizuit = progrese.Count(p => p.EsteDeRevizuitAzi);
+        int deRevizuit = await _progresRepo.GetNrRevizuiriAziAsync(utilizatorId);
+        int cuvinteNoi = await _progresRepo.GetNrCuvinteNoiAsync(utilizatorId);
         double rata = total == 0 ? 0 : progrese.Average(p => p.RataSucces);
 
         var zile = sesiuni.Select(s => DateOnly.FromDateTime(s.DataSesiunii))
@@ -109,8 +125,10 @@ public class CardService : ICardService
                                  g.Sum(s => s.NrCorect + s.NrGresit) * 100, 1)))
             .OrderBy(s => s.Data).ToList();
 
-        return new StatisticiDto(total, invatate, consolidate,
-            deRevizuit, 0, Math.Round(rata, 1), streak, istoric);
+        return new StatisticiDto(
+            total, invatate, consolidate,
+            deRevizuit, cuvinteNoi,
+            Math.Round(rata, 1), streak, istoric);
     }
 
     private static int CalculeazaStreak(List<DateOnly> zile)

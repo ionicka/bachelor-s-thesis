@@ -6,19 +6,21 @@
        Shell.FlyoutBehavior="Disabled"
        Shell.NavBarIsVisible="False">
 
-    <!-- Login -->
     <ShellContent Route="LoginPage"
                   Shell.TabBarIsVisible="False"
                   Shell.NavBarIsVisible="False"
                   ContentTemplate="{DataTemplate views:LoginPage}" />
 
-    <!-- Pagina principala cu custom navbar jos -->
     <ShellContent Route="MainPage"
                   Shell.TabBarIsVisible="False"
                   Shell.NavBarIsVisible="False"
                   ContentTemplate="{DataTemplate views:MainPage}" />
 
-    <!-- Flux vocabular full screen TikTok -->
+    <ShellContent Route="SesiuneConfigPage"
+                  Shell.TabBarIsVisible="False"
+                  Shell.NavBarIsVisible="False"
+                  ContentTemplate="{DataTemplate views:SesiuneConfigPage}" />
+
     <ShellContent Route="FluxPage"
                   Shell.TabBarIsVisible="False"
                   Shell.NavBarIsVisible="False"

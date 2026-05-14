@@ -6,7 +6,11 @@ namespace LexaCard.Core.Interfaces;
 
 public interface ICardRepository
 {
-    Task<List<CardDto>> GetCarduriPentruAziAsync(int utilizatorId, int max = 20);
+    // Revizuiri programate pentru azi
+    Task<List<CardDto>> GetRevizuiriAziAsync(int utilizatorId);
+    // Cuvinte noi (nevazute niciodata de utilizator)
+    Task<List<CardDto>> GetCuvinteNoiAsync(int utilizatorId, int max);
+    // Toate cuvintele (pentru practica libera)
     Task<List<CardDto>> GetToateCuvinteleAsync(int utilizatorId);
     Task<CardDto?> GetCardAsync(int utilizatorId, int cuvantId);
 }
@@ -17,6 +21,8 @@ public interface IProgresRepository
     Task<ProgresCuvant> GetSauCreeazaAsync(int utilizatorId, int cuvantId);
     Task SalveazaAsync(ProgresCuvant progres);
     Task<List<ProgresCuvant>> GetToateProgreselAsync(int utilizatorId);
+    Task<int> GetNrRevizuiriAziAsync(int utilizatorId);
+    Task<int> GetNrCuvinteNoiAsync(int utilizatorId);
 }
 
 public interface IUtilizatorRepository
@@ -54,7 +60,10 @@ public interface ISrsService
 
 public interface ICardService
 {
-    Task<List<CardDto>> GetFluxAsync(int utilizatorId);
+    // Returneaza cardurile pentru sesiunea curenta
+    // (revizuiri de azi + X cuvinte noi configurate de utilizator)
+    Task<List<CardDto>> GetSesiuneAsync(int utilizatorId, int cuvinteNoi);
+    // Practica libera - toate cuvintele
     Task<List<CardDto>> GetToateCuvinteleAsync(int utilizatorId);
     Task<RezultatRaspunsDto> ProceseazaRaspunsAsync(
         int utilizatorId, RaspunsCardDto raspuns);

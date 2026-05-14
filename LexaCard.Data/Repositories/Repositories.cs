@@ -9,86 +9,93 @@ using Npgsql;
 
 namespace LexaCard.Data.Repositories;
 
-// ═══════════════════════════════════════════════════════
-// CardRepository — DAPPER
-// ═══════════════════════════════════════════════════════
+// ===============================================================
+// CardRepository — DAPPER pentru citiri performante
+// ===============================================================
 
 public class CardRepository : ICardRepository
 {
     private readonly string _connStr;
-
     public CardRepository(string connectionString) => _connStr = connectionString;
 
-    public async Task<List<CardDto>> GetCarduriPentruAziAsync(
-        int utilizatorId, int max = 20)
+    /// <summary>
+    /// Revizuiri programate pentru azi - toate, fara limita
+    /// </summary>
+    public async Task<List<CardDto>> GetRevizuiriAziAsync(int utilizatorId)
     {
         await using var conn = new NpgsqlConnection(_connStr);
-
         string sql = @"
-            SELECT * FROM (
-                SELECT
-                    c.""Id""               AS CuvantId,
-                    c.""Termen"",
-                    c.""Definitie"",
-                    c.""ExempluPropozitie"",
-                    c.""CaleImagine"",
-                    c.""Pronuntie"",
-                    c.""Nivel"",
-                    p.""NivelCunoastere"",
-                    p.""NrRaspunsuriCorecte"",
-                    p.""NrRaspunsuriGresite"",
-                    1 AS EsteDeRevizuit,
-                    0 AS EsteNou
-                FROM progres_cuvinte p
-                INNER JOIN cuvinte c ON c.""Id"" = p.""CuvantId""
-                WHERE p.""UtilizatorId"" = @UId
-                  AND p.""DataUrmatoareiRevizuiri"" <= @Azi::date
-                  AND p.""NivelCunoastere"" < 7
-                ORDER BY p.""DataUrmatoareiRevizuiri"" ASC
-                LIMIT @MaxR
-            ) revizuire
-            UNION ALL
-            SELECT * FROM (
-                SELECT
-                    c.""Id""               AS CuvantId,
-                    c.""Termen"",
-                    c.""Definitie"",
-                    c.""ExempluPropozitie"",
-                    c.""CaleImagine"",
-                    c.""Pronuntie"",
-                    c.""Nivel"",
-                    0  AS NivelCunoastere,
-                    0  AS NrRaspunsuriCorecte,
-                    0  AS NrRaspunsuriGresite,
-                    0  AS EsteDeRevizuit,
-                    1  AS EsteNou
-                FROM cuvinte c
-                WHERE c.""Id"" NOT IN (
-                    SELECT ""CuvantId"" FROM progres_cuvinte
-                    WHERE ""UtilizatorId"" = @UId)
-                ORDER BY RANDOM()
-                LIMIT @MaxN
-            ) noi";
-
-        int maxR = (int)(max * 0.75);
-        int maxN = max - maxR;
-        string aziStr = DateOnly.FromDateTime(DateTime.UtcNow).ToString("yyyy-MM-dd");
+            SELECT
+                c.""Id""               AS CuvantId,
+                c.""Termen"",
+                c.""Definitie"",
+                c.""ExempluPropozitie"",
+                c.""CaleImagine"",
+                c.""Pronuntie"",
+                c.""Nivel"",
+                p.""NivelCunoastere"",
+                p.""NrRaspunsuriCorecte"",
+                p.""NrRaspunsuriGresite"",
+                1 AS EsteDeRevizuit,
+                0 AS EsteNou
+            FROM progres_cuvinte p
+            INNER JOIN cuvinte c ON c.""Id"" = p.""CuvantId""
+            WHERE p.""UtilizatorId"" = @UId
+              AND p.""DataUrmatoareiRevizuiri"" <= @Azi::date
+              AND p.""NivelCunoastere"" < 7
+            ORDER BY p.""NivelCunoastere"" ASC, p.""DataUrmatoareiRevizuiri"" ASC";
 
         var rows = await conn.QueryAsync<CardRaw>(sql, new
         {
             UId = utilizatorId,
-            Azi = aziStr,
-            MaxR = maxR,
-            MaxN = maxN
+            Azi = DateOnly.FromDateTime(DateTime.UtcNow).ToString("yyyy-MM-dd")
         });
-
         return rows.Select(MapToDto).ToList();
     }
 
+    /// <summary>
+    /// Cuvinte noi - nevazute niciodata de utilizator, limitate la max
+    /// </summary>
+    public async Task<List<CardDto>> GetCuvinteNoiAsync(int utilizatorId, int max)
+    {
+        if (max <= 0) return new List<CardDto>();
+
+        await using var conn = new NpgsqlConnection(_connStr);
+        string sql = @"
+            SELECT
+                c.""Id""               AS CuvantId,
+                c.""Termen"",
+                c.""Definitie"",
+                c.""ExempluPropozitie"",
+                c.""CaleImagine"",
+                c.""Pronuntie"",
+                c.""Nivel"",
+                0 AS NivelCunoastere,
+                0 AS NrRaspunsuriCorecte,
+                0 AS NrRaspunsuriGresite,
+                0 AS EsteDeRevizuit,
+                1 AS EsteNou
+            FROM cuvinte c
+            WHERE c.""Id"" NOT IN (
+                SELECT ""CuvantId"" FROM progres_cuvinte
+                WHERE ""UtilizatorId"" = @UId)
+            ORDER BY c.""Nivel"" ASC, RANDOM()
+            LIMIT @Max";
+
+        var rows = await conn.QueryAsync<CardRaw>(sql, new
+        {
+            UId = utilizatorId,
+            Max = max
+        });
+        return rows.Select(MapToDto).ToList();
+    }
+
+    /// <summary>
+    /// Toate cuvintele - pentru practica libera
+    /// </summary>
     public async Task<List<CardDto>> GetToateCuvinteleAsync(int utilizatorId)
     {
         await using var conn = new NpgsqlConnection(_connStr);
-
         string sql = @"
             SELECT
                 c.""Id""               AS CuvantId,
@@ -115,7 +122,6 @@ public class CardRepository : ICardRepository
     public async Task<CardDto?> GetCardAsync(int utilizatorId, int cuvantId)
     {
         await using var conn = new NpgsqlConnection(_connStr);
-
         string sql = @"
             SELECT
                 c.""Id""               AS CuvantId,
@@ -129,7 +135,8 @@ public class CardRepository : ICardRepository
                 COALESCE(p.""NrRaspunsuriCorecte"", 0) AS NrRaspunsuriCorecte,
                 COALESCE(p.""NrRaspunsuriGresite"", 0) AS NrRaspunsuriGresite,
                 CASE WHEN p.""Id"" IS NULL THEN 1 ELSE 0 END AS EsteNou,
-                CASE WHEN p.""DataUrmatoareiRevizuiri"" <= @Azi::date THEN 1 ELSE 0 END AS EsteDeRevizuit
+                CASE WHEN p.""DataUrmatoareiRevizuiri"" <= @Azi::date
+                     THEN 1 ELSE 0 END AS EsteDeRevizuit
             FROM cuvinte c
             LEFT JOIN progres_cuvinte p
                 ON p.""CuvantId"" = c.""Id"" AND p.""UtilizatorId"" = @UId
@@ -141,7 +148,6 @@ public class CardRepository : ICardRepository
             CuvantId = cuvantId,
             Azi = DateOnly.FromDateTime(DateTime.UtcNow).ToString("yyyy-MM-dd")
         });
-
         return row == null ? null : MapToDto(row);
     }
 
@@ -151,17 +157,13 @@ public class CardRepository : ICardRepository
         double rata = total == 0 ? 0
             : Math.Round((double)r.NrRaspunsuriCorecte / total * 100, 1);
 
-        string blur = r.ExempluPropozitie
-            .Replace("[TERMEN]", new string('_', r.Termen.Length));
+        string blur = r.ExempluPropozitie.Replace("[TERMEN]", new string('_', r.Termen.Length));
         string rev = r.ExempluPropozitie.Replace("[TERMEN]", r.Termen);
+        string casute = string.Concat(r.Termen.Select(c => c == ' ' ? "  " : "□"));
 
-        // Casute: fiecare litera devine □, spatiile raman spatii
-        string casute = string.Concat(r.Termen.Select(c =>
-            c == ' ' ? "  " : "□"));
-
-        var tip = r.NrRaspunsuriCorecte < 3
-            ? TipRaspuns.Recunoastere
-            : TipRaspuns.RemintireActiva;
+        var tip = r.NivelCunoastere >= 3
+            ? TipRaspuns.RemintireActiva
+            : TipRaspuns.Recunoastere;
 
         return new CardDto(
             r.CuvantId, r.Termen, r.Definitie,
@@ -187,9 +189,9 @@ public class CardRepository : ICardRepository
     }
 }
 
-// ═══════════════════════════════════════════════════════
+// ===============================================================
 // ProgresRepository — EF CORE
-// ═══════════════════════════════════════════════════════
+// ===============================================================
 
 public class ProgresRepository : IProgresRepository
 {
@@ -224,11 +226,31 @@ public class ProgresRepository : IProgresRepository
             .Where(p => p.UtilizatorId == utilizatorId)
             .Include(p => p.Cuvant)
             .ToListAsync();
+
+    public async Task<int> GetNrRevizuiriAziAsync(int utilizatorId)
+    {
+        var azi = DateOnly.FromDateTime(DateTime.UtcNow);
+        return await _ctx.ProgresCuvinte
+            .CountAsync(p =>
+                p.UtilizatorId == utilizatorId &&
+                p.DataUrmatoareiRevizuiri <= azi &&
+                p.NivelCunoastere < 7);
+    }
+
+    public async Task<int> GetNrCuvinteNoiAsync(int utilizatorId)
+    {
+        var toateCuvinteleIds = await _ctx.Cuvinte
+            .Select(c => c.Id).ToListAsync();
+        var cuvinteVazuteIds = await _ctx.ProgresCuvinte
+            .Where(p => p.UtilizatorId == utilizatorId)
+            .Select(p => p.CuvantId).ToListAsync();
+        return toateCuvinteleIds.Except(cuvinteVazuteIds).Count();
+    }
 }
 
-// ═══════════════════════════════════════════════════════
+// ===============================================================
 // UtilizatorRepository — EF CORE
-// ═══════════════════════════════════════════════════════
+// ===============================================================
 
 public class UtilizatorRepository : IUtilizatorRepository
 {
@@ -236,8 +258,7 @@ public class UtilizatorRepository : IUtilizatorRepository
     public UtilizatorRepository(LexaDbContext ctx) => _ctx = ctx;
 
     public async Task<Utilizator?> GetByEmailAsync(string email) =>
-        await _ctx.Utilizatori
-            .FirstOrDefaultAsync(u => u.Email == email.ToLower());
+        await _ctx.Utilizatori.FirstOrDefaultAsync(u => u.Email == email.ToLower());
 
     public async Task<Utilizator?> GetByIdAsync(int id) =>
         await _ctx.Utilizatori.FindAsync(id);
@@ -270,9 +291,9 @@ public class UtilizatorRepository : IUtilizatorRepository
     }
 }
 
-// ═══════════════════════════════════════════════════════
+// ===============================================================
 // SesiuneRepository — EF CORE
-// ═══════════════════════════════════════════════════════
+// ===============================================================
 
 public class SesiuneRepository : ISesiuneRepository
 {
@@ -316,9 +337,9 @@ public class SesiuneRepository : ISesiuneRepository
     }
 }
 
-// ═══════════════════════════════════════════════════════
+// ===============================================================
 // RaspunsRepository — EF CORE
-// ═══════════════════════════════════════════════════════
+// ===============================================================
 
 public class RaspunsRepository : IRaspunsRepository
 {

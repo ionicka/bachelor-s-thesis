@@ -64,8 +64,6 @@ public partial class MainViewModel : ObservableObject
     }
 
     [RelayCommand]
-    async Task MergeVocabularAsync()
-    {
-        await Shell.Current.GoToAsync("//FluxPage");
-    }
+    async Task MergeVocabularAsync() =>
+        await Shell.Current.GoToAsync("//SesiuneConfigPage");
 }
