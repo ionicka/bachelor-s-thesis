@@ -37,23 +37,25 @@ public class SrsService : ISrsService
                 break;
         }
 
-        int intervalBaza = IntervaleBaza[nivelNou];
-        int intervalNou = (int)Math.Round(
-            Math.Max(intervalBaza, progres.IntervalCurentZile * factor));
-
-        // Variatie aleatorie +-10% doar pentru intervale > 0
-        if (intervalNou > 0)
+        // Intervale fixe per nivel — clare si predictibile:
+        // Nivel 1: azi din nou (0 zile)
+        // Nivel 2: maine (1 zi)
+        // Nivel 3: 3 zile
+        // Nivel 4: 7 zile (o saptamana)
+        // Nivel 5: 14 zile (2 saptamani)
+        // Nivel 6: 30 zile (o luna)
+        // Nivel 7: 90 zile (consolidat)
+       int intervalNou = nivelNou switch
         {
-            double variatie = 0.9 + Random.Shared.NextDouble() * 0.2;
-            intervalNou = (int)Math.Round(intervalNou * variatie);
-        }
-
-        // Nivel 1-2 = revizuire tot azi (interval 0)
-        // Nivel 3+  = minim 1 zi
-        if (nivelNou >= 3)
-            intervalNou = Math.Max(1, intervalNou);
-        else
-            intervalNou = 0; // apare din nou azi
+            1 => 0,
+            2 => 1,
+            3 => 3,
+            4 => 7,
+            5 => 14,
+            6 => 30,
+            7 => 90,
+            _ => 1
+        };
 
         return new RezultatSrs(
             nivelNou,

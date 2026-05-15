@@ -111,7 +111,7 @@
                            Padding="0" BorderColor="#0F3460" HasShadow="False">
                         <Frame.GestureRecognizers>
                             <SwipeGestureRecognizer Direction="Up"
-                                Command="{Binding TreceLaUrmatorCardCommand}" />
+                                Command="{Binding RevelazaPropozitiaCommand}" />
                         </Frame.GestureRecognizers>
                         <VerticalStackLayout>
                             <!-- Imagine -->
@@ -232,6 +232,7 @@
                    VerticalOptions="Center" />
         </Frame>
 
+
         <!-- BUTOANE JOS -->
         <Grid Grid.Row="2"
               IsVisible="{Binding SesiuneGoala, Converter={StaticResource InvertBool}}"
@@ -251,47 +252,77 @@
                        HorizontalOptions="Center" />
             </Frame>
 
-            <!-- Modul TASTARE: butonul de verifica -->
-            <Grid Grid.Row="1" IsVisible="{Binding ModTastare}">
-                <Button Text="Verifica raspunsul"
-                        Command="{Binding RaspundeTastareCommand}"
-                        Style="{StaticResource BtnPrincipal}"
-                        HeightRequest="56" />
-            </Grid>
+            <Grid Grid.Row="1">
 
-            <!-- Modul RECUNOASTERE: inainte si dupa revelatie -->
-            <Grid Grid.Row="1" IsVisible="{Binding ModTastare,
-                              Converter={StaticResource InvertBool}}">
+                <!-- MAI DEPARTE — deasupra tuturor, apare dupa raspuns -->
+                <Button Text="Mai departe →"
+                        Command="{Binding MailDeparteCommand}"
+                        IsVisible="{Binding AsteaptaMailDeparte}"
+                        BackgroundColor="#2E5A8C"
+                        TextColor="White"
+                        CornerRadius="16"
+                        HeightRequest="56"
+                        FontSize="16"
+                        FontAttributes="Bold" />
 
-                <!-- Inainte de revelatie -->
-                <Button Text="Reveleaza propozitia"
-                        Command="{Binding RevelazaPropozitiaCommand}"
-                        IsVisible="{Binding PropozitieRevelata,
-                                    Converter={StaticResource InvertBool}}"
-                        Style="{StaticResource BtnDark}"
-                        HeightRequest="56" />
-
-                <!-- Dupa revelatie -->
-                <Grid IsVisible="{Binding PropozitieRevelata}"
+                <!-- Toate butoanele normale — dispar dupa raspuns -->
+                <Grid IsVisible="{Binding AsteaptaMailDeparte,
+                                  Converter={StaticResource InvertBool}}"
                       RowDefinitions="Auto,Auto" RowSpacing="8">
 
-                    <Grid Grid.Row="0" ColumnDefinitions="*,10,*" HeightRequest="56">
-                        <Button Grid.Column="0" Text="Nu stiu"
-                                Command="{Binding RaspundeRecunoastereCommand}"
-                                CommandParameter="nu"
-                                Style="{StaticResource BtnRosu}" />
-                        <Button Grid.Column="2" Text="Stiu!"
-                                Command="{Binding RaspundeRecunoastereCommand}"
-                                CommandParameter="sigur"
-                                Style="{StaticResource BtnVerde}" />
+                    <!-- TASTARE -->
+                    <Button Grid.Row="0"
+                            Text="Verifica raspunsul"
+                            Command="{Binding RaspundeTastareCommand}"
+                            IsVisible="{Binding ModTastare}"
+                            Style="{StaticResource BtnPrincipal}"
+                            HeightRequest="56" />
+
+                    <!-- RECUNOASTERE -->
+                    <Grid Grid.Row="0"
+                          IsVisible="{Binding ModTastare,
+                                      Converter={StaticResource InvertBool}}"
+                          RowDefinitions="Auto,Auto" RowSpacing="8">
+
+                        <!-- Inainte de revelatie -->
+                        <Button Grid.Row="0"
+                                Text="Reveleaza propozitia"
+                                Command="{Binding RevelazaPropozitiaCommand}"
+                                IsVisible="{Binding PropozitieRevelata,
+                                            Converter={StaticResource InvertBool}}"
+                                Style="{StaticResource BtnDark}"
+                                HeightRequest="56" />
+
+                        <!-- Dupa revelatie -->
+                        <Grid Grid.Row="1"
+                              IsVisible="{Binding PropozitieRevelata}"
+                              RowDefinitions="Auto,Auto" RowSpacing="8">
+
+                            <Grid Grid.Row="0"
+                                  ColumnDefinitions="*,10,*" HeightRequest="56">
+                                <Button Grid.Column="0"
+                                        Text="Nu stiu"
+                                        Command="{Binding RaspundeRecunoastereCommand}"
+                                        CommandParameter="nu"
+                                        Style="{StaticResource BtnRosu}" />
+                                <Button Grid.Column="2"
+                                        Text="Stiu!"
+                                        Command="{Binding RaspundeRecunoastereCommand}"
+                                        CommandParameter="sigur"
+                                        Style="{StaticResource BtnVerde}" />
+                            </Grid>
+
+                            <Button Grid.Row="1"
+                                    Text="Stiu, dar cu ezitare"
+                                    Command="{Binding RaspundeRecunoastereCommand}"
+                                    CommandParameter="ezitare"
+                                    Style="{StaticResource BtnAlbastru}"
+                                    HeightRequest="46" />
+                        </Grid>
                     </Grid>
 
-                    <Button Grid.Row="1" Text="Stiu, dar cu ezitare"
-                            Command="{Binding RaspundeRecunoastereCommand}"
-                            CommandParameter="ezitare"
-                            Style="{StaticResource BtnAlbastru}"
-                            HeightRequest="46" />
                 </Grid>
+
             </Grid>
 
         </Grid>

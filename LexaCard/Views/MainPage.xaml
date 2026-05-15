@@ -105,10 +105,8 @@
                             <Label Text="{Binding CarduriAzi, StringFormat='{0} cuvinte'}"
                                    TextColor="White" FontSize="22"
                                    FontAttributes="Bold" />
-                            <ProgressBar
-                                Progress="{Binding ProgressZi}"
-                                ProgressColor="#E94560"
-                                HeightRequest="6" />
+                            <Label Text="Cuvinte cu progres programate azi"
+                                   TextColor="#556688" FontSize="11" />
                         </VerticalStackLayout>
                         <Label Grid.Column="1" Text="📚"
                                FontSize="48" VerticalOptions="Center" />

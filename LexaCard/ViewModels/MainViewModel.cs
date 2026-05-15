@@ -31,12 +31,10 @@ public partial class MainViewModel : ObservableObject
     {
         if (_session.UtilizatorCurent == null) return;
 
-        // Seteaza datele utilizatorului
         NumeUtilizator = _session.UtilizatorCurent.NumeUtilizator;
         InitialaUtilizator = NumeUtilizator.Length > 0
             ? NumeUtilizator[0].ToString().ToUpper() : "?";
 
-        // Salut in functie de ora
         int ora = DateTime.Now.Hour;
         Salut = ora switch
         {
@@ -46,21 +44,21 @@ public partial class MainViewModel : ObservableObject
             _ => "Noapte buna,"
         };
 
-        // Statistici
         try
         {
             var stats = await _cardService.GetStatisticiAsync(
                 _session.UtilizatorCurent.Id);
 
-            CarduriAzi = stats.CuvinteDeRevizuitAzi + stats.CuvinteNoi;
+            // "De revizuit azi" = doar carduri cu progres existent programate azi
+            CarduriAzi = stats.CuvinteDeRevizuitAzi;
             Streak = stats.ZileCurenteStreak;
-            Monede = stats.CuvinteInvatate * 10; // 10 monede per cuvant invatat
+            Monede = stats.CuvinteInvatate * 10;
             NrNotificari = stats.CuvinteDeRevizuitAzi > 0 ? 1 : 0;
             AreNotificari = NrNotificari > 0;
             ProgressZi = stats.TotalCuvinte == 0 ? 0
                 : Math.Min(1.0, (double)stats.CuvinteInvatate / stats.TotalCuvinte);
         }
-        catch { /* ignora erori de statistici */ }
+        catch { }
     }
 
     [RelayCommand]
