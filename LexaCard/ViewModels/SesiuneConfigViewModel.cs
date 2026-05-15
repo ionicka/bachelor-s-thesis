@@ -17,23 +17,23 @@ public partial class SesiuneConfigViewModel : ObservableObject
     [ObservableProperty] int _totalSesiune = 0;
     [ObservableProperty] string _estimareTimp = "";
 
-    // Slider foloseste double intern, dar noi afisam int
-    private double _sliderVal = 10;
-    public double SliderVal
+    private int _cuvinteNoi = 10;
+    public int CuvinteNoi
     {
-        get => _sliderVal;
+        get => _cuvinteNoi;
         set
         {
-            if (SetProperty(ref _sliderVal, value))
+            int clamped = Math.Clamp(value, 0, _maxCuvinteNoi);
+            if (SetProperty(ref _cuvinteNoi, clamped))
             {
-                OnPropertyChanged(nameof(CuvinteNoi));
+                OnPropertyChanged(nameof(ProgressCuvinte));
                 ActualizeazaRezumat();
             }
         }
     }
 
-    // Proprietate int derivata din slider
-    public int CuvinteNoi => (int)Math.Round(_sliderVal);
+    public double ProgressCuvinte =>
+        _maxCuvinteNoi > 0 ? (double)_cuvinteNoi / _maxCuvinteNoi : 0;
 
     public SesiuneConfigViewModel(
         ICardService cardService,
@@ -57,7 +57,7 @@ public partial class SesiuneConfigViewModel : ObservableObject
         MaxCuvinteNoi = Math.Max(50, NrCuvinteNoi);
 
         int defaultNoi = _session.UtilizatorCurent.CarduriNoiPerZi;
-        SliderVal = NrCuvinteNoi > 0
+        CuvinteNoi = NrCuvinteNoi > 0
             ? Math.Min(defaultNoi, NrCuvinteNoi)
             : 0;
 
@@ -73,15 +73,17 @@ public partial class SesiuneConfigViewModel : ObservableObject
             : "Nimic programat — alege cuvinte noi";
     }
 
-    // Butoanele rapide seteaza direct SliderVal
+    [RelayCommand]
+    void AdaugaCuvinte() => CuvinteNoi += 1;
+
+    [RelayCommand]
+    void ScadeCuvinte() => CuvinteNoi -= 1;
+
     [RelayCommand]
     void SeteazaCuvinte(string valoare)
     {
         if (int.TryParse(valoare, out int val))
-        {
-            int limita = NrCuvinteNoi > 0 ? NrCuvinteNoi : 0;
-            SliderVal = Math.Min(val, limita);
-        }
+            CuvinteNoi = val;
     }
 
     [RelayCommand]

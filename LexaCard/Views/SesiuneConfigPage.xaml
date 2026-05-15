@@ -74,19 +74,42 @@
                                FontAttributes="Bold"
                                HorizontalOptions="Start" />
 
-                        <!-- Numarul de cuvinte selectate - INT fara zecimale -->
+                        <!-- Numar mare centrat -->
                         <Label Text="{Binding CuvinteNoi, StringFormat='{0} cuvinte noi'}"
                                TextColor="#9B6FDE" FontSize="30"
                                FontAttributes="Bold"
                                HorizontalOptions="Center" />
 
-                        <!-- Slider legat la SliderVal (double intern) -->
-                        <Slider Minimum="0"
-                                Maximum="{Binding MaxCuvinteNoi}"
-                                Value="{Binding SliderVal, Mode=TwoWay}"
-                                ThumbColor="#7B2FBE"
-                                MinimumTrackColor="#7B2FBE"
-                                MaximumTrackColor="#2E3A5C" />
+                        <!-- Butoane +/- -->
+                        <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
+                            <Button Grid.Column="0" Text="−"
+                                    Command="{Binding ScadeCuvinteCommand}"
+                                    BackgroundColor="#2E1060"
+                                    TextColor="White" FontSize="24"
+                                    FontAttributes="Bold"
+                                    WidthRequest="56" HeightRequest="56"
+                                    CornerRadius="28" Padding="0" />
+
+                            <Frame Grid.Column="1"
+                                   BackgroundColor="#0F0828"
+                                   BorderColor="#7B2FBE"
+                                   CornerRadius="12" Padding="0"
+                                   HeightRequest="56">
+                                <ProgressBar
+                                    Progress="{Binding ProgressCuvinte}"
+                                    ProgressColor="#7B2FBE"
+                                    VerticalOptions="Center"
+                                    Margin="4,0" />
+                            </Frame>
+
+                            <Button Grid.Column="2" Text="+"
+                                    Command="{Binding AdaugaCuvinteCommand}"
+                                    BackgroundColor="#7B2FBE"
+                                    TextColor="White" FontSize="24"
+                                    FontAttributes="Bold"
+                                    WidthRequest="56" HeightRequest="56"
+                                    CornerRadius="28" Padding="0" />
+                        </Grid>
 
                         <!-- Butoane rapide -->
                         <Grid ColumnDefinitions="*,*,*,*" ColumnSpacing="8">

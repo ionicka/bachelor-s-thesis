@@ -41,8 +41,19 @@ public class SrsService : ISrsService
         int intervalNou = (int)Math.Round(
             Math.Max(intervalBaza, progres.IntervalCurentZile * factor));
 
-        double variatie = 0.9 + Random.Shared.NextDouble() * 0.2;
-        intervalNou = Math.Max(1, (int)Math.Round(intervalNou * variatie));
+        // Variatie aleatorie +-10% doar pentru intervale > 0
+        if (intervalNou > 0)
+        {
+            double variatie = 0.9 + Random.Shared.NextDouble() * 0.2;
+            intervalNou = (int)Math.Round(intervalNou * variatie);
+        }
+
+        // Nivel 1-2 = revizuire tot azi (interval 0)
+        // Nivel 3+  = minim 1 zi
+        if (nivelNou >= 3)
+            intervalNou = Math.Max(1, intervalNou);
+        else
+            intervalNou = 0; // apare din nou azi
 
         return new RezultatSrs(
             nivelNou,
@@ -60,8 +71,8 @@ public class SrsService : ISrsService
             1 or 2 => 0.2,
             3 or 4 => 0.5,
             5 or 6 => 0.7,
-            7      => 0.9,
-            _      => 0.3
+            7 => 0.9,
+            _ => 0.3
         };
 
         return Random.Shared.NextDouble() < prob
@@ -86,13 +97,13 @@ public class SrsService : ISrsService
         for (int i = 0; i <= a.Length; i++) dp[i, 0] = i;
         for (int j = 0; j <= b.Length; j++) dp[0, j] = j;
         for (int i = 1; i <= a.Length; i++)
-        for (int j = 1; j <= b.Length; j++)
-        {
-            int cost = a[i - 1] == b[j - 1] ? 0 : 1;
-            dp[i, j] = Math.Min(
-                Math.Min(dp[i - 1, j] + 1, dp[i, j - 1] + 1),
-                dp[i - 1, j - 1] + cost);
-        }
+            for (int j = 1; j <= b.Length; j++)
+            {
+                int cost = a[i - 1] == b[j - 1] ? 0 : 1;
+                dp[i, j] = Math.Min(
+                    Math.Min(dp[i - 1, j] + 1, dp[i, j - 1] + 1),
+                    dp[i - 1, j - 1] + cost);
+            }
         return dp[a.Length, b.Length];
     }
 }
