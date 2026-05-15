@@ -17,7 +17,6 @@
 
         <!-- HEADER -->
         <Grid Grid.Row="0" ColumnDefinitions="Auto,*,Auto" Padding="16,16,20,8">
-            <!-- Buton inapoi -->
             <Button Grid.Column="0"
                     Text="←"
                     Command="{Binding MergeInapoiCommand}"
@@ -31,7 +30,7 @@
                    FontSize="18" FontAttributes="Bold" TextColor="White"
                    HorizontalOptions="Center" VerticalOptions="Center" />
             <Label Grid.Column="2"
-                   Text="{Binding CardCurent.NivelCunoastere, StringFormat='Niv {0}/7'}"
+                   Text="{Binding ProgressText}"
                    TextColor="#8899BB" FontSize="13" VerticalOptions="Center" />
         </Grid>
 
