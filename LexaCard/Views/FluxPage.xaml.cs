@@ -1,3 +1,5 @@
+using LexaCard.Core.Interfaces;
+using LexaCard.Services;
 using LexaCard.ViewModels;
 
 namespace LexaCard.Views;
@@ -5,17 +7,57 @@ namespace LexaCard.Views;
 public partial class FluxPage : ContentPage
 {
     private readonly FluxViewModel _vm;
+    private readonly ICardService _cardService;
+    private readonly ISessionStateService _session;
+    private bool _abonata = false;
 
-    public FluxPage(FluxViewModel vm)
+    public FluxPage(FluxViewModel vm, ICardService cardService,
+                    ISessionStateService session)
     {
         InitializeComponent();
         _vm = vm;
+        _cardService = cardService;
+        _session = session;
         BindingContext = vm;
     }
 
     protected override async void OnAppearing()
     {
         base.OnAppearing();
+        if (!_abonata)
+        {
+            _vm.PropertyChanged += OnVmPropertyChanged;
+            _abonata = true;
+        }
         await _vm.InitializeazaAsync();
+    }
+
+    private async void OnVmPropertyChanged(object? sender,
+        System.ComponentModel.PropertyChangedEventArgs e)
+    {
+        if (e.PropertyName != nameof(FluxViewModel.SesiuneGoala)) return;
+        if (!_vm.SesiuneGoala) return;
+        await AfiseazaFelicitari();
+    }
+
+    private async Task AfiseazaFelicitari()
+    {
+        if (_session.UtilizatorCurent == null) return;
+        try
+        {
+            var stats = await _cardService.GetStatisticiAsync(
+                _session.UtilizatorCurent.Id);
+
+            if (stats.SesiuniFinalizateAzi != 1) return;
+
+            var felicitariVm = new FelicitariViewModel(
+                stats.ZileCurenteStreak,
+                _vm.NrCorect,
+                _vm.NrGresit);
+
+            await Navigation.PushModalAsync(
+                new FelicitariPage(felicitariVm), animated: true);
+        }
+        catch { }
     }
 }

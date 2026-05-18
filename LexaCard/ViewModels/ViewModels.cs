@@ -129,12 +129,13 @@ public class CardSesiune
     public bool EstePrimaVezut { get; }
     public int NrGresite { get; private set; }
 
-    public CardSesiune(CardDto card, TipRaspuns tip, bool estePrimaVezut = false)
+    public CardSesiune(CardDto card, TipRaspuns tip,
+                       bool estePrimaVezut = false, int nrGresite = 0)
     {
         Card = card;
         Tip = tip;
         EstePrimaVezut = estePrimaVezut;
-        NrGresite = 0;
+        NrGresite = nrGresite;
     }
 
     public void IncrementeazaGresite() => NrGresite++;
@@ -147,6 +148,7 @@ public partial class FluxViewModel : ObservableObject
 {
     private readonly ICardService _cardService;
     private readonly ISessionStateService _session;
+    private readonly ISesiuneService _sesiuneService;
 
     private Queue<CardSesiune> _coada = new();
     private Queue<CardSesiune> _coadaRetry = new();
@@ -169,10 +171,14 @@ public partial class FluxViewModel : ObservableObject
     [ObservableProperty] bool _asteaptaMailDeparte = false;
     [ObservableProperty] string _progressText = "";
 
-    public FluxViewModel(ICardService cardService, ISessionStateService session)
+    public FluxViewModel(
+        ICardService cardService,
+        ISessionStateService session,
+        ISesiuneService sesiuneService)
     {
         _cardService = cardService;
         _session = session;
+        _sesiuneService = sesiuneService;
     }
 
     public async Task InitializeazaAsync()
@@ -209,7 +215,7 @@ public partial class FluxViewModel : ObservableObject
             _cardVazut = 0;
             ActualizeazaProgress();
 
-            AfiseazaUrmatorCard();
+            await AfiseazaUrmatorCard();
         }
         catch (Exception ex)
         {
@@ -262,7 +268,7 @@ public partial class FluxViewModel : ObservableObject
         foreach (var c in lista) coada.Enqueue(c);
     }
 
-    private void AfiseazaUrmatorCard()
+    private async Task AfiseazaUrmatorCard()
     {
         PropozitieRevelata = false;
         TextTastat = string.Empty;
@@ -291,6 +297,20 @@ public partial class FluxViewModel : ObservableObject
         }
 
         SesiuneGoala = true;
+
+        // Inchide sesiunea in baza de date
+        if (_session.SesiuneCurenta.HasValue)
+        {
+            try
+            {
+                await _sesiuneService.InchideSesiuneAsync(
+                    _session.SesiuneCurenta.Value,
+                    NrCorect + NrGresit,
+                    NrCorect,
+                    NrGresit);
+            }
+            catch { }
+        }
     }
 
     private void ActualizeazaProgress()
@@ -372,7 +392,7 @@ public partial class FluxViewModel : ObservableObject
     }
 
     [RelayCommand]
-    void MailDeparte() => AfiseazaUrmatorCard();
+    async Task MailDeparte() => await AfiseazaUrmatorCard();
 
     [RelayCommand]
     async Task RaspundeTastareAsync()
@@ -398,20 +418,30 @@ public partial class FluxViewModel : ObservableObject
                 _ => CalitatRaspuns.Nu_Stiu
             };
             await TrimiteRaspunsAsync(calitateSalvata, TipRaspuns.RemintireActiva, TextTastat);
-            FinalizatCard(); // card complet — nu mai apare in sesiune
+            FinalizatCard();
+            // NU mai adaugam in coada - cardul e terminat
         }
         else
         {
             NrGresit++;
             _cardSesiuneCurent.IncrementeazaGresite();
             await TrimiteRaspunsAsync(CalitatRaspuns.Nu_Stiu, TipRaspuns.RemintireActiva, TextTastat);
-            // Reapare ca recunoastere + tastare
-            _coadaRetry.Enqueue(new CardSesiune(CardCurent, TipRaspuns.Recunoastere));
-            _coadaRetry.Enqueue(new CardSesiune(CardCurent, TipRaspuns.RemintireActiva));
+
+            // Reapare in retry — cu noul CardSesiune care mosteneste NrGresite
+            int nrGresite = _cardSesiuneCurent.NrGresite;
+            if (nrGresite <= 5)
+            {
+                _coadaRetry.Enqueue(new CardSesiune(
+                    CardCurent, TipRaspuns.Recunoastere,
+                    estePrimaVezut: false, nrGresite: nrGresite));
+                _coadaRetry.Enqueue(new CardSesiune(
+                    CardCurent, TipRaspuns.RemintireActiva,
+                    estePrimaVezut: false, nrGresite: nrGresite));
+            }
+            // Daca a depasit 5 incercari, cardul e abandonat din sesiune
         }
 
         await Task.Delay(400);
-        // Arata butonul "Mai departe"
         AsteaptaMailDeparte = true;
     }
 
@@ -431,7 +461,7 @@ public partial class FluxViewModel : ObservableObject
                 _session.UtilizatorCurent.Id);
             foreach (var card in carduri)
                 _coada.Enqueue(new CardSesiune(card, card.TipRaspunsRecomandat));
-            AfiseazaUrmatorCard();
+            await AfiseazaUrmatorCard();
         }
         finally { SeIncarca = false; }
     }

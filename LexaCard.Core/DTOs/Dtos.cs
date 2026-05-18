@@ -45,6 +45,7 @@ public record StatisticiDto(
     int CuvinteNoi,
     double RataSuccesGlobala,
     int ZileCurenteStreak,
+    int SesiuniFinalizateAzi,
     List<StatisticiZilniceDto> IstoricSaptamana
 );
 

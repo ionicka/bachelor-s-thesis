@@ -44,7 +44,7 @@ public static class MauiProgram
         builder.Services.AddScoped<ISrsService, SrsService>();
         builder.Services.AddScoped<ICardService, CardService>();
         builder.Services.AddScoped<IAuthService, AuthService>();
-        builder.Services.AddScoped<ISesiuneService, SesiuneService>();
+        builder.Services.AddTransient<ISesiuneService, SesiuneService>();
 
         // ── Services MAUI ─────────────────────────────────────────
         builder.Services.AddSingleton<INavigationService, NavigationService>();
@@ -55,7 +55,7 @@ public static class MauiProgram
         builder.Services.AddTransient<InregistrareViewModel>();
         builder.Services.AddTransient<MainViewModel>();
         builder.Services.AddTransient<SesiuneConfigViewModel>();
-        builder.Services.AddTransient<FluxViewModel>();
+        builder.Services.AddSingleton<FluxViewModel>();
         builder.Services.AddTransient<StatisticiViewModel>();
         builder.Services.AddTransient<SetariViewModel>();
 
@@ -67,6 +67,7 @@ public static class MauiProgram
         builder.Services.AddTransient<FluxPage>();
         builder.Services.AddTransient<StatisticiPage>();
         builder.Services.AddTransient<SetariPage>();
+        builder.Services.AddTransient<FelicitariPage>();
 
         builder.Services.AddMemoryCache();
 

@@ -1,8 +1,8 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using LexaCard.Core.DTOs;
 using LexaCard.Core.Interfaces;
 using LexaCard.Services;
-using LexaCard.Views;
 
 namespace LexaCard.ViewModels;
 
@@ -20,6 +20,9 @@ public partial class MainViewModel : ObservableObject
     [ObservableProperty] bool _areNotificari = false;
     [ObservableProperty] int _carduriAzi = 0;
     [ObservableProperty] double _progressZi = 0.0;
+
+    // Calendarul saptamanal — 7 zile L-D
+    [ObservableProperty] List<ZiCalendar> _zileSaptamana = new();
 
     public MainViewModel(ICardService cardService, ISessionStateService session)
     {
@@ -49,7 +52,6 @@ public partial class MainViewModel : ObservableObject
             var stats = await _cardService.GetStatisticiAsync(
                 _session.UtilizatorCurent.Id);
 
-            // "De revizuit azi" = doar carduri cu progres existent programate azi
             CarduriAzi = stats.CuvinteDeRevizuitAzi;
             Streak = stats.ZileCurenteStreak;
             Monede = stats.CuvinteInvatate * 10;
@@ -57,11 +59,65 @@ public partial class MainViewModel : ObservableObject
             AreNotificari = NrNotificari > 0;
             ProgressZi = stats.TotalCuvinte == 0 ? 0
                 : Math.Min(1.0, (double)stats.CuvinteInvatate / stats.TotalCuvinte);
+
+            // Construieste calendarul saptamanal
+            ZileSaptamana = ConstruiesteCalendar(stats.IstoricSaptamana);
         }
         catch { }
+    }
+
+    private static List<ZiCalendar> ConstruiesteCalendar(
+        List<StatisticiZilniceDto> istoric)
+    {
+        var azi = DateOnly.FromDateTime(DateTime.Now);
+
+        // Gaseste inceputul saptamanii curente (Luni)
+        int ziSapt = (int)azi.DayOfWeek;
+        if (ziSapt == 0) ziSapt = 7; // Duminica = 7
+        var luni = azi.AddDays(-(ziSapt - 1));
+
+        var zileCuStudiu = istoric
+            .Select(z => z.Data)
+            .ToHashSet();
+
+        var zile = new List<ZiCalendar>();
+        string[] etichete = { "L", "M", "M", "J", "V", "S", "D" };
+
+        for (int i = 0; i < 7; i++)
+        {
+            var zi = luni.AddDays(i);
+            bool esteAzi = zi == azi;
+            bool aStudiat = zileCuStudiu.Contains(zi);
+            bool esteViitor = zi > azi;
+
+            zile.Add(new ZiCalendar
+            {
+                Eticheta = etichete[i],
+                Data = zi,
+                AStudiat = aStudiat,
+                EsteAzi = esteAzi,
+                EsteViitor = esteViitor,
+                Culoare = esteViitor ? "#1E3A5C" :
+                              aStudiat ? "#4CAF50" :
+                              esteAzi ? "#E94560" :
+                                            "#2E3A5C"
+            });
+        }
+
+        return zile;
     }
 
     [RelayCommand]
     async Task MergeVocabularAsync() =>
         await Shell.Current.GoToAsync("//SesiuneConfigPage");
+}
+
+public class ZiCalendar
+{
+    public string Eticheta { get; set; } = "";
+    public DateOnly Data { get; set; }
+    public bool AStudiat { get; set; }
+    public bool EsteAzi { get; set; }
+    public bool EsteViitor { get; set; }
+    public string Culoare { get; set; } = "#2E3A5C";
 }

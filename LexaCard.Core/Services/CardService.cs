@@ -101,7 +101,7 @@ public class CardService : ICardService
     public async Task<StatisticiDto> GetStatisticiAsync(int utilizatorId)
     {
         var progrese = await _progresRepo.GetToateProgreselAsync(utilizatorId);
-        var sesiuni = await _sesiuneRepo.GetIstoricAsync(utilizatorId, 7);
+        var sesiuni = await _sesiuneRepo.GetIstoricAsync(utilizatorId, 30);
 
         int total = progrese.Count;
         int invatate = progrese.Count(p => p.NivelCunoastere >= 5);
@@ -110,39 +110,78 @@ public class CardService : ICardService
         int cuvinteNoi = await _progresRepo.GetNrCuvinteNoiAsync(utilizatorId);
         double rata = total == 0 ? 0 : progrese.Average(p => p.RataSucces);
 
-        var zile = sesiuni.Select(s => DateOnly.FromDateTime(s.DataSesiunii))
-                            .Distinct().OrderByDescending(d => d).ToList();
+        // Streak bazat DOAR pe sesiuni inchise (DataSfarsitului != null)
+        // Nu folosim DataUltimeiRevizuiri pentru ca se seteaza si la prima vizualizare
+        var zile = sesiuni
+            .Where(s => s.DataSfarsitului.HasValue) // doar sesiuni finalizate
+            .Select(s => DateOnly.FromDateTime(
+                s.DataSesiunii.Kind == DateTimeKind.Utc
+                    ? s.DataSesiunii.ToLocalTime()
+                    : s.DataSesiunii))
+            .Distinct()
+            .OrderByDescending(d => d)
+            .ToList();
+
         int streak = CalculeazaStreak(zile);
 
-        var istoric = sesiuni
-            .GroupBy(s => DateOnly.FromDateTime(s.DataSesiunii))
-            .Select(g => new StatisticiZilniceDto(
-                g.Key,
-                g.Sum(s => s.NrCarduriVazute),
-                g.Sum(s => s.NrCorect),
-                g.Sum(s => s.NrCorect + s.NrGresit) == 0 ? 0
-                    : Math.Round((double)g.Sum(s => s.NrCorect) /
-                                 g.Sum(s => s.NrCorect + s.NrGresit) * 100, 1)))
+        // Istoricul saptamanal - zile cu sesiuni finalizate
+        var zileCuStudiu = sesiuni
+            .Where(s => s.DataSfarsitului.HasValue)
+            .Select(s => DateOnly.FromDateTime(
+                s.DataSesiunii.Kind == DateTimeKind.Utc
+                    ? s.DataSesiunii.ToLocalTime()
+                    : s.DataSesiunii))
+            .Distinct()
+            .ToList();
+
+        var zilePentruCalendar = zileCuStudiu;
+        var istoric = zilePentruCalendar
+            .Select(z => new StatisticiZilniceDto(z, 0, 0, 0))
             .OrderBy(s => s.Data).ToList();
+
+        // Numara sesiunile finalizate azi
+        var aziLocal = DateOnly.FromDateTime(DateTime.Now);
+        int sesiuniAzi = sesiuni
+            .Count(s => s.DataSfarsitului.HasValue &&
+                DateOnly.FromDateTime(
+                    s.DataSesiunii.Kind == DateTimeKind.Utc
+                        ? s.DataSesiunii.ToLocalTime()
+                        : s.DataSesiunii) == aziLocal);
 
         return new StatisticiDto(
             total, invatate, consolidate,
             deRevizuit, cuvinteNoi,
-            Math.Round(rata, 1), streak, istoric);
+            Math.Round(rata, 1), streak, sesiuniAzi, istoric);
     }
 
     private static int CalculeazaStreak(List<DateOnly> zile)
     {
         if (!zile.Any()) return 0;
-        var azi = DateOnly.FromDateTime(DateTime.UtcNow);
-        if (zile.First() < azi.AddDays(-1)) return 0;
+
+        // zile vine deja OrderByDescending
+        var azi = DateOnly.FromDateTime(DateTime.Now);
+        var ziMaxima = zile.First(); // cea mai recenta
+
+        // Daca ultima activitate e mai veche de ieri, streak = 0
+        if (ziMaxima < azi.AddDays(-1)) return 0;
+
         int streak = 0;
-        var zi = azi;
+        var asteptat = ziMaxima; // incepem de la cea mai recenta
+
         foreach (var z in zile)
         {
-            if (z == zi || z == zi.AddDays(-1)) { streak++; zi = z.AddDays(-1); }
-            else break;
+            if (z == asteptat)
+            {
+                streak++;
+                asteptat = asteptat.AddDays(-1);
+            }
+            else if (z < asteptat)
+            {
+                break; // gap in zile, streak s-a terminat
+            }
+            // z > asteptat inseamna duplicat, ignoram
         }
+
         return streak;
     }
 

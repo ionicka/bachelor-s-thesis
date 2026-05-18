@@ -212,95 +212,36 @@
                        FontAttributes="Bold" />
 
                 <Frame BackgroundColor="#16213E" CornerRadius="20"
-                       Padding="20" BorderColor="#0F3460">
-                    <VerticalStackLayout Spacing="12">
-                        <Grid ColumnDefinitions="*,*,*,*,*,*,*" ColumnSpacing="8">
-                            <VerticalStackLayout Grid.Column="0" Spacing="6" HorizontalOptions="Center">
-                                <Frame WidthRequest="36" HeightRequest="36"
-                                       CornerRadius="18" Padding="0"
-                                       BackgroundColor="#4CAF50" BorderColor="Transparent">
-                                    <Label Text="L" TextColor="White" FontSize="13"
-                                           FontAttributes="Bold"
-                                           HorizontalOptions="Center"
-                                           VerticalOptions="Center" />
-                                </Frame>
-                                <Label Text="L" TextColor="#8899BB" FontSize="11"
-                                       HorizontalOptions="Center" />
-                            </VerticalStackLayout>
-                            <VerticalStackLayout Grid.Column="1" Spacing="6" HorizontalOptions="Center">
-                                <Frame WidthRequest="36" HeightRequest="36"
-                                       CornerRadius="18" Padding="0"
-                                       BackgroundColor="#4CAF50" BorderColor="Transparent">
-                                    <Label Text="M" TextColor="White" FontSize="13"
-                                           FontAttributes="Bold"
-                                           HorizontalOptions="Center"
-                                           VerticalOptions="Center" />
-                                </Frame>
-                                <Label Text="M" TextColor="#8899BB" FontSize="11"
-                                       HorizontalOptions="Center" />
-                            </VerticalStackLayout>
-                            <VerticalStackLayout Grid.Column="2" Spacing="6" HorizontalOptions="Center">
-                                <Frame WidthRequest="36" HeightRequest="36"
-                                       CornerRadius="18" Padding="0"
-                                       BackgroundColor="#E94560" BorderColor="Transparent">
-                                    <Label Text="M" TextColor="White" FontSize="13"
-                                           FontAttributes="Bold"
-                                           HorizontalOptions="Center"
-                                           VerticalOptions="Center" />
-                                </Frame>
-                                <Label Text="M" TextColor="#8899BB" FontSize="11"
-                                       HorizontalOptions="Center" />
-                            </VerticalStackLayout>
-                            <VerticalStackLayout Grid.Column="3" Spacing="6" HorizontalOptions="Center">
-                                <Frame WidthRequest="36" HeightRequest="36"
-                                       CornerRadius="18" Padding="0"
-                                       BackgroundColor="#1E3A5C" BorderColor="#2E5A8C">
-                                    <Label Text="J" TextColor="#8899BB" FontSize="13"
-                                           FontAttributes="Bold"
-                                           HorizontalOptions="Center"
-                                           VerticalOptions="Center" />
-                                </Frame>
-                                <Label Text="J" TextColor="#8899BB" FontSize="11"
-                                       HorizontalOptions="Center" />
-                            </VerticalStackLayout>
-                            <VerticalStackLayout Grid.Column="4" Spacing="6" HorizontalOptions="Center">
-                                <Frame WidthRequest="36" HeightRequest="36"
-                                       CornerRadius="18" Padding="0"
-                                       BackgroundColor="#1E3A5C" BorderColor="#2E5A8C">
-                                    <Label Text="V" TextColor="#8899BB" FontSize="13"
-                                           FontAttributes="Bold"
-                                           HorizontalOptions="Center"
-                                           VerticalOptions="Center" />
-                                </Frame>
-                                <Label Text="V" TextColor="#8899BB" FontSize="11"
-                                       HorizontalOptions="Center" />
-                            </VerticalStackLayout>
-                            <VerticalStackLayout Grid.Column="5" Spacing="6" HorizontalOptions="Center">
-                                <Frame WidthRequest="36" HeightRequest="36"
-                                       CornerRadius="18" Padding="0"
-                                       BackgroundColor="#1E3A5C" BorderColor="#2E5A8C">
-                                    <Label Text="S" TextColor="#8899BB" FontSize="13"
-                                           FontAttributes="Bold"
-                                           HorizontalOptions="Center"
-                                           VerticalOptions="Center" />
-                                </Frame>
-                                <Label Text="S" TextColor="#8899BB" FontSize="11"
-                                       HorizontalOptions="Center" />
-                            </VerticalStackLayout>
-                            <VerticalStackLayout Grid.Column="6" Spacing="6" HorizontalOptions="Center">
-                                <Frame WidthRequest="36" HeightRequest="36"
-                                       CornerRadius="18" Padding="0"
-                                       BackgroundColor="#1E3A5C" BorderColor="#2E5A8C">
-                                    <Label Text="D" TextColor="#8899BB" FontSize="13"
-                                           FontAttributes="Bold"
-                                           HorizontalOptions="Center"
-                                           VerticalOptions="Center" />
-                                </Frame>
-                                <Label Text="D" TextColor="#8899BB" FontSize="11"
-                                       HorizontalOptions="Center" />
-                            </VerticalStackLayout>
-                        </Grid>
-                    </VerticalStackLayout>
+                       Padding="16" BorderColor="#0F3460">
+                    <CollectionView ItemsSource="{Binding ZileSaptamana}"
+                                    HeightRequest="80">
+                        <CollectionView.ItemsLayout>
+                            <LinearItemsLayout Orientation="Horizontal"
+                                               ItemSpacing="0" />
+                        </CollectionView.ItemsLayout>
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate x:DataType="vm:ZiCalendar">
+                                <VerticalStackLayout Spacing="6"
+                                                     HorizontalOptions="Center"
+                                                     WidthRequest="44">
+                                    <Frame WidthRequest="36" HeightRequest="36"
+                                           CornerRadius="18" Padding="0"
+                                           BackgroundColor="{Binding Culoare}"
+                                           BorderColor="Transparent"
+                                           HorizontalOptions="Center">
+                                        <Label Text="{Binding Eticheta}"
+                                               TextColor="White" FontSize="13"
+                                               FontAttributes="Bold"
+                                               HorizontalOptions="Center"
+                                               VerticalOptions="Center" />
+                                    </Frame>
+                                    <Label Text="{Binding Eticheta}"
+                                           TextColor="#8899BB" FontSize="11"
+                                           HorizontalOptions="Center" />
+                                </VerticalStackLayout>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
                 </Frame>
 
                 <!-- Spatiu jos pentru navbar -->
