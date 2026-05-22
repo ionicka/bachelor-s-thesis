@@ -1,0 +1,206 @@
+# FlashCards 
+
+A flashcard application for learning English vocabulary, built with **.NET MAUI** and **PostgreSQL**, powered by a **Spaced Repetition System (SRS)** algorithm.
+
+---
+
+##  Features
+
+-  **Interactive cards** — illustration image, EN/RO definition, 3 context sentences with the target word highlighted in bold gold
+-  **Text-to-speech** — for both the word and the full context sentence
+-  **SRS algorithm** — 7 knowledge levels with fixed intervals: today → 1d → 3d → 7d → 14d → 30d → 90d
+-  **Two response modes** — recognition (Know/Don't know) and typing with Levenshtein tolerance
+-  **Configurable sessions** — choose total cards per session; system always prioritises due reviews
+-  **Weekly activity calendar** — study days highlighted green, daily streak counter 
+-  **Completion screen** — session stats and streak celebration after finishing
+-  **Illustrated cards** — swap between two images per word
+-  **Definition translation** — toggle between English and Romanian definition with one tap
+
+---
+
+##  Architecture
+
+```
+FlashCards.sln
+├── FlashCards/              ← .NET MAUI (UI, ViewModels, Views)
+├── FlashCards.Core/         ← Business Logic (Entities, Services, Interfaces)
+└── FlashCards.Data/         ← Data Access (EF Core + Dapper + PostgreSQL)
+```
+
+**Tech stack:**
+| Technology | Version | Usage |
+|-----------|---------|-------|
+| .NET MAUI | .NET 9 | Cross-platform UI |
+| Entity Framework Core | 8.0.0 | CRUD operations, schema management |
+| Dapper | 2.1.35 | Complex queries (daily session) |
+| Npgsql | 8.0.0 | PostgreSQL provider |
+| BCrypt.Net-Next | 4.0.3 | Password hashing |
+| CommunityToolkit.Mvvm | 8.2.2 | MVVM, ObservableProperty |
+| CommunityToolkit.Maui | 7.0.1 | Extra UI components |
+
+---
+
+##  Getting Started
+
+### Requirements
+- Visual Studio 2022 (v17.8+) with **.NET MAUI Workload**
+- .NET 9 SDK
+- PostgreSQL 16+
+
+### Setup
+
+**1. Clone the repository**
+```bash
+git clone <repository-url>
+cd flashcards
+```
+
+**2. Create the database**
+```sql
+-- In pgAdmin or psql:
+CREATE DATABASE flashcards;
+```
+
+**3. Check the connection string**
+
+In `FlashCards.Data/Context/LexaDbContext.cs`:
+```csharp
+public const string ConnectionString =
+    "Host=localhost;Port=5432;Database=flashcards;" +
+    "Username=postgres;Password=postgres";
+```
+Change if your PostgreSQL uses a different user or password.
+
+**4. Run the application**
+
+Open `FlashCards.sln` in Visual Studio → press **F5**
+
+On first launch:
+- `EnsureCreated()` automatically creates the database schema
+- `SeedData.Populeaza()` inserts **50 English words**
+
+**5. Create an account**
+
+Use the Register screen inside the app. There is no default account.
+
+---
+
+##  Database Schema
+
+```
+Utilizatori ──< ProgresCuvinte >── Cuvinte
+                      │
+               SesiuniStudiu
+                      │
+           RaspunsuriDetaliate
+```
+
+**Performance-critical index:**
+```sql
+CREATE INDEX "ix_progres_azi"
+    ON "ProgresCuvinte" ("UtilizatorId", "DataUrmatoareiRevizuiri");
+```
+
+This index is used on every session initialisation to fetch due reviews without a full table scan.
+
+---
+
+##  Images
+
+Images are **not included** in the repository. To add them:
+
+1. Place image files in `FlashCards/Resources/Images/`
+2. Set **Build Action: MauiImage** in Visual Studio
+3. Update the database reference:
+```sql
+UPDATE "Cuvinte"
+SET "CaleImagini" = 'perseverance1.jpg|perseverance2.webp'
+WHERE "Termen" = 'perseverance';
+```
+
+Supported formats: `.jpg`, `.jpeg`, `.png`, `.webp`, `.gif`
+
+---
+
+##  Word Data Format
+
+```
+ExemplePropozitii:  "Her [TERMEN] paid off.|His [TERMEN] led to success.|..."
+                    ──────────────────────── pipe separator ─────────────────
+                    3 sentences separated by |, [TERMEN] = word placeholder
+
+CaleImagini:        "image1.jpg|image2.webp"
+                    2 paths separated by |
+```
+
+---
+
+##  Security
+
+- Passwords stored as **BCrypt hashes** with unique salt per user (workFactor=12)
+- All SQL queries use **parameterised statements** — SQL Injection protection
+- Connection string is **not committed** to Git (`.gitignore`)
+
+---
+
+##  Performance Benchmarks
+
+Measured with `System.Diagnostics.Stopwatch` on a dataset of 50 words and 1 user:
+
+| Operation | Avg Time | Technology |
+|-----------|---------|-----------|
+| Session initialisation (10 cards) | ~22 ms | Dapper |
+| Save progress after answer | ~14 ms | EF Core |
+| Load statistics (MainPage) | ~31 ms | EF Core |
+| User login (includes BCrypt.Verify) | ~326 ms | EF Core + BCrypt |
+| First-run schema creation | ~312 ms | EF Core EnsureCreated |
+
+> **Note:** BCrypt verification intentionally takes ~280 ms (workFactor=12), making brute-force attacks impractical (~3 attempts/second maximum).
+
+---
+
+##  SRS Algorithm
+
+Each word has a knowledge level (0–7). After every answer, the level changes based on response quality:
+
+| Response | Level change | Next review |
+|---------|-------------|------------|
+| Typed correctly (0 mistakes) | +2 | 7 days |
+| Know it (confident) | +1 | 3–14 days |
+| Know it (hesitant) | +1 | 1–7 days |
+| Don't know | -1 | tomorrow |
+
+New words always appear **twice per session**: first as recognition, then as typing (inserted randomly into the queue after at least 2 positions).
+
+---
+
+##  Seed Data
+
+On first run, **50 English words** are automatically inserted from `SeedData.cs`. Each word includes:
+- English definition
+- Romanian translation
+- 3 context sentences with `[TERMEN]` placeholder
+- IPA pronunciation
+- Difficulty level (Beginner → Advanced)
+
+Sample words: *perseverance, resilient, ambiguous, eloquent, catalyst, meticulous, serendipity, innovative, empathy, profound...*
+
+---
+
+##  Navigation Flow
+
+```
+LoginPage
+    └── MainPage (Dashboard)
+            └── SesiuneConfigPage (Session setup)
+                        └── FluxPage (Study session)
+                                └── FelicitariPage (Completion screen)
+                                        ├── MainPage (Back to menu)
+                                        └── SesiuneConfigPage (Practice more)
+```
+
+---
+
+##  License
+
+Academic project — State University of Moldova, Faculty of Mathematics and Informatics.
