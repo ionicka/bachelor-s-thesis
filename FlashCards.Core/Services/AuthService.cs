@@ -2,6 +2,7 @@ using FlashCards.Core.DTOs;
 using FlashCards.Core.Entities;
 using FlashCards.Core.Interfaces;
 
+
 namespace FlashCards.Core.Services;
 
 public class AuthService : IAuthService
@@ -13,24 +14,46 @@ public class AuthService : IAuthService
     public async Task<(bool Succes, UtilizatorDto? Utilizator, string? Eroare)>
         LoginAsync(LoginDto dto)
     {
+        var sw = System.Diagnostics.Stopwatch.StartNew();
+        System.Diagnostics.Debug.WriteLine("───────────────────────────────────────");
+        System.Diagnostics.Debug.WriteLine($"[BENCHMARK] LoginAsync ({dto.Email})");
+
         if (string.IsNullOrWhiteSpace(dto.Email) ||
             string.IsNullOrWhiteSpace(dto.Parola))
             return (false, null, "Email si parola sunt obligatorii.");
 
+        var sw1 = System.Diagnostics.Stopwatch.StartNew();
         var u = await _repo.GetByEmailAsync(dto.Email.Trim().ToLower());
+        sw1.Stop();
+        System.Diagnostics.Debug.WriteLine($"[BENCHMARK]   GetByEmail (EF Core): {sw1.ElapsedMilliseconds} ms");
+
         if (u == null)
             return (false, null, "Email sau parola incorecta.");
 
-        if (!BCrypt.Net.BCrypt.Verify(dto.Parola, u.ParolaHash))
+        var sw2 = System.Diagnostics.Stopwatch.StartNew();
+        bool parolaCorecta = BCrypt.Net.BCrypt.Verify(dto.Parola, u.ParolaHash);
+        sw2.Stop();
+        System.Diagnostics.Debug.WriteLine($"[BENCHMARK]   BCrypt.Verify (hash parola): {sw2.ElapsedMilliseconds} ms");
+
+        if (!parolaCorecta)
             return (false, null, "Email sau parola incorecta.");
 
         await _repo.ActualizeazaUltimaAutentificareAsync(u.Id);
+
+        sw.Stop();
+        System.Diagnostics.Debug.WriteLine($"[BENCHMARK]   TOTAL Login: {sw.ElapsedMilliseconds} ms → succes");
+        System.Diagnostics.Debug.WriteLine("───────────────────────────────────────");
+
         return (true, MapToDto(u), null);
     }
 
     public async Task<(bool Succes, string? Eroare)>
         InregistreazaAsync(InregistrareDto dto)
     {
+        var sw = System.Diagnostics.Stopwatch.StartNew();
+        System.Diagnostics.Debug.WriteLine("───────────────────────────────────────");
+        System.Diagnostics.Debug.WriteLine($"[BENCHMARK] InregistreazaAsync ({dto.Email})");
+
         if (string.IsNullOrWhiteSpace(dto.NumeUtilizator))
             return (false, "Numele de utilizator este obligatoriu.");
         if (string.IsNullOrWhiteSpace(dto.Email) || !dto.Email.Contains('@'))
@@ -44,13 +67,25 @@ public class AuthService : IAuthService
         if (await _repo.ExistaNumeAsync(dto.NumeUtilizator.Trim()))
             return (false, "Numele de utilizator este deja folosit.");
 
+        var sw1 = System.Diagnostics.Stopwatch.StartNew();
         string hash = BCrypt.Net.BCrypt.HashPassword(dto.Parola, workFactor: 12);
+        sw1.Stop();
+        System.Diagnostics.Debug.WriteLine($"[BENCHMARK]   BCrypt.HashPassword (workFactor=12): {sw1.ElapsedMilliseconds} ms");
+
+        var sw2 = System.Diagnostics.Stopwatch.StartNew();
         await _repo.CreeazaAsync(new Utilizator
         {
             NumeUtilizator = dto.NumeUtilizator.Trim(),
-            Email          = dto.Email.Trim().ToLower(),
-            ParolaHash     = hash
+            Email = dto.Email.Trim().ToLower(),
+            ParolaHash = hash
         });
+        sw2.Stop();
+
+        sw.Stop();
+        System.Diagnostics.Debug.WriteLine($"[BENCHMARK]   INSERT utilizator (EF Core): {sw2.ElapsedMilliseconds} ms");
+        System.Diagnostics.Debug.WriteLine($"[BENCHMARK]   TOTAL Inregistrare: {sw.ElapsedMilliseconds} ms → succes");
+        System.Diagnostics.Debug.WriteLine("───────────────────────────────────────");
+
         return (true, null);
     }
 
@@ -64,7 +99,7 @@ public class AuthService : IAuthService
     {
         var u = await _repo.GetByIdAsync(id);
         if (u == null) return;
-        u.CarduriNoiPerZi      = Math.Clamp(carduriNoi, 1, 50);
+        u.CarduriNoiPerZi = Math.Clamp(carduriNoi, 1, 50);
         u.MaxCarduriPerSesiune = Math.Clamp(maxCarduri, 5, 100);
         await _repo.ActualizeazaAsync(u);
     }

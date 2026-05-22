@@ -5,6 +5,18 @@
     {
       "AbsoluteMoniker": "D:0:0:{81AC265B-203D-ED49-C559-7A642ABF6AFF}|FlashCards\\FlashCards.csproj|h:\\git\\licenta\\flashcards\\mauiprogram.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{81AC265B-203D-ED49-C559-7A642ABF6AFF}|FlashCards\\FlashCards.csproj|solutionrelative:flashcards\\mauiprogram.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{66E14BB1-17B4-E581-8365-84562AEA75A0}|FlashCards.Data\\FlashCards.Data.csproj|h:\\git\\licenta\\flashcards.data\\repositories\\repositories.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{66E14BB1-17B4-E581-8365-84562AEA75A0}|FlashCards.Data\\FlashCards.Data.csproj|solutionrelative:flashcards.data\\repositories\\repositories.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{724D06EE-FFEB-6859-9C2F-E791A191DA55}|FlashCards.Core\\FlashCards.Core.csproj|h:\\git\\licenta\\flashcards.core\\services\\cardservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{724D06EE-FFEB-6859-9C2F-E791A191DA55}|FlashCards.Core\\FlashCards.Core.csproj|solutionrelative:flashcards.core\\services\\cardservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{724D06EE-FFEB-6859-9C2F-E791A191DA55}|FlashCards.Core\\FlashCards.Core.csproj|h:\\git\\licenta\\flashcards.core\\services\\authservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{724D06EE-FFEB-6859-9C2F-E791A191DA55}|FlashCards.Core\\FlashCards.Core.csproj|solutionrelative:flashcards.core\\services\\authservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -14,8 +26,47 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 3,
           "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Repositories.cs",
+              "DocumentMoniker": "H:\\git\\licenta\\FlashCards.Data\\Repositories\\Repositories.cs",
+              "RelativeDocumentMoniker": "FlashCards.Data\\Repositories\\Repositories.cs",
+              "ToolTip": "H:\\git\\licenta\\FlashCards.Data\\Repositories\\Repositories.cs",
+              "RelativeToolTip": "FlashCards.Data\\Repositories\\Repositories.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-30T09:58:30.607Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "AuthService.cs",
+              "DocumentMoniker": "H:\\git\\licenta\\FlashCards.Core\\Services\\AuthService.cs",
+              "RelativeDocumentMoniker": "FlashCards.Core\\Services\\AuthService.cs",
+              "ToolTip": "H:\\git\\licenta\\FlashCards.Core\\Services\\AuthService.cs",
+              "RelativeToolTip": "FlashCards.Core\\Services\\AuthService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-30T09:46:05.012Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "CardService.cs",
+              "DocumentMoniker": "H:\\git\\licenta\\FlashCards.Core\\Services\\CardService.cs",
+              "RelativeDocumentMoniker": "FlashCards.Core\\Services\\CardService.cs",
+              "ToolTip": "H:\\git\\licenta\\FlashCards.Core\\Services\\CardService.cs",
+              "RelativeToolTip": "FlashCards.Core\\Services\\CardService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-30T09:45:48.062Z",
+              "EditorCaption": ""
+            },
             {
               "$type": "Document",
               "DocumentIndex": 0,
@@ -24,7 +75,7 @@
               "RelativeDocumentMoniker": "FlashCards\\MauiProgram.cs",
               "ToolTip": "H:\\git\\licenta\\FlashCards\\MauiProgram.cs",
               "RelativeToolTip": "FlashCards\\MauiProgram.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAABAAAAApAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-05-30T09:36:54.15Z",
               "EditorCaption": ""

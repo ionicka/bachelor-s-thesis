@@ -6,6 +6,7 @@ using FlashCards.Data.Repositories;
 using FlashCards.Services;
 using FlashCards.ViewModels;
 using FlashCards.Views;
+using FlashCards.Core.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
@@ -83,18 +84,38 @@ public static class MauiProgram
 
         var app = builder.Build();
 
-        // Creeaza schema si populeaza cu date la prima rulare
+        // ── BENCHMARK: Initializare baza de date ──────────────────
         using (var scope = app.Services.CreateScope())
         {
             var ctx = scope.ServiceProvider.GetRequiredService<LexaDbContext>();
 
-            // Sterge si recreaza baza de date (doar in development)
-            // ctx.Database.EnsureDeleted();
+            var sw = System.Diagnostics.Stopwatch.StartNew();
+            System.Diagnostics.Debug.WriteLine("═══════════════════════════════════════");
+            System.Diagnostics.Debug.WriteLine("[BENCHMARK] Initializare FlashCards...");
+            System.Diagnostics.Debug.WriteLine($"[BENCHMARK] Timestamp: {DateTime.Now:HH:mm:ss.fff}");
+            System.Diagnostics.Debug.WriteLine("───────────────────────────────────────");
 
-            // Creeaza tabelele dupa schema din entitati
+            var sw1 = System.Diagnostics.Stopwatch.StartNew();
             ctx.Database.EnsureCreated();
+            sw1.Stop();
+            System.Diagnostics.Debug.WriteLine($"[BENCHMARK] EnsureCreated (schema BD): {sw1.ElapsedMilliseconds} ms");
 
-            // Seed data — doar daca nu exista cuvinte
+            if (!ctx.Cuvinte.Any())
+            {
+                var sw2 = System.Diagnostics.Stopwatch.StartNew();
+                SeedData.Populeaza(ctx);
+                sw2.Stop();
+                System.Diagnostics.Debug.WriteLine($"[BENCHMARK] SeedData (50 cuvinte): {sw2.ElapsedMilliseconds} ms");
+            }
+            else
+            {
+                System.Diagnostics.Debug.WriteLine("[BENCHMARK] SeedData: skipped (date existente)");
+            }
+
+            sw.Stop();
+            System.Diagnostics.Debug.WriteLine("───────────────────────────────────────");
+            System.Diagnostics.Debug.WriteLine($"[BENCHMARK] Total initializare: {sw.ElapsedMilliseconds} ms");
+            System.Diagnostics.Debug.WriteLine("═══════════════════════════════════════");            // Seed data — doar daca nu exista cuvinte
             if (!ctx.Cuvinte.Any())
             {
                 SeedData.Populeaza(ctx);

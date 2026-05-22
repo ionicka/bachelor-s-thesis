@@ -35,12 +35,24 @@ public class CardService : ICardService
     public async Task<List<CardDto>> GetSesiuneAsync(
         int utilizatorId, int cuvinteNoi, int maxRevizuiri = 100)
     {
-        // Intai revizuirile programate (limitate)
+        var sw = System.Diagnostics.Stopwatch.StartNew();
+        System.Diagnostics.Debug.WriteLine("───────────────────────────────────────");
+        System.Diagnostics.Debug.WriteLine($"[BENCHMARK] GetSesiuneAsync (utilizator {utilizatorId})");
+
+        var sw1 = System.Diagnostics.Stopwatch.StartNew();
         var toateRevizuirile = await _cardRepo.GetRevizuiriAziAsync(utilizatorId);
         var revizuiri = toateRevizuirile.Take(maxRevizuiri).ToList();
+        sw1.Stop();
+        System.Diagnostics.Debug.WriteLine($"[BENCHMARK]   Revizuiri din BD (Dapper): {sw1.ElapsedMilliseconds} ms → {revizuiri.Count} carduri");
 
-        // Completam cu cuvinte noi pana la limita
+        var sw2 = System.Diagnostics.Stopwatch.StartNew();
         var noi = await _cardRepo.GetCuvinteNoiAsync(utilizatorId, cuvinteNoi);
+        sw2.Stop();
+        System.Diagnostics.Debug.WriteLine($"[BENCHMARK]   Cuvinte noi din BD (Dapper): {sw2.ElapsedMilliseconds} ms → {noi.Count} carduri");
+
+        sw.Stop();
+        System.Diagnostics.Debug.WriteLine($"[BENCHMARK]   TOTAL initializare sesiune: {sw.ElapsedMilliseconds} ms ({revizuiri.Count + noi.Count} carduri total)");
+        System.Diagnostics.Debug.WriteLine("───────────────────────────────────────");
 
         return revizuiri.Concat(noi).ToList();
     }
@@ -64,6 +76,8 @@ public class CardService : ICardService
                     : CalitatRaspuns.Nu_Stiu;
         }
 
+        var sw = System.Diagnostics.Stopwatch.StartNew();
+
         var progres = await _progresRepo.GetSauCreeazaAsync(utilizatorId, dto.CuvantId);
         var srs = _srs.CalculeazaUrmatoareaRevizuire(progres, calitateFinal);
 
@@ -78,9 +92,12 @@ public class CardService : ICardService
         else
             progres.NrRaspunsuriGresite++;
 
+        var sw1 = System.Diagnostics.Stopwatch.StartNew();
         await _progresRepo.SalveazaAsync(progres);
+        sw1.Stop();
 
         // Salveaza raspunsul detaliat
+        var sw2 = System.Diagnostics.Stopwatch.StartNew();
         await _raspunsRepo.SalveazaAsync(new RaspunsDetaliat
         {
             ProgresCuvantId = progres.Id,
@@ -92,6 +109,11 @@ public class CardService : ICardService
             TextTastat = dto.TextTastat,
             Timestamp = DateTime.UtcNow
         });
+        sw2.Stop();
+        sw.Stop();
+
+        System.Diagnostics.Debug.WriteLine($"[BENCHMARK] ProceseazaRaspuns '{dto.TextTastat ?? dto.Calitate.ToString()}'" +
+            $" → Nivel {srs.NivelNou} | Progres EF: {sw1.ElapsedMilliseconds}ms | Raspuns EF: {sw2.ElapsedMilliseconds}ms | Total: {sw.ElapsedMilliseconds}ms");
 
         return new RezultatRaspunsDto(
             srs.NivelNou,
@@ -103,14 +125,29 @@ public class CardService : ICardService
 
     public async Task<StatisticiDto> GetStatisticiAsync(int utilizatorId)
     {
+        var sw = System.Diagnostics.Stopwatch.StartNew();
+        System.Diagnostics.Debug.WriteLine("───────────────────────────────────────");
+        System.Diagnostics.Debug.WriteLine($"[BENCHMARK] GetStatisticiAsync (utilizator {utilizatorId})");
+
+        var sw1 = System.Diagnostics.Stopwatch.StartNew();
         var progrese = await _progresRepo.GetToateProgreselAsync(utilizatorId);
+        sw1.Stop();
+        System.Diagnostics.Debug.WriteLine($"[BENCHMARK]   GetToateProgresele (EF Core): {sw1.ElapsedMilliseconds} ms → {progrese.Count} inregistrari");
+
+        var sw2 = System.Diagnostics.Stopwatch.StartNew();
         var sesiuni = await _sesiuneRepo.GetIstoricAsync(utilizatorId, 30);
+        sw2.Stop();
+        System.Diagnostics.Debug.WriteLine($"[BENCHMARK]   GetIstoric sesiuni (EF Core): {sw2.ElapsedMilliseconds} ms → {sesiuni.Count} sesiuni");
 
         int total = progrese.Count;
         int invatate = progrese.Count(p => p.NivelCunoastere >= 5);
         int consolidate = progrese.Count(p => p.NivelCunoastere >= 7);
+
+        var sw3 = System.Diagnostics.Stopwatch.StartNew();
         int deRevizuit = await _progresRepo.GetNrRevizuiriAziAsync(utilizatorId);
         int cuvinteNoi = await _progresRepo.GetNrCuvinteNoiAsync(utilizatorId);
+        sw3.Stop();
+        System.Diagnostics.Debug.WriteLine($"[BENCHMARK]   Numar revizuiri+noi (EF Core): {sw3.ElapsedMilliseconds} ms");
         double rata = total == 0 ? 0 : progrese.Average(p => p.RataSucces);
 
         // Streak bazat DOAR pe sesiuni inchise (DataSfarsitului != null)
@@ -150,6 +187,10 @@ public class CardService : ICardService
                     s.DataSesiunii.Kind == DateTimeKind.Utc
                         ? s.DataSesiunii.ToLocalTime()
                         : s.DataSesiunii) == aziLocal);
+
+        sw.Stop();
+        System.Diagnostics.Debug.WriteLine($"[BENCHMARK]   TOTAL GetStatistici: {sw.ElapsedMilliseconds} ms");
+        System.Diagnostics.Debug.WriteLine("───────────────────────────────────────");
 
         return new StatisticiDto(
             total, invatate, consolidate,
