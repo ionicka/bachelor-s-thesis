@@ -16,5 +16,12 @@ public class LexaDbContext : DbContext
     public DbSet<SesiuneStudiu> SesiuniStudiu { get; set; }
     public DbSet<RaspunsDetaliat> RaspunsuriDetaliate { get; set; }
 
-    protected override void OnModelCreating(ModelBuilder mb) { /* ... la fel ... */ }
+    protected override void OnModelCreating(ModelBuilder mb) {
+
+        mb.Entity<Cuvant>(e =>
+        {
+            e.HasIndex(c => c.Domeniu).HasDatabaseName("ix_cuvinte_domeniu");
+            e.HasIndex(c => c.Tip).HasDatabaseName("ix_cuvinte_tip");
+        });
+    }
 }

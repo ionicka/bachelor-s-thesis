@@ -370,3 +370,174 @@ public class RaspunsRepository : IRaspunsRepository
         await _ctx.SaveChangesAsync();
     }
 }
+
+
+// ===============================================================
+// AdminRepository — EF CORE
+// CRUD complet pentru gestionarea cuvintelor de către admin
+// ===============================================================
+
+public class AdminRepository : IAdminRepository
+{
+    private readonly LexaDbContext _ctx;
+    public AdminRepository(LexaDbContext ctx) => _ctx = ctx;
+
+    public async Task<List<CuvantListaDto>> GetCuvinteAsync(FiltruCuvinteDto? filtru = null)
+    {
+        var query = _ctx.Cuvinte.AsNoTracking().AsQueryable();
+
+        if (filtru != null)
+        {
+            if (!string.IsNullOrWhiteSpace(filtru.Cautare))
+            {
+                var c = filtru.Cautare.Trim().ToLower();
+                // ILIKE = case-insensitive în PostgreSQL
+                query = query.Where(x =>
+                    EF.Functions.ILike(x.Termen, $"%{c}%") ||
+                    EF.Functions.ILike(x.Definitie, $"%{c}%"));
+            }
+            if (filtru.Tip.HasValue)
+                query = query.Where(x => x.Tip == filtru.Tip.Value);
+            if (filtru.Domeniu.HasValue)
+                query = query.Where(x => x.Domeniu == filtru.Domeniu.Value);
+            if (filtru.Nivel.HasValue)
+                query = query.Where(x => x.Nivel == filtru.Nivel.Value);
+        }
+
+        return await query
+            .OrderByDescending(c => c.DataAdaugarii)
+            .Select(c => new CuvantListaDto(
+                c.Id,
+                c.Termen,
+                c.Definitie,
+                c.Tip,
+                c.Domeniu,
+                c.Nivel,
+                c.ExemplePropozitii == "" ? 0 :
+                    c.ExemplePropozitii.Split(new[] { '|' }, StringSplitOptions.RemoveEmptyEntries).Length,
+                c.CaleImagini == null || c.CaleImagini == "" ? 0 :
+                    c.CaleImagini.Split(new[] { '|' }, StringSplitOptions.RemoveEmptyEntries).Length,
+                c.DataAdaugarii))
+            .ToListAsync();
+    }
+
+    public async Task<CuvantEditDto?> GetCuvantPentruEditAsync(int id)
+    {
+        var c = await _ctx.Cuvinte
+            .AsNoTracking()
+            .FirstOrDefaultAsync(x => x.Id == id);
+
+        if (c == null) return null;
+
+        return new CuvantEditDto
+        {
+            Id = c.Id,
+            Termen = c.Termen,
+            Definitie = c.Definitie,
+            DefinitieRo = c.DefinitieRo,
+            Pronuntie = c.Pronuntie,
+            Tip = c.Tip,
+            Domeniu = c.Domeniu,
+            Nivel = c.Nivel,
+            Limba = c.Limba,
+            Etichete = c.Etichete,
+            Exemple = c.ExemplePropozitii
+                .Split('|', StringSplitOptions.RemoveEmptyEntries)
+                .ToList(),
+            Imagini = (c.CaleImagini ?? "")
+                .Split('|', StringSplitOptions.RemoveEmptyEntries)
+                .ToList()
+        };
+    }
+
+    public async Task<int> CreeazaCuvantAsync(CuvantEditDto dto)
+    {
+        var cuvant = new Cuvant
+        {
+            Termen = dto.Termen.Trim(),
+            Definitie = dto.Definitie.Trim(),
+            DefinitieRo = string.IsNullOrWhiteSpace(dto.DefinitieRo) ? null : dto.DefinitieRo.Trim(),
+            Pronuntie = string.IsNullOrWhiteSpace(dto.Pronuntie) ? null : dto.Pronuntie.Trim(),
+            Tip = dto.Tip,
+            Domeniu = dto.Domeniu,
+            Nivel = dto.Nivel,
+            Limba = dto.Limba,
+            Etichete = string.IsNullOrWhiteSpace(dto.Etichete) ? null : dto.Etichete.Trim(),
+            ExemplePropozitii = string.Join("|",
+                dto.Exemple.Where(e => !string.IsNullOrWhiteSpace(e)).Select(e => e.Trim())),
+            CaleImagini = dto.Imagini.Count == 0 ? null :
+                string.Join("|", dto.Imagini.Where(i => !string.IsNullOrWhiteSpace(i))),
+            DataAdaugarii = DateTime.UtcNow
+        };
+
+        _ctx.Cuvinte.Add(cuvant);
+        await _ctx.SaveChangesAsync();
+        return cuvant.Id;
+    }
+
+    public async Task ActualizeazaCuvantAsync(CuvantEditDto dto)
+    {
+        if (!dto.Id.HasValue)
+            throw new InvalidOperationException("Id-ul este obligatoriu pentru actualizare.");
+
+        var cuvant = await _ctx.Cuvinte.FirstOrDefaultAsync(c => c.Id == dto.Id.Value);
+        if (cuvant == null)
+            throw new InvalidOperationException($"Cuvântul cu Id={dto.Id} nu există.");
+
+        cuvant.Termen = dto.Termen.Trim();
+        cuvant.Definitie = dto.Definitie.Trim();
+        cuvant.DefinitieRo = string.IsNullOrWhiteSpace(dto.DefinitieRo) ? null : dto.DefinitieRo.Trim();
+        cuvant.Pronuntie = string.IsNullOrWhiteSpace(dto.Pronuntie) ? null : dto.Pronuntie.Trim();
+        cuvant.Tip = dto.Tip;
+        cuvant.Domeniu = dto.Domeniu;
+        cuvant.Nivel = dto.Nivel;
+        cuvant.Limba = dto.Limba;
+        cuvant.Etichete = string.IsNullOrWhiteSpace(dto.Etichete) ? null : dto.Etichete.Trim();
+        cuvant.ExemplePropozitii = string.Join("|",
+            dto.Exemple.Where(e => !string.IsNullOrWhiteSpace(e)).Select(e => e.Trim()));
+        cuvant.CaleImagini = dto.Imagini.Count == 0 ? null :
+            string.Join("|", dto.Imagini.Where(i => !string.IsNullOrWhiteSpace(i)));
+
+        await _ctx.SaveChangesAsync();
+    }
+
+    public async Task StergeCuvantAsync(int id)
+    {
+        var cuvant = await _ctx.Cuvinte.FirstOrDefaultAsync(c => c.Id == id);
+        if (cuvant == null) return;
+
+        // Cascade pe progrese e Restrict (definit în LexaDbContext)
+        // → trebuie să ștergem manual progresele dependente întâi
+        var progrese = await _ctx.ProgresCuvinte
+            .Where(p => p.CuvantId == id)
+            .ToListAsync();
+        if (progrese.Any())
+        {
+            // Ștergem și răspunsurile (cascade pe ProgresCuvant)
+            _ctx.ProgresCuvinte.RemoveRange(progrese);
+        }
+
+        _ctx.Cuvinte.Remove(cuvant);
+        await _ctx.SaveChangesAsync();
+    }
+
+    public async Task<bool> ExistaTermenAsync(string termen, int? exceptId = null)
+    {
+        var t = termen.Trim().ToLower();
+        var query = _ctx.Cuvinte.Where(c => c.Termen.ToLower() == t);
+        if (exceptId.HasValue)
+            query = query.Where(c => c.Id != exceptId.Value);
+        return await query.AnyAsync();
+    }
+
+    public async Task<int> GetNrTotalCuvinteAsync() =>
+        await _ctx.Cuvinte.CountAsync();
+
+    public async Task<Dictionary<DomeniuCuvant, int>> GetNrPeDomeniiAsync()
+    {
+        return await _ctx.Cuvinte
+            .GroupBy(c => c.Domeniu)
+            .Select(g => new { Domeniu = g.Key, Count = g.Count() })
+            .ToDictionaryAsync(x => x.Domeniu, x => x.Count);
+    }
+}

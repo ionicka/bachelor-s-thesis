@@ -11,7 +11,7 @@
 
         <!-- ═══ TOP NAVBAR ═══════════════════════════════════════ -->
         <Grid Grid.Row="0"
-              ColumnDefinitions="Auto,*,Auto,Auto,Auto"
+              ColumnDefinitions="Auto,*,Auto,Auto,Auto,Auto"
               Padding="16,50,16,12"
               BackgroundColor="#0D0D1A">
 
@@ -87,6 +87,18 @@
                                FontAttributes="Bold" />
                     </Frame>
                 </Grid>
+            </Frame>
+            <Frame Grid.Column="5"
+                   IsVisible="{Binding EsteAdmin}"
+                   BackgroundColor="#2A1060"
+                   BorderColor="#9B5FDE"
+                   CornerRadius="20" Padding="10,6"
+                   VerticalOptions="Center"
+                   Margin="8,0,0,0">
+                <Frame.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding DeschideAdminPanelCommand}" />
+                </Frame.GestureRecognizers>
+                <Label Text="🛠" FontSize="18" VerticalOptions="Center" />
             </Frame>
 
         </Grid>
@@ -173,7 +185,7 @@
 
                 <!-- Al doilea rand de lectii -->
                 <Grid ColumnDefinitions="*,*" ColumnSpacing="12">
-
+                  
                     <Frame Grid.Column="0"
                            BackgroundColor="#0F1A2E"
                            BorderColor="#1E3A5C"

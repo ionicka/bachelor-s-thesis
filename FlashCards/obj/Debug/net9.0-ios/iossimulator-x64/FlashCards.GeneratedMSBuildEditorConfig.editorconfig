@@ -42,6 +42,18 @@ build_metadata.AdditionalFiles.ManifestResourceName = FlashCards.Resources.Style
 build_metadata.AdditionalFiles.TargetPath = Resources\Styles\Styles.xaml
 build_metadata.AdditionalFiles.RelativePath = Resources\Styles\Styles.xaml
 
+[C:/git/bachelor-s-thesis/FlashCards/Views/AdminPanelPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = FlashCards.Views.AdminPanelPage.xaml
+build_metadata.AdditionalFiles.TargetPath = Views\AdminPanelPage.xaml
+build_metadata.AdditionalFiles.RelativePath = Views\AdminPanelPage.xaml
+
+[C:/git/bachelor-s-thesis/FlashCards/Views/EditeazaCuvantPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = FlashCards.Views.EditeazaCuvantPage.xaml
+build_metadata.AdditionalFiles.TargetPath = Views\EditeazaCuvantPage.xaml
+build_metadata.AdditionalFiles.RelativePath = Views\EditeazaCuvantPage.xaml
+
 [C:/git/bachelor-s-thesis/FlashCards/Views/FelicitariPage.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = FlashCards.Views.FelicitariPage.xaml

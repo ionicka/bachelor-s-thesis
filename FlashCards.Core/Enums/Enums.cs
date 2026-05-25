@@ -28,3 +28,25 @@ public enum RolUtilizator
     Utilizator = 0,
     Admin = 1
 }
+public enum TipCuvant
+{
+    Substantiv = 1,
+    Verb = 2,
+    Adjectiv = 3,
+    VerbFrazal = 4,
+    Expresie = 5
+}
+
+public enum DomeniuCuvant
+{
+    General = 0,
+    Business = 1,
+    Tehnologie = 2,
+    Sanatate = 3,
+    Educatie = 4,
+    Cultura = 5,
+    Sport = 6,
+    Politica = 7,
+    Calatorii = 8,
+    Emotii = 9
+}

@@ -1,0 +1,316 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:FlashCards.ViewModels"
+             xmlns:conv="clr-namespace:FlashCards.Converters"
+             x:Class="FlashCards.Views.EditeazaCuvantPage"
+             x:DataType="vm:EditeazaCuvantViewModel"
+             Shell.NavBarIsVisible="False"
+             BackgroundColor="#0D0D1A">
+
+	<ContentPage.Resources>
+		<conv:InvertBoolConverter x:Key="InvertBool" />
+		<conv:StringToBoolConverter x:Key="StringToBool" />
+	</ContentPage.Resources>
+
+	<Grid RowDefinitions="Auto,*,Auto">
+
+		<!-- ═══ HEADER ═══════════════════════════════════════════ -->
+		<Grid Grid.Row="0" ColumnDefinitions="Auto,*" Padding="16,44,16,12">
+			<Button Grid.Column="0"
+                    Text="←"
+                    Command="{Binding AnuleazaCommand}"
+                    BackgroundColor="Transparent" TextColor="White"
+                    FontSize="22" WidthRequest="44" HeightRequest="44" Padding="0" />
+			<Label Grid.Column="1"
+                   Text="{Binding TitluPagina}"
+                   FontSize="18" FontAttributes="Bold" TextColor="White"
+                   VerticalOptions="Center" Margin="8,0,0,0"
+                   LineBreakMode="TailTruncation" />
+		</Grid>
+
+		<!-- ═══ CONTINUT ═══════════════════════════════════════════ -->
+		<ScrollView Grid.Row="1" Padding="16,0,16,16">
+			<VerticalStackLayout Spacing="16">
+
+				<!-- ─── TERMEN ──────────────────────────────────── -->
+				<VerticalStackLayout Spacing="6">
+					<Label Text="Termen *" TextColor="#E94560"
+                           FontSize="12" FontAttributes="Bold"
+                           CharacterSpacing="1" />
+					<Frame BackgroundColor="#16213E" BorderColor="#0F3460"
+                           CornerRadius="12" Padding="14,2" HasShadow="False">
+						<Entry Text="{Binding Termen}"
+                               Placeholder="ex: perseverance"
+                               BackgroundColor="Transparent"
+                               TextColor="White"
+                               PlaceholderColor="#556688"
+                               FontSize="16" FontAttributes="Bold" />
+					</Frame>
+				</VerticalStackLayout>
+
+				<!-- ─── DEFINIȚIE EN ─────────────────────────────── -->
+				<VerticalStackLayout Spacing="6">
+					<Label Text="Definiție (Engleză) *" TextColor="#E94560"
+                           FontSize="12" FontAttributes="Bold"
+                           CharacterSpacing="1" />
+					<Frame BackgroundColor="#16213E" BorderColor="#0F3460"
+                           CornerRadius="12" Padding="14,8" HasShadow="False">
+						<Editor Text="{Binding Definitie}"
+                                Placeholder="The quality of continuing to try..."
+                                BackgroundColor="Transparent"
+                                TextColor="White"
+                                PlaceholderColor="#556688"
+                                FontSize="14"
+                                HeightRequest="80"
+                                AutoSize="TextChanges" />
+					</Frame>
+				</VerticalStackLayout>
+
+				<!-- ─── DEFINIȚIE RO ─────────────────────────────── -->
+				<VerticalStackLayout Spacing="6">
+					<Label Text="Definiție (Română)" TextColor="#8899BB"
+                           FontSize="12" FontAttributes="Bold"
+                           CharacterSpacing="1" />
+					<Frame BackgroundColor="#16213E" BorderColor="#0F3460"
+                           CornerRadius="12" Padding="14,8" HasShadow="False">
+						<Editor Text="{Binding DefinitieRo}"
+                                Placeholder="Calitatea de a continua..."
+                                BackgroundColor="Transparent"
+                                TextColor="White"
+                                PlaceholderColor="#556688"
+                                FontSize="14"
+                                HeightRequest="80"
+                                AutoSize="TextChanges" />
+					</Frame>
+				</VerticalStackLayout>
+
+				<!-- ─── PRONUNȚIE + ETICHETE ─────────────────────── -->
+				<Grid ColumnDefinitions="*,*" ColumnSpacing="10">
+					<VerticalStackLayout Grid.Column="0" Spacing="6">
+						<Label Text="Pronunție (IPA)" TextColor="#8899BB"
+                               FontSize="12" FontAttributes="Bold" />
+						<Frame BackgroundColor="#16213E" BorderColor="#0F3460"
+                               CornerRadius="12" Padding="12,2" HasShadow="False">
+							<Entry Text="{Binding Pronuntie}"
+                                   Placeholder="/ˌpɜːsɪˈvɪərəns/"
+                                   BackgroundColor="Transparent"
+                                   TextColor="White"
+                                   PlaceholderColor="#556688"
+                                   FontSize="13" />
+						</Frame>
+					</VerticalStackLayout>
+
+					<VerticalStackLayout Grid.Column="1" Spacing="6">
+						<Label Text="Etichete" TextColor="#8899BB"
+                               FontSize="12" FontAttributes="Bold" />
+						<Frame BackgroundColor="#16213E" BorderColor="#0F3460"
+                               CornerRadius="12" Padding="12,2" HasShadow="False">
+							<Entry Text="{Binding Etichete}"
+                                   Placeholder="opțional"
+                                   BackgroundColor="Transparent"
+                                   TextColor="White"
+                                   PlaceholderColor="#556688"
+                                   FontSize="13" />
+						</Frame>
+					</VerticalStackLayout>
+				</Grid>
+
+				<!-- ─── CLASIFICARE ──────────────────────────────── -->
+				<Label Text="CLASIFICARE" TextColor="#E94560"
+                       FontSize="11" FontAttributes="Bold"
+                       CharacterSpacing="1.5" Margin="0,8,0,0" />
+
+				<Grid ColumnDefinitions="*,*" ColumnSpacing="10">
+					<VerticalStackLayout Grid.Column="0" Spacing="6">
+						<Label Text="Tip gramatical" TextColor="#8899BB" FontSize="12" />
+						<Frame BackgroundColor="#16213E" BorderColor="#0F3460"
+                               CornerRadius="12" Padding="6,0" HasShadow="False">
+							<Picker ItemsSource="{Binding TipuriOptiuni}"
+                                    SelectedIndex="{Binding SelectedTipIndex}"
+                                    BackgroundColor="Transparent"
+                                    TextColor="White"
+                                    TitleColor="#556688"
+                                    FontSize="14" />
+						</Frame>
+					</VerticalStackLayout>
+
+					<VerticalStackLayout Grid.Column="1" Spacing="6">
+						<Label Text="Domeniu" TextColor="#8899BB" FontSize="12" />
+						<Frame BackgroundColor="#16213E" BorderColor="#0F3460"
+                               CornerRadius="12" Padding="6,0" HasShadow="False">
+							<Picker ItemsSource="{Binding DomeniiOptiuni}"
+                                    SelectedIndex="{Binding SelectedDomeniuIndex}"
+                                    BackgroundColor="Transparent"
+                                    TextColor="White"
+                                    TitleColor="#556688"
+                                    FontSize="14" />
+						</Frame>
+					</VerticalStackLayout>
+				</Grid>
+
+				<VerticalStackLayout Spacing="6">
+					<Label Text="Nivel dificultate" TextColor="#8899BB" FontSize="12" />
+					<Frame BackgroundColor="#16213E" BorderColor="#0F3460"
+                           CornerRadius="12" Padding="6,0" HasShadow="False">
+						<Picker ItemsSource="{Binding NivelOptiuni}"
+                                SelectedIndex="{Binding SelectedNivelIndex}"
+                                BackgroundColor="Transparent"
+                                TextColor="White"
+                                TitleColor="#556688"
+                                FontSize="14" />
+					</Frame>
+				</VerticalStackLayout>
+
+				<!-- ─── EXEMPLE ──────────────────────────────────── -->
+				<Grid ColumnDefinitions="*,Auto" Margin="0,8,0,0">
+					<Label Grid.Column="0"
+                           Text="EXEMPLE (folosește [TERMEN])"
+                           TextColor="#E94560"
+                           FontSize="11" FontAttributes="Bold"
+                           CharacterSpacing="1.5"
+                           VerticalOptions="Center" />
+					<Button Grid.Column="1"
+                            Text="+ Exemplu"
+                            Command="{Binding AdaugaExempluCommand}"
+                            BackgroundColor="#1A1040" TextColor="#9B6FDE"
+                            FontSize="11" CornerRadius="8"
+                            HeightRequest="30" Padding="8,0" />
+				</Grid>
+
+				<CollectionView ItemsSource="{Binding Exemple}">
+					<CollectionView.ItemTemplate>
+						<DataTemplate x:DataType="vm:ExempluVm">
+							<Grid ColumnDefinitions="*,Auto" Margin="0,4">
+								<Frame Grid.Column="0"
+                                       BackgroundColor="#16213E" BorderColor="#0F3460"
+                                       CornerRadius="12" Padding="12,4" HasShadow="False">
+									<Editor Text="{Binding Text}"
+                                            Placeholder="Her [TERMEN] in learning paid off..."
+                                            BackgroundColor="Transparent"
+                                            TextColor="White"
+                                            PlaceholderColor="#556688"
+                                            FontSize="13"
+                                            AutoSize="TextChanges" />
+								</Frame>
+								<Button Grid.Column="1"
+                                        Text="✕"
+                                        Command="{Binding StergeCommand}"
+                                        IsVisible="{Binding PoateSterge}"
+                                        BackgroundColor="Transparent"
+                                        TextColor="#E94560"
+                                        FontSize="14"
+                                        WidthRequest="36" HeightRequest="36"
+                                        Padding="0" />
+							</Grid>
+						</DataTemplate>
+					</CollectionView.ItemTemplate>
+				</CollectionView>
+
+				<!-- ─── IMAGINI ──────────────────────────────────── -->
+				<Grid ColumnDefinitions="*,Auto" Margin="0,8,0,0">
+					<Label Grid.Column="0"
+                           Text="IMAGINI (max 2)"
+                           TextColor="#E94560"
+                           FontSize="11" FontAttributes="Bold"
+                           CharacterSpacing="1.5"
+                           VerticalOptions="Center" />
+					<Button Grid.Column="1"
+                            Text="+ Imagine"
+                            Command="{Binding AdaugaImagineCommand}"
+                            IsVisible="{Binding PoateAdaugaImagine}"
+                            BackgroundColor="#1A1040" TextColor="#9B6FDE"
+                            FontSize="11" CornerRadius="8"
+                            HeightRequest="30" Padding="8,0" />
+				</Grid>
+
+				<CollectionView ItemsSource="{Binding Imagini}">
+					<CollectionView.ItemsLayout>
+						<LinearItemsLayout Orientation="Horizontal" ItemSpacing="10" />
+					</CollectionView.ItemsLayout>
+					<CollectionView.ItemTemplate>
+						<DataTemplate x:DataType="vm:ImagineVm">
+							<Grid WidthRequest="140" HeightRequest="140">
+								<Frame BackgroundColor="#16213E"
+                                       BorderColor="#0F3460"
+                                       CornerRadius="12"
+                                       Padding="0"
+                                       IsClippedToBounds="True"
+                                       HasShadow="False">
+									<Image Source="{Binding CaleAbsoluta}"
+                                           Aspect="AspectFill" />
+								</Frame>
+								<Button Text="✕"
+                                        Command="{Binding StergeCommand}"
+                                        BackgroundColor="#E94560"
+                                        TextColor="White"
+                                        FontSize="12" FontAttributes="Bold"
+                                        WidthRequest="30" HeightRequest="30"
+                                        CornerRadius="15"
+                                        Padding="0"
+                                        HorizontalOptions="End"
+                                        VerticalOptions="Start"
+                                        Margin="0,6,6,0" />
+							</Grid>
+						</DataTemplate>
+					</CollectionView.ItemTemplate>
+				</CollectionView>
+
+				<!-- Placeholder dacă nu sunt imagini -->
+				<Frame BackgroundColor="#0F1A2E"
+                       BorderColor="#1E3A5C"
+                       CornerRadius="12" Padding="20"
+                       HasShadow="False"
+                       IsVisible="False"
+                       x:Name="PlaceholderImagini">
+					<VerticalStackLayout Spacing="6" HorizontalOptions="Center">
+						<Label Text="🖼" FontSize="32" HorizontalOptions="Center" />
+						<Label Text="Niciun imagini adăugată"
+                               TextColor="#556688" FontSize="12"
+                               HorizontalOptions="Center" />
+					</VerticalStackLayout>
+				</Frame>
+
+				<!-- ─── MESAJ EROARE ─────────────────────────────── -->
+				<Frame BackgroundColor="#1A0A0A" BorderColor="#E94560"
+                       CornerRadius="12" Padding="14"
+                       IsVisible="{Binding MesajEroare,
+                                   Converter={StaticResource StringToBool}}"
+                       HasShadow="False">
+					<Label Text="{Binding MesajEroare}"
+                           TextColor="#E94560" FontSize="13"
+                           HorizontalTextAlignment="Center" />
+				</Frame>
+
+				<BoxView HeightRequest="40" BackgroundColor="Transparent" />
+
+			</VerticalStackLayout>
+		</ScrollView>
+
+		<!-- ═══ BUTON SALVEAZĂ ═════════════════════════════════════ -->
+		<Grid Grid.Row="2" Padding="16,8,16,20"
+              BackgroundColor="#0D0D1A"
+              ColumnDefinitions="Auto,*" ColumnSpacing="10">
+
+			<Button Grid.Column="0"
+                    Text="Anulează"
+                    Command="{Binding AnuleazaCommand}"
+                    BackgroundColor="Transparent"
+                    TextColor="#8899BB"
+                    BorderColor="#2E3A5C" BorderWidth="1"
+                    CornerRadius="16" HeightRequest="54"
+                    FontSize="14" WidthRequest="100" />
+
+			<Button Grid.Column="1"
+                    Text="{Binding TextButonSalvare}"
+                    Command="{Binding SalveazaCommand}"
+                    IsEnabled="{Binding SeSalveaza,
+                                Converter={StaticResource InvertBool}}"
+                    BackgroundColor="#7B2FBE"
+                    TextColor="White"
+                    CornerRadius="16" HeightRequest="54"
+                    FontSize="16" FontAttributes="Bold" />
+		</Grid>
+
+	</Grid>
+</ContentPage>

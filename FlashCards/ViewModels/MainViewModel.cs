@@ -19,6 +19,7 @@ public partial class MainViewModel : ObservableObject
     [ObservableProperty] int _nrNotificari = 0;
     [ObservableProperty] bool _areNotificari = false;
     [ObservableProperty] int _carduriAzi = 0;
+    [ObservableProperty] bool _esteAdmin = false;
     [ObservableProperty] double _progressZi = 0.0;
 
     // Calendarul saptamanal — 7 zile L-D
@@ -37,6 +38,7 @@ public partial class MainViewModel : ObservableObject
         NumeUtilizator = _session.UtilizatorCurent.NumeUtilizator;
         InitialaUtilizator = NumeUtilizator.Length > 0
             ? NumeUtilizator[0].ToString().ToUpper() : "?";
+        EsteAdmin = _session.EsteAdmin;
 
         int ora = DateTime.Now.Hour;
         Salut = ora switch
@@ -110,6 +112,9 @@ public partial class MainViewModel : ObservableObject
     [RelayCommand]
     async Task MergeVocabularAsync() =>
         await Shell.Current.GoToAsync("//SesiuneConfigPage");
+    [RelayCommand]
+    async Task DeschideAdminPanel() =>
+    await Shell.Current.GoToAsync("//AdminPanelPage");
 }
 
 public class ZiCalendar
@@ -120,4 +125,5 @@ public class ZiCalendar
     public bool EsteAzi { get; set; }
     public bool EsteViitor { get; set; }
     public string Culoare { get; set; } = "#2E3A5C";
+
 }

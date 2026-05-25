@@ -30,5 +30,13 @@
                   Shell.TabBarIsVisible="False"
                   Shell.NavBarIsVisible="False"
                   ContentTemplate="{DataTemplate views:FelicitariPage}" />
+    <ShellContent Route="AdminPanelPage"
+                  Shell.TabBarIsVisible="False"
+                  Shell.NavBarIsVisible="False"
+                  ContentTemplate="{DataTemplate views:AdminPanelPage}" />
+    <ShellContent Route="EditeazaCuvantPage"
+              Shell.TabBarIsVisible="False"
+              Shell.NavBarIsVisible="False"
+              ContentTemplate="{DataTemplate views:EditeazaCuvantPage}" />
 
 </Shell>

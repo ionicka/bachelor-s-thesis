@@ -1,0 +1,239 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:FlashCards.ViewModels"
+             xmlns:conv="clr-namespace:FlashCards.Converters"
+             x:Class="FlashCards.Views.AdminPanelPage"
+             x:DataType="vm:AdminPanelViewModel"
+             Shell.NavBarIsVisible="False"
+             BackgroundColor="#0D0D1A">
+
+    <ContentPage.Resources>
+        <conv:InvertBoolConverter x:Key="InvertBool" />
+        <conv:StringToBoolConverter x:Key="StringToBool" />
+    </ContentPage.Resources>
+
+    <Grid RowDefinitions="Auto,Auto,*,Auto">
+
+        <!-- ═══ HEADER ═══════════════════════════════════════════ -->
+        <Grid Grid.Row="0" ColumnDefinitions="Auto,*,Auto" Padding="16,44,16,12">
+            <Button Grid.Column="0"
+                    Text="←"
+                    Command="{Binding InapoiLaMainCommand}"
+                    BackgroundColor="Transparent" TextColor="White"
+                    FontSize="22" WidthRequest="44" HeightRequest="44" Padding="0" />
+            <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="2" Margin="8,0">
+                <Label Text="🛠 Admin Panel"
+                       TextColor="White" FontSize="18" FontAttributes="Bold" />
+                <Label Text="{Binding NrTotal, StringFormat='{0} cuvinte în baza de date'}"
+                       TextColor="#8899BB" FontSize="11" />
+            </VerticalStackLayout>
+            <Button Grid.Column="2"
+                    Text="+"
+                    Command="{Binding AdaugaCuvantNouCommand}"
+                    BackgroundColor="#7B2FBE" TextColor="White"
+                    FontSize="22" FontAttributes="Bold"
+                    WidthRequest="44" HeightRequest="44" Padding="0"
+                    CornerRadius="22" />
+        </Grid>
+
+        <!-- ═══ SEARCH + FILTRE ════════════════════════════════════ -->
+        <VerticalStackLayout Grid.Row="1" Padding="16,0,16,12" Spacing="10">
+
+            <!-- Search box -->
+            <Frame BackgroundColor="#16213E" BorderColor="#0F3460"
+                   CornerRadius="12" Padding="12,4" HasShadow="False">
+                <Grid ColumnDefinitions="Auto,*,Auto">
+                    <Label Grid.Column="0" Text="🔍"
+                           FontSize="18" VerticalOptions="Center" Margin="0,0,8,0" />
+                    <Entry Grid.Column="1"
+                           Text="{Binding CautareText}"
+                           Placeholder="Caută cuvânt sau definiție..."
+                           BackgroundColor="Transparent"
+                           TextColor="White"
+                           PlaceholderColor="#556688"
+                           FontSize="14" />
+                    <Button Grid.Column="2"
+                            Text="✕"
+                            IsVisible="{Binding CautareText,
+                                        Converter={StaticResource StringToBool}}"
+                            Command="{Binding ReseteazaFiltreCommand}"
+                            BackgroundColor="Transparent" TextColor="#556688"
+                            FontSize="14" WidthRequest="32" HeightRequest="32" Padding="0" />
+                </Grid>
+            </Frame>
+
+            <!-- Filtre pe rând -->
+            <Grid ColumnDefinitions="*,*" ColumnSpacing="10">
+
+                <!-- Filtru Tip -->
+                <Picker Grid.Column="0"
+                        x:Name="PickerTip"
+                        Title="Filtru tip"
+                        ItemsSource="{Binding TipuriOptiuni}"
+                        SelectedIndex="0"
+                        SelectedIndexChanged="OnPickerTipChanged"
+                        BackgroundColor="#16213E"
+                        TextColor="White"
+                        TitleColor="#8899BB" />
+
+                <!-- Filtru Domeniu -->
+                <Picker Grid.Column="1"
+                        x:Name="PickerDomeniu"
+                        Title="Filtru domeniu"
+                        ItemsSource="{Binding DomeniiOptiuni}"
+                        SelectedIndex="0"
+                        SelectedIndexChanged="OnPickerDomeniuChanged"
+                        BackgroundColor="#16213E"
+                        TextColor="White"
+                        TitleColor="#8899BB" />
+            </Grid>
+
+        </VerticalStackLayout>
+
+        <!-- ═══ LISTA CUVINTE ══════════════════════════════════════ -->
+        <Grid Grid.Row="2">
+
+            <!-- Loader -->
+            <ActivityIndicator IsVisible="{Binding SeIncarca}"
+                               IsRunning="{Binding SeIncarca}"
+                               Color="#7B2FBE"
+                               VerticalOptions="Center"
+                               HorizontalOptions="Center" />
+
+            <!-- Listă goală -->
+            <VerticalStackLayout
+                IsVisible="False"
+                x:Name="MesajGol"
+                VerticalOptions="Center"
+                HorizontalOptions="Center"
+                Spacing="12"
+                Padding="32">
+                <Label Text="📭" FontSize="48" HorizontalOptions="Center" />
+                <Label Text="Niciun cuvânt găsit"
+                       TextColor="#8899BB" FontSize="15"
+                       HorizontalOptions="Center" />
+                <Label Text="Apasă + în colțul dreapta sus pentru a adăuga primul cuvânt"
+                       TextColor="#556688" FontSize="12"
+                       HorizontalOptions="Center"
+                       HorizontalTextAlignment="Center" />
+            </VerticalStackLayout>
+
+            <!-- Listă -->
+            <CollectionView ItemsSource="{Binding Cuvinte}"
+                            IsVisible="{Binding SeIncarca,
+                                        Converter={StaticResource InvertBool}}"
+                            Margin="12,0,12,0">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="vm:CuvantListItemVm">
+                        <Frame BackgroundColor="#16213E"
+                               BorderColor="#0F3460"
+                               CornerRadius="14"
+                               Padding="14"
+                               Margin="0,4"
+                               HasShadow="False">
+                            <Grid RowDefinitions="Auto,Auto,Auto"
+                                  ColumnDefinitions="*,Auto,Auto"
+                                  RowSpacing="6">
+
+                                <!-- Rândul 1: termen + butoane -->
+                                <Label Grid.Row="0" Grid.Column="0"
+                                       Text="{Binding Termen}"
+                                       TextColor="White"
+                                       FontSize="18"
+                                       FontAttributes="Bold"
+                                       VerticalOptions="Center" />
+                                <Button Grid.Row="0" Grid.Column="1"
+                                        Text="✏️"
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type vm:AdminPanelViewModel}},
+                                                  Path=EditeazaCuvantCommand}"
+                                        CommandParameter="{Binding .}"
+                                        BackgroundColor="Transparent"
+                                        FontSize="16"
+                                        WidthRequest="36" HeightRequest="36"
+                                        Padding="0" />
+                                <Button Grid.Row="0" Grid.Column="2"
+                                        Text="🗑"
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type vm:AdminPanelViewModel}},
+                                                  Path=StergeCuvantCommand}"
+                                        CommandParameter="{Binding .}"
+                                        BackgroundColor="Transparent"
+                                        FontSize="16"
+                                        WidthRequest="36" HeightRequest="36"
+                                        Padding="0" />
+
+                                <!-- Rândul 2: definiție -->
+                                <Label Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3"
+                                       Text="{Binding Definitie}"
+                                       TextColor="#AABBCC"
+                                       FontSize="13"
+                                       LineBreakMode="WordWrap" />
+
+                                <!-- Rândul 3: chips cu tip + domeniu + meta -->
+                                <HorizontalStackLayout Grid.Row="2"
+                                                       Grid.Column="0" Grid.ColumnSpan="3"
+                                                       Spacing="8">
+                                    <!-- Chip Tip -->
+                                    <Frame BackgroundColor="#0F1A2E"
+                                           BorderColor="#2E3A5C"
+                                           CornerRadius="10"
+                                           Padding="8,3"
+                                           HasShadow="False">
+                                        <HorizontalStackLayout Spacing="4">
+                                            <Label Text="{Binding TipIcon}"
+                                                   FontSize="11"
+                                                   VerticalOptions="Center" />
+                                            <Label Text="{Binding TipLabel}"
+                                                   TextColor="#AABBCC"
+                                                   FontSize="11"
+                                                   VerticalOptions="Center" />
+                                        </HorizontalStackLayout>
+                                    </Frame>
+
+                                    <!-- Chip Domeniu -->
+                                    <Frame BackgroundColor="#0F1A2E"
+                                           BorderColor="{Binding DomeniuCuloare}"
+                                           CornerRadius="10"
+                                           Padding="8,3"
+                                           HasShadow="False">
+                                        <HorizontalStackLayout Spacing="4">
+                                            <Label Text="{Binding DomeniuIcon}"
+                                                   FontSize="11"
+                                                   VerticalOptions="Center" />
+                                            <Label Text="{Binding DomeniuLabel}"
+                                                   TextColor="{Binding DomeniuCuloare}"
+                                                   FontSize="11"
+                                                   FontAttributes="Bold"
+                                                   VerticalOptions="Center" />
+                                        </HorizontalStackLayout>
+                                    </Frame>
+
+                                    <!-- Meta -->
+                                    <Label Text="{Binding MetaInfo}"
+                                           TextColor="#556688"
+                                           FontSize="10"
+                                           VerticalOptions="Center" />
+                                </HorizontalStackLayout>
+
+                            </Grid>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+        </Grid>
+
+        <!-- ═══ BUTOANE JOS ════════════════════════════════════════ -->
+        <Button Grid.Row="3"
+                Text="+ Adaugă cuvânt nou"
+                Command="{Binding AdaugaCuvantNouCommand}"
+                BackgroundColor="#7B2FBE"
+                TextColor="White"
+                CornerRadius="16"
+                HeightRequest="54"
+                FontSize="16"
+                FontAttributes="Bold"
+                Margin="16,8,16,20" />
+
+    </Grid>
+</ContentPage>

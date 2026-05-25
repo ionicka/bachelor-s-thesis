@@ -1,4 +1,4 @@
-using FlashCards.Core.DTOs;
+﻿using FlashCards.Core.DTOs;
 using FlashCards.Core.Entities;
 using FlashCards.Core.Enums;
 
@@ -84,4 +84,43 @@ public interface ISesiuneService
     Task<int> IncepeSesiuneAsync(int utilizatorId);
     Task InchideSesiuneAsync(int sesiuneId, int nrVazute, int nrCorect, int nrGresit);
     Task<List<SesiuneStudiu>> GetIstoricAsync(int utilizatorId);
+}
+
+public interface IAdminRepository
+{
+    // Listare cu filtrare
+    Task<List<CuvantListaDto>> GetCuvinteAsync(FiltruCuvinteDto? filtru = null);
+
+    // Pentru formularul de edit — încarcă tot ce trebuie pentru pre-populare
+    Task<CuvantEditDto?> GetCuvantPentruEditAsync(int id);
+
+    // CRUD
+    Task<int> CreeazaCuvantAsync(CuvantEditDto dto);
+    Task ActualizeazaCuvantAsync(CuvantEditDto dto);
+    Task StergeCuvantAsync(int id);
+
+    // Verificare unicitate (la add și edit)
+    Task<bool> ExistaTermenAsync(string termen, int? exceptId = null);
+
+    // Numărători pentru dashboard admin (opțional, util)
+    Task<int> GetNrTotalCuvinteAsync();
+    Task<Dictionary<DomeniuCuvant, int>> GetNrPeDomeniiAsync();
+}
+
+public interface IAdminService
+{
+    // Listare
+    Task<List<CuvantListaDto>> GetCuvinteAsync(FiltruCuvinteDto? filtru = null);
+
+    // Pentru pagina de edit
+    Task<CuvantEditDto?> GetCuvantPentruEditAsync(int id);
+
+    // Operații cu validare
+    Task<RezultatOperatieDto> CreeazaCuvantAsync(CuvantEditDto dto);
+    Task<RezultatOperatieDto> ActualizeazaCuvantAsync(CuvantEditDto dto);
+    Task<RezultatOperatieDto> StergeCuvantAsync(int id);
+
+    // Statistici
+    Task<int> GetNrTotalCuvinteAsync();
+    Task<Dictionary<DomeniuCuvant, int>> GetNrPeDomeniiAsync();
 }

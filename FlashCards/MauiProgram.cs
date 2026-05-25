@@ -41,16 +41,19 @@ public static class MauiProgram
         builder.Services.AddTransient<IUtilizatorRepository, UtilizatorRepository>();
         builder.Services.AddTransient<ISesiuneRepository, SesiuneRepository>();
         builder.Services.AddTransient<IRaspunsRepository, RaspunsRepository>();
+        builder.Services.AddTransient<IAdminRepository, AdminRepository>();
 
         // ── Services Core — Transient ─────────────────────────────
         builder.Services.AddTransient<ISrsService, SrsService>();
         builder.Services.AddTransient<ICardService, CardService>();
         builder.Services.AddTransient<IAuthService, AuthService>();
         builder.Services.AddTransient<ISesiuneService, SesiuneService>();
+        builder.Services.AddTransient<IAdminService, AdminService>();
 
         // ── Services MAUI ─────────────────────────────────────────
         builder.Services.AddSingleton<INavigationService, NavigationService>();
         builder.Services.AddSingleton<ISessionStateService, SessionStateService>();
+        builder.Services.AddSingleton<IImageStorageService, ImageStorageService>();
 
         // ── ViewModels ────────────────────────────────────────────
         builder.Services.AddTransient<LoginViewModel>();
@@ -60,6 +63,8 @@ public static class MauiProgram
         builder.Services.AddSingleton<FluxViewModel>();
         builder.Services.AddTransient<StatisticiViewModel>();
         builder.Services.AddTransient<SetariViewModel>();
+        builder.Services.AddTransient<AdminPanelViewModel>();
+        builder.Services.AddTransient<EditeazaCuvantViewModel>();
 
         // ── Pages ─────────────────────────────────────────────────
         builder.Services.AddTransient<LoginPage>();
@@ -70,6 +75,8 @@ public static class MauiProgram
         builder.Services.AddTransient<StatisticiPage>();
         builder.Services.AddTransient<SetariPage>();
         builder.Services.AddTransient<FelicitariPage>();
+        builder.Services.AddTransient<AdminPanelPage>();
+        builder.Services.AddTransient<EditeazaCuvantPage>();
 
         builder.Services.AddMemoryCache();
 
@@ -87,11 +94,13 @@ public static class MauiProgram
             var sw = System.Diagnostics.Stopwatch.StartNew();
             ctx.Database.EnsureCreated();
 
-            if (!ctx.Cuvinte.Any())
+
+            //admins job
+          /*  if (!ctx.Cuvinte.Any())
             {
                 SeedData.Populeaza(ctx);
                 logger.LogInformation("SeedData populat cu cuvinte initiale");
-            }
+            }*/
 
             sw.Stop();
             logger.LogInformation("Initializare BD completa in {Ms}ms", sw.ElapsedMilliseconds);
