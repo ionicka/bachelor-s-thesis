@@ -49,20 +49,13 @@ public partial class FluxPage : ContentPage
         {
             var stats = await _cardService.GetStatisticiAsync(
                 _session.UtilizatorCurent.Id);
-
             bool primaAZilei = stats.SesiuniFinalizateAzi == 1;
 
-            // Salvam datele in FelicitariViewModel singleton
-            // si navigam direct (nu modal)
-            var felicitariVm = new FelicitariViewModel(
-                stats.ZileCurenteStreak,
-                _vm.NrCorect,
-                _vm.NrGresit,
-                primaAZilei);
-
-            // Navigare directa Shell - fara modal
-            FelicitariPage.ViewModel = felicitariVm;
-            await Shell.Current.GoToAsync("//FelicitariPage");
+            await Shell.Current.GoToAsync(
+                $"//FelicitariPage?streak={stats.ZileCurenteStreak}" +
+                $"&corect={_vm.NrCorect}" +
+                $"&gresit={_vm.NrGresit}" +
+                $"&prima={primaAZilei}");
         }
         catch { }
     }

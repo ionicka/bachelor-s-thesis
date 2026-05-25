@@ -1,4 +1,5 @@
-using FlashCards.Core.DTOs;
+﻿using FlashCards.Core.DTOs;
+using FlashCards.Core.Enums;
 
 namespace FlashCards.Services;
 
@@ -11,10 +12,14 @@ public interface INavigationService
 public interface ISessionStateService
 {
     bool EsteAutentificat { get; }
+    bool EsteAdmin { get; }
     UtilizatorDto? UtilizatorCurent { get; }
     int? SesiuneCurenta { get; }
     int CuvinteNoiSesiune { get; }
     int RevizuiriSesiune { get; }
+
+    event Action? LaDeconectare; 
+
     void SetUtilizator(UtilizatorDto utilizator);
     void Deconecteaza();
     void SetSesiune(int sesiuneId);
@@ -38,6 +43,8 @@ public class SessionStateService : ISessionStateService
     private int _cuvinteNoi = 10;
     private int _revizuiri = 100;
 
+    public event Action? LaDeconectare;
+
     public bool EsteAutentificat => _utilizator != null;
     public UtilizatorDto? UtilizatorCurent => _utilizator;
     public int? SesiuneCurenta => _sesiune;
@@ -48,12 +55,13 @@ public class SessionStateService : ISessionStateService
     public void SetSesiune(int id) => _sesiune = id;
     public void SetCuvinteNoi(int nr) => _cuvinteNoi = nr;
     public void SetRevizuiriSesiune(int nr) => _revizuiri = nr;
-
+    public bool EsteAdmin => _utilizator?.Rol == RolUtilizator.Admin;
     public void Deconecteaza()
     {
         _utilizator = null;
         _sesiune = null;
         _cuvinteNoi = 10;
         _revizuiri = 100;
+        LaDeconectare?.Invoke();  
     }
 }

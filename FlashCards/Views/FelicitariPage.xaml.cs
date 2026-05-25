@@ -1,35 +1,34 @@
-using FlashCards.ViewModels;
+﻿using FlashCards.ViewModels;
 
 namespace FlashCards.Views;
 
+[QueryProperty(nameof(Streak), "streak")]
+[QueryProperty(nameof(NrCorect), "corect")]
+[QueryProperty(nameof(NrGresit), "gresit")]
+[QueryProperty(nameof(PrimaAZilei), "prima")]
 public partial class FelicitariPage : ContentPage
 {
-    // Static ca sa putem trimite datele fara DI complex
-    public static FelicitariViewModel? ViewModel { get; set; }
+    public int Streak { get; set; }
+    public int NrCorect { get; set; }
+    public int NrGresit { get; set; }
+    public bool PrimaAZilei { get; set; }
 
     public FelicitariPage()
     {
         InitializeComponent();
-        if (ViewModel != null)
-            BindingContext = ViewModel;
     }
 
     protected override void OnAppearing()
     {
         base.OnAppearing();
-        if (ViewModel != null)
-            BindingContext = ViewModel;
+        // Construim VM-ul după ce query params au sosit
+        BindingContext = new FelicitariViewModel(
+            Streak, NrCorect, NrGresit, PrimaAZilei);
     }
 
     private async void OnContinuaClicked(object sender, EventArgs e)
-    {
-        ViewModel = null;
-        await Shell.Current.GoToAsync("//MainPage");
-    }
+        => await Shell.Current.GoToAsync("//MainPage");
 
     private async void OnPracticaClicked(object sender, EventArgs e)
-    {
-        ViewModel = null;
-        await Shell.Current.GoToAsync("//SesiuneConfigPage");
-    }
+        => await Shell.Current.GoToAsync("//SesiuneConfigPage");
 }

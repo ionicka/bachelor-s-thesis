@@ -21,25 +21,17 @@ public static class MauiProgram
         builder
             .UseMauiApp<App>()
             .UseMauiCommunityToolkit()
-            .ConfigureFonts(fonts =>
-            {
-                fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
-                fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
-            });
+            .ConfigureFonts(fonts => { /* ... */ });
 
-        // ── PostgreSQL ────────────────────────────────────────────
-        string connStr = LexaDbContext.ConnectionString;
+        // ── Config + Connection String ──────────────────────────
+        var config = ConfigLoader.Incarca();  // sincron, nu mai GetResult()
+        string connStr = config.Database.ToConnectionString();
 
-        // DbContextFactory permite crearea de contexte independente
-        // rezolva NpgsqlOperationInProgressException
-        builder.Services.AddDbContextFactory<LexaDbContext>(opt =>
-            opt.UseNpgsql(connStr));
+        builder.Services.AddSingleton(config);
 
-        // Pastram si AddDbContext pentru compatibilitate
         builder.Services.AddDbContext<LexaDbContext>(opt =>
             opt.UseNpgsql(connStr));
 
-        // ── Repositories — Transient pentru a evita conflicte de conexiune ──
         builder.Services.AddTransient<ICardRepository>(_ =>
             new CardRepository(connStr));
         builder.Services.AddTransient<IProgresRepository, ProgresRepository>();
@@ -84,42 +76,22 @@ public static class MauiProgram
 
         var app = builder.Build();
 
-        // ── BENCHMARK: Initializare baza de date ──────────────────
         using (var scope = app.Services.CreateScope())
         {
             var ctx = scope.ServiceProvider.GetRequiredService<LexaDbContext>();
+            var logger = scope.ServiceProvider.GetRequiredService<ILogger<App>>();
 
             var sw = System.Diagnostics.Stopwatch.StartNew();
-            System.Diagnostics.Debug.WriteLine("═══════════════════════════════════════");
-            System.Diagnostics.Debug.WriteLine("[BENCHMARK] Initializare FlashCards...");
-            System.Diagnostics.Debug.WriteLine($"[BENCHMARK] Timestamp: {DateTime.Now:HH:mm:ss.fff}");
-            System.Diagnostics.Debug.WriteLine("───────────────────────────────────────");
-
-            var sw1 = System.Diagnostics.Stopwatch.StartNew();
             ctx.Database.EnsureCreated();
-            sw1.Stop();
-            System.Diagnostics.Debug.WriteLine($"[BENCHMARK] EnsureCreated (schema BD): {sw1.ElapsedMilliseconds} ms");
 
             if (!ctx.Cuvinte.Any())
             {
-                var sw2 = System.Diagnostics.Stopwatch.StartNew();
                 SeedData.Populeaza(ctx);
-                sw2.Stop();
-                System.Diagnostics.Debug.WriteLine($"[BENCHMARK] SeedData (50 cuvinte): {sw2.ElapsedMilliseconds} ms");
-            }
-            else
-            {
-                System.Diagnostics.Debug.WriteLine("[BENCHMARK] SeedData: skipped (date existente)");
+                logger.LogInformation("SeedData populat cu cuvinte initiale");
             }
 
             sw.Stop();
-            System.Diagnostics.Debug.WriteLine("───────────────────────────────────────");
-            System.Diagnostics.Debug.WriteLine($"[BENCHMARK] Total initializare: {sw.ElapsedMilliseconds} ms");
-            System.Diagnostics.Debug.WriteLine("═══════════════════════════════════════");            // Seed data — doar daca nu exista cuvinte
-            if (!ctx.Cuvinte.Any())
-            {
-                SeedData.Populeaza(ctx);
-            }
+            logger.LogInformation("Initializare BD completa in {Ms}ms", sw.ElapsedMilliseconds);
         }
 
         return app;

@@ -81,7 +81,7 @@ public interface IAuthService
 
 public interface ISesiuneService
 {
-    Task<int> IncepeSesuineAsync(int utilizatorId);
+    Task<int> IncepeSesiuneAsync(int utilizatorId);
     Task InchideSesiuneAsync(int sesiuneId, int nrVazute, int nrCorect, int nrGresit);
     Task<List<SesiuneStudiu>> GetIstoricAsync(int utilizatorId);
 }

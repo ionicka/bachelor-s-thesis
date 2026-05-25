@@ -24,3 +24,16 @@ H:\git\licenta\FlashCards.Core\obj\Debug\net9.0\FlashCards.Core.dll
 H:\git\licenta\FlashCards.Core\obj\Debug\net9.0\refint\FlashCards.Core.dll
 H:\git\licenta\FlashCards.Core\obj\Debug\net9.0\FlashCards.Core.pdb
 H:\git\licenta\FlashCards.Core\obj\Debug\net9.0\ref\FlashCards.Core.dll
+C:\git\bachelor-s-thesis\FlashCards.Core\bin\Debug\net9.0\FlashCards.Core.deps.json
+C:\git\bachelor-s-thesis\FlashCards.Core\bin\Debug\net9.0\FlashCards.Core.dll
+C:\git\bachelor-s-thesis\FlashCards.Core\bin\Debug\net9.0\FlashCards.Core.pdb
+C:\git\bachelor-s-thesis\FlashCards.Core\obj\Debug\net9.0\FlashCards.Core.csproj.AssemblyReference.cache
+C:\git\bachelor-s-thesis\FlashCards.Core\obj\Debug\net9.0\FlashCards.Core.GeneratedMSBuildEditorConfig.editorconfig
+C:\git\bachelor-s-thesis\FlashCards.Core\obj\Debug\net9.0\FlashCards.Core.AssemblyInfoInputs.cache
+C:\git\bachelor-s-thesis\FlashCards.Core\obj\Debug\net9.0\FlashCards.Core.AssemblyInfo.cs
+C:\git\bachelor-s-thesis\FlashCards.Core\obj\Debug\net9.0\FlashCards.Core.csproj.CoreCompileInputs.cache
+C:\git\bachelor-s-thesis\FlashCards.Core\obj\Debug\net9.0\FlashCards.Core.sourcelink.json
+C:\git\bachelor-s-thesis\FlashCards.Core\obj\Debug\net9.0\FlashCards.Core.dll
+C:\git\bachelor-s-thesis\FlashCards.Core\obj\Debug\net9.0\refint\FlashCards.Core.dll
+C:\git\bachelor-s-thesis\FlashCards.Core\obj\Debug\net9.0\FlashCards.Core.pdb
+C:\git\bachelor-s-thesis\FlashCards.Core\obj\Debug\net9.0\ref\FlashCards.Core.dll

@@ -1,3 +1,4 @@
+﻿using FlashCards.Core.Enums;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -17,6 +18,7 @@ public class Utilizator
 
     [Required][MaxLength(255)]
     public string ParolaHash { get; set; } = string.Empty;
+    public RolUtilizator Rol { get; set; } = RolUtilizator.Utilizator;
 
     public DateTime DataInregistrarii { get; set; } = DateTime.UtcNow;
     public DateTime? UltimaAutentificare { get; set; }

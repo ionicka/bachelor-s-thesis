@@ -4,96 +4,87 @@ build_property.EnableSingleFileAnalyzer = true
 build_property.EnableTrimAnalyzer = false
 build_property.IncludeAllContentForSelfExtract = 
 build_property.TargetFramework = net9.0-android
-build_property.TargetFrameworkIdentifier = .NETCoreApp
-build_property.TargetFrameworkVersion = v9.0
 build_property.TargetPlatformMinVersion = 
 build_property.UsingMicrosoftNETSdkWeb = 
 build_property.ProjectTypeGuids = 
 build_property.InvariantGlobalization = false
 build_property.PlatformNeutralAssembly = 
 build_property.EnforceExtendedAnalyzerRules = 
-build_property.EntryPointFilePath = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = FlashCards
-build_property.ProjectDir = H:\git\licenta\FlashCards\
+build_property.ProjectDir = C:\git\bachelor-s-thesis\FlashCards\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
 build_property.EffectiveAnalysisLevelStyle = 9.0
 build_property.EnableCodeStyleSeverity = 
 
-[H:/git/licenta/FlashCards/App.xaml]
+[C:/git/bachelor-s-thesis/FlashCards/App.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = FlashCards.App.xaml
 build_metadata.AdditionalFiles.TargetPath = App.xaml
 build_metadata.AdditionalFiles.RelativePath = App.xaml
 
-[H:/git/licenta/FlashCards/AppShell.xaml]
+[C:/git/bachelor-s-thesis/FlashCards/AppShell.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = FlashCards.AppShell.xaml
 build_metadata.AdditionalFiles.TargetPath = AppShell.xaml
 build_metadata.AdditionalFiles.RelativePath = AppShell.xaml
 
-[H:/git/licenta/FlashCards/MainPage.xaml]
-build_metadata.AdditionalFiles.GenKind = Xaml
-build_metadata.AdditionalFiles.ManifestResourceName = FlashCards.MainPage.xaml
-build_metadata.AdditionalFiles.TargetPath = MainPage.xaml
-build_metadata.AdditionalFiles.RelativePath = MainPage.xaml
-
-[H:/git/licenta/FlashCards/Resources/Styles/Colors.xaml]
+[C:/git/bachelor-s-thesis/FlashCards/Resources/Styles/Colors.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = FlashCards.Resources.Styles.Colors.xaml
 build_metadata.AdditionalFiles.TargetPath = Resources\Styles\Colors.xaml
 build_metadata.AdditionalFiles.RelativePath = Resources\Styles\Colors.xaml
 
-[H:/git/licenta/FlashCards/Resources/Styles/Styles.xaml]
+[C:/git/bachelor-s-thesis/FlashCards/Resources/Styles/Styles.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = FlashCards.Resources.Styles.Styles.xaml
 build_metadata.AdditionalFiles.TargetPath = Resources\Styles\Styles.xaml
 build_metadata.AdditionalFiles.RelativePath = Resources\Styles\Styles.xaml
 
-[H:/git/licenta/FlashCards/Views/FelicitariPage.xaml]
+[C:/git/bachelor-s-thesis/FlashCards/Views/FelicitariPage.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = FlashCards.Views.FelicitariPage.xaml
 build_metadata.AdditionalFiles.TargetPath = Views\FelicitariPage.xaml
 build_metadata.AdditionalFiles.RelativePath = Views\FelicitariPage.xaml
 
-[H:/git/licenta/FlashCards/Views/FluxPage.xaml]
+[C:/git/bachelor-s-thesis/FlashCards/Views/FluxPage.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = FlashCards.Views.FluxPage.xaml
 build_metadata.AdditionalFiles.TargetPath = Views\FluxPage.xaml
 build_metadata.AdditionalFiles.RelativePath = Views\FluxPage.xaml
 
-[H:/git/licenta/FlashCards/Views/InregistrarePage.xaml]
+[C:/git/bachelor-s-thesis/FlashCards/Views/InregistrarePage.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = FlashCards.Views.InregistrarePage.xaml
 build_metadata.AdditionalFiles.TargetPath = Views\InregistrarePage.xaml
 build_metadata.AdditionalFiles.RelativePath = Views\InregistrarePage.xaml
 
-[H:/git/licenta/FlashCards/Views/LoginPage.xaml]
+[C:/git/bachelor-s-thesis/FlashCards/Views/LoginPage.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = FlashCards.Views.LoginPage.xaml
 build_metadata.AdditionalFiles.TargetPath = Views\LoginPage.xaml
 build_metadata.AdditionalFiles.RelativePath = Views\LoginPage.xaml
 
-[H:/git/licenta/FlashCards/Views/MainPage.xaml]
+[C:/git/bachelor-s-thesis/FlashCards/Views/MainPage.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = FlashCards.Views.MainPage.xaml
 build_metadata.AdditionalFiles.TargetPath = Views\MainPage.xaml
 build_metadata.AdditionalFiles.RelativePath = Views\MainPage.xaml
 
-[H:/git/licenta/FlashCards/Views/SesiuneConfigPage.xaml]
+[C:/git/bachelor-s-thesis/FlashCards/Views/SesiuneConfigPage.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = FlashCards.Views.SesiuneConfigPage.xaml
 build_metadata.AdditionalFiles.TargetPath = Views\SesiuneConfigPage.xaml
 build_metadata.AdditionalFiles.RelativePath = Views\SesiuneConfigPage.xaml
 
-[H:/git/licenta/FlashCards/Views/SetariPage.xaml]
+[C:/git/bachelor-s-thesis/FlashCards/Views/SetariPage.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = FlashCards.Views.SetariPage.xaml
 build_metadata.AdditionalFiles.TargetPath = Views\SetariPage.xaml
 build_metadata.AdditionalFiles.RelativePath = Views\SetariPage.xaml
 
-[H:/git/licenta/FlashCards/Views/StatisticiPage.xaml]
+[C:/git/bachelor-s-thesis/FlashCards/Views/StatisticiPage.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = FlashCards.Views.StatisticiPage.xaml
 build_metadata.AdditionalFiles.TargetPath = Views\StatisticiPage.xaml

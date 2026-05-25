@@ -22,3 +22,9 @@ public enum NivelCuvant
     Intermediar = 4,
     Avansat = 5
 }
+
+public enum RolUtilizator
+{
+    Utilizator = 0,
+    Admin = 1
+}

@@ -216,13 +216,15 @@ public partial class FluxViewModel : ObservableObject
         _aratDefinitieRo ? "🇬🇧 EN" : "🇷🇴 RO";
 
     public FluxViewModel(
-        ICardService cardService,
-        ISessionStateService session,
-        ISesiuneService sesiuneService)
+     ICardService cardService,
+     ISessionStateService session,
+     ISesiuneService sesiuneService)
     {
         _cardService = cardService;
         _session = session;
         _sesiuneService = sesiuneService;
+
+        _session.LaDeconectare += ResetSesiune;  // ← NOU
     }
 
     partial void OnCardCurentChanged(CardDto? value)
@@ -258,7 +260,7 @@ public partial class FluxViewModel : ObservableObject
             // Porneste o sesiune noua in BD
             if (_session.UtilizatorCurent != null)
             {
-                int sesId = await _sesiuneService.IncepeSesuineAsync(
+                int sesId = await _sesiuneService.IncepeSesiuneAsync(
                     _session.UtilizatorCurent.Id);
                 _session.SetSesiune(sesId);
             }

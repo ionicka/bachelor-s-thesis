@@ -259,12 +259,10 @@ public class ProgresRepository : IProgresRepository
 
     public async Task<int> GetNrCuvinteNoiAsync(int utilizatorId)
     {
-        var toateCuvinteleIds = await _ctx.Cuvinte
-            .Select(c => c.Id).ToListAsync();
-        var cuvinteVazuteIds = await _ctx.ProgresCuvinte
-            .Where(p => p.UtilizatorId == utilizatorId)
-            .Select(p => p.CuvantId).ToListAsync();
-        return toateCuvinteleIds.Except(cuvinteVazuteIds).Count();
+        return await _ctx.Cuvinte
+            .Where(c => !_ctx.ProgresCuvinte
+                .Any(p => p.UtilizatorId == utilizatorId && p.CuvantId == c.Id))
+            .CountAsync();
     }
 }
 

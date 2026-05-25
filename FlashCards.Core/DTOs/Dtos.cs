@@ -78,7 +78,8 @@ public record UtilizatorDto(
     string NumeUtilizator,
     string Email,
     int CarduriNoiPerZi,
-    int MaxCarduriPerSesiune
+    int MaxCarduriPerSesiune,
+    RolUtilizator Rol  
 );
 
 public record RezultatSrs(

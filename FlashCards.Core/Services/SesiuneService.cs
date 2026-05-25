@@ -8,7 +8,7 @@ public class SesiuneService : ISesiuneService
     private readonly ISesiuneRepository _repo;
     public SesiuneService(ISesiuneRepository repo) => _repo = repo;
 
-    public async Task<int> IncepeSesuineAsync(int utilizatorId)
+    public async Task<int> IncepeSesiuneAsync(int utilizatorId)
     {
         var s = await _repo.IncepeAsync(utilizatorId);
         return s.Id;

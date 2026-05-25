@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "H:\\git\\licenta\\FlashCards.Data\\FlashCards.Data.csproj": {}
+    "C:\\git\\bachelor-s-thesis\\FlashCards.Data\\FlashCards.Data.csproj": {}
   },
   "projects": {
-    "H:\\git\\licenta\\FlashCards.Core\\FlashCards.Core.csproj": {
+    "C:\\git\\bachelor-s-thesis\\FlashCards.Core\\FlashCards.Core.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "H:\\git\\licenta\\FlashCards.Core\\FlashCards.Core.csproj",
+        "projectUniqueName": "C:\\git\\bachelor-s-thesis\\FlashCards.Core\\FlashCards.Core.csproj",
         "projectName": "FlashCards.Core",
-        "projectPath": "H:\\git\\licenta\\FlashCards.Core\\FlashCards.Core.csproj",
-        "packagesPath": "C:\\Users\\john\\.nuget\\packages\\",
-        "outputPath": "H:\\git\\licenta\\FlashCards.Core\\obj\\",
+        "projectPath": "C:\\git\\bachelor-s-thesis\\FlashCards.Core\\FlashCards.Core.csproj",
+        "packagesPath": "C:\\Users\\ASUS\\.nuget\\packages\\",
+        "outputPath": "C:\\git\\bachelor-s-thesis\\FlashCards.Core\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\john\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\ASUS\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -31,7 +31,6 @@
         },
         "frameworks": {
           "net9.0": {
-            "framework": "net9.0",
             "targetAlias": "net9.0",
             "projectReferences": {}
           }
@@ -46,16 +45,19 @@
           "auditLevel": "low",
           "auditMode": "direct"
         },
-        "SdkAnalysisLevel": "10.0.300"
+        "SdkAnalysisLevel": "9.0.300"
       },
       "frameworks": {
         "net9.0": {
-          "framework": "net9.0",
           "targetAlias": "net9.0",
           "dependencies": {
             "BCrypt.Net-Next": {
               "target": "Package",
               "version": "[4.0.3, )"
+            },
+            "Microsoft.Extensions.Logging": {
+              "target": "Package",
+              "version": "[9.0.9, )"
             }
           },
           "imports": [
@@ -74,24 +76,24 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.300/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.304/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "H:\\git\\licenta\\FlashCards.Data\\FlashCards.Data.csproj": {
+    "C:\\git\\bachelor-s-thesis\\FlashCards.Data\\FlashCards.Data.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "H:\\git\\licenta\\FlashCards.Data\\FlashCards.Data.csproj",
+        "projectUniqueName": "C:\\git\\bachelor-s-thesis\\FlashCards.Data\\FlashCards.Data.csproj",
         "projectName": "FlashCards.Data",
-        "projectPath": "H:\\git\\licenta\\FlashCards.Data\\FlashCards.Data.csproj",
-        "packagesPath": "C:\\Users\\john\\.nuget\\packages\\",
-        "outputPath": "H:\\git\\licenta\\FlashCards.Data\\obj\\",
+        "projectPath": "C:\\git\\bachelor-s-thesis\\FlashCards.Data\\FlashCards.Data.csproj",
+        "packagesPath": "C:\\Users\\ASUS\\.nuget\\packages\\",
+        "outputPath": "C:\\git\\bachelor-s-thesis\\FlashCards.Data\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\john\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\ASUS\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -105,11 +107,10 @@
         },
         "frameworks": {
           "net9.0": {
-            "framework": "net9.0",
             "targetAlias": "net9.0",
             "projectReferences": {
-              "H:\\git\\licenta\\FlashCards.Core\\FlashCards.Core.csproj": {
-                "projectPath": "H:\\git\\licenta\\FlashCards.Core\\FlashCards.Core.csproj"
+              "C:\\git\\bachelor-s-thesis\\FlashCards.Core\\FlashCards.Core.csproj": {
+                "projectPath": "C:\\git\\bachelor-s-thesis\\FlashCards.Core\\FlashCards.Core.csproj"
               }
             }
           }
@@ -124,11 +125,10 @@
           "auditLevel": "low",
           "auditMode": "direct"
         },
-        "SdkAnalysisLevel": "10.0.300"
+        "SdkAnalysisLevel": "9.0.300"
       },
       "frameworks": {
         "net9.0": {
-          "framework": "net9.0",
           "targetAlias": "net9.0",
           "dependencies": {
             "Dapper": {
@@ -156,7 +156,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.300/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.304/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

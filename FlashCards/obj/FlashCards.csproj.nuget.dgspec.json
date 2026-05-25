@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "H:\\git\\licenta\\FlashCards\\FlashCards.csproj": {}
+    "C:\\git\\bachelor-s-thesis\\FlashCards\\FlashCards.csproj": {}
   },
   "projects": {
-    "H:\\git\\licenta\\FlashCards.Core\\FlashCards.Core.csproj": {
+    "C:\\git\\bachelor-s-thesis\\FlashCards.Core\\FlashCards.Core.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "H:\\git\\licenta\\FlashCards.Core\\FlashCards.Core.csproj",
+        "projectUniqueName": "C:\\git\\bachelor-s-thesis\\FlashCards.Core\\FlashCards.Core.csproj",
         "projectName": "FlashCards.Core",
-        "projectPath": "H:\\git\\licenta\\FlashCards.Core\\FlashCards.Core.csproj",
-        "packagesPath": "C:\\Users\\john\\.nuget\\packages\\",
-        "outputPath": "H:\\git\\licenta\\FlashCards.Core\\obj\\",
+        "projectPath": "C:\\git\\bachelor-s-thesis\\FlashCards.Core\\FlashCards.Core.csproj",
+        "packagesPath": "C:\\Users\\ASUS\\.nuget\\packages\\",
+        "outputPath": "C:\\git\\bachelor-s-thesis\\FlashCards.Core\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\john\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\ASUS\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -31,7 +31,6 @@
         },
         "frameworks": {
           "net9.0": {
-            "framework": "net9.0",
             "targetAlias": "net9.0",
             "projectReferences": {}
           }
@@ -46,16 +45,19 @@
           "auditLevel": "low",
           "auditMode": "direct"
         },
-        "SdkAnalysisLevel": "10.0.300"
+        "SdkAnalysisLevel": "9.0.300"
       },
       "frameworks": {
         "net9.0": {
-          "framework": "net9.0",
           "targetAlias": "net9.0",
           "dependencies": {
             "BCrypt.Net-Next": {
               "target": "Package",
               "version": "[4.0.3, )"
+            },
+            "Microsoft.Extensions.Logging": {
+              "target": "Package",
+              "version": "[9.0.9, )"
             }
           },
           "imports": [
@@ -74,24 +76,24 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.300/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.304/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "H:\\git\\licenta\\FlashCards.Data\\FlashCards.Data.csproj": {
+    "C:\\git\\bachelor-s-thesis\\FlashCards.Data\\FlashCards.Data.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "H:\\git\\licenta\\FlashCards.Data\\FlashCards.Data.csproj",
+        "projectUniqueName": "C:\\git\\bachelor-s-thesis\\FlashCards.Data\\FlashCards.Data.csproj",
         "projectName": "FlashCards.Data",
-        "projectPath": "H:\\git\\licenta\\FlashCards.Data\\FlashCards.Data.csproj",
-        "packagesPath": "C:\\Users\\john\\.nuget\\packages\\",
-        "outputPath": "H:\\git\\licenta\\FlashCards.Data\\obj\\",
+        "projectPath": "C:\\git\\bachelor-s-thesis\\FlashCards.Data\\FlashCards.Data.csproj",
+        "packagesPath": "C:\\Users\\ASUS\\.nuget\\packages\\",
+        "outputPath": "C:\\git\\bachelor-s-thesis\\FlashCards.Data\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\john\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\ASUS\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -105,11 +107,10 @@
         },
         "frameworks": {
           "net9.0": {
-            "framework": "net9.0",
             "targetAlias": "net9.0",
             "projectReferences": {
-              "H:\\git\\licenta\\FlashCards.Core\\FlashCards.Core.csproj": {
-                "projectPath": "H:\\git\\licenta\\FlashCards.Core\\FlashCards.Core.csproj"
+              "C:\\git\\bachelor-s-thesis\\FlashCards.Core\\FlashCards.Core.csproj": {
+                "projectPath": "C:\\git\\bachelor-s-thesis\\FlashCards.Core\\FlashCards.Core.csproj"
               }
             }
           }
@@ -124,11 +125,10 @@
           "auditLevel": "low",
           "auditMode": "direct"
         },
-        "SdkAnalysisLevel": "10.0.300"
+        "SdkAnalysisLevel": "9.0.300"
       },
       "frameworks": {
         "net9.0": {
-          "framework": "net9.0",
           "targetAlias": "net9.0",
           "dependencies": {
             "Dapper": {
@@ -156,25 +156,25 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.300/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.304/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "H:\\git\\licenta\\FlashCards\\FlashCards.csproj": {
+    "C:\\git\\bachelor-s-thesis\\FlashCards\\FlashCards.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "H:\\git\\licenta\\FlashCards\\FlashCards.csproj",
+        "projectUniqueName": "C:\\git\\bachelor-s-thesis\\FlashCards\\FlashCards.csproj",
         "projectName": "FlashCards",
-        "projectPath": "H:\\git\\licenta\\FlashCards\\FlashCards.csproj",
-        "packagesPath": "C:\\Users\\john\\.nuget\\packages\\",
-        "outputPath": "H:\\git\\licenta\\FlashCards\\obj\\",
+        "projectPath": "C:\\git\\bachelor-s-thesis\\FlashCards\\FlashCards.csproj",
+        "packagesPath": "C:\\Users\\ASUS\\.nuget\\packages\\",
+        "outputPath": "C:\\git\\bachelor-s-thesis\\FlashCards\\obj\\",
         "projectStyle": "PackageReference",
         "crossTargeting": true,
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\john\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\ASUS\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -190,51 +190,47 @@
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
-          "net9.0-android": {
-            "framework": "net9.0-android35.0",
+          "net9.0-android35.0": {
             "targetAlias": "net9.0-android",
             "projectReferences": {
-              "H:\\git\\licenta\\FlashCards.Core\\FlashCards.Core.csproj": {
-                "projectPath": "H:\\git\\licenta\\FlashCards.Core\\FlashCards.Core.csproj"
+              "C:\\git\\bachelor-s-thesis\\FlashCards.Core\\FlashCards.Core.csproj": {
+                "projectPath": "C:\\git\\bachelor-s-thesis\\FlashCards.Core\\FlashCards.Core.csproj"
               },
-              "H:\\git\\licenta\\FlashCards.Data\\FlashCards.Data.csproj": {
-                "projectPath": "H:\\git\\licenta\\FlashCards.Data\\FlashCards.Data.csproj"
+              "C:\\git\\bachelor-s-thesis\\FlashCards.Data\\FlashCards.Data.csproj": {
+                "projectPath": "C:\\git\\bachelor-s-thesis\\FlashCards.Data\\FlashCards.Data.csproj"
               }
             }
           },
-          "net9.0-ios": {
-            "framework": "net9.0-ios26.4",
+          "net9.0-ios26.4": {
             "targetAlias": "net9.0-ios",
             "projectReferences": {
-              "H:\\git\\licenta\\FlashCards.Core\\FlashCards.Core.csproj": {
-                "projectPath": "H:\\git\\licenta\\FlashCards.Core\\FlashCards.Core.csproj"
+              "C:\\git\\bachelor-s-thesis\\FlashCards.Core\\FlashCards.Core.csproj": {
+                "projectPath": "C:\\git\\bachelor-s-thesis\\FlashCards.Core\\FlashCards.Core.csproj"
               },
-              "H:\\git\\licenta\\FlashCards.Data\\FlashCards.Data.csproj": {
-                "projectPath": "H:\\git\\licenta\\FlashCards.Data\\FlashCards.Data.csproj"
+              "C:\\git\\bachelor-s-thesis\\FlashCards.Data\\FlashCards.Data.csproj": {
+                "projectPath": "C:\\git\\bachelor-s-thesis\\FlashCards.Data\\FlashCards.Data.csproj"
               }
             }
           },
-          "net9.0-maccatalyst": {
-            "framework": "net9.0-maccatalyst26.4",
+          "net9.0-maccatalyst26.4": {
             "targetAlias": "net9.0-maccatalyst",
             "projectReferences": {
-              "H:\\git\\licenta\\FlashCards.Core\\FlashCards.Core.csproj": {
-                "projectPath": "H:\\git\\licenta\\FlashCards.Core\\FlashCards.Core.csproj"
+              "C:\\git\\bachelor-s-thesis\\FlashCards.Core\\FlashCards.Core.csproj": {
+                "projectPath": "C:\\git\\bachelor-s-thesis\\FlashCards.Core\\FlashCards.Core.csproj"
               },
-              "H:\\git\\licenta\\FlashCards.Data\\FlashCards.Data.csproj": {
-                "projectPath": "H:\\git\\licenta\\FlashCards.Data\\FlashCards.Data.csproj"
+              "C:\\git\\bachelor-s-thesis\\FlashCards.Data\\FlashCards.Data.csproj": {
+                "projectPath": "C:\\git\\bachelor-s-thesis\\FlashCards.Data\\FlashCards.Data.csproj"
               }
             }
           },
-          "net9.0-windows10.0.19041.0": {
-            "framework": "net9.0-windows10.0.19041",
+          "net9.0-windows10.0.19041": {
             "targetAlias": "net9.0-windows10.0.19041.0",
             "projectReferences": {
-              "H:\\git\\licenta\\FlashCards.Core\\FlashCards.Core.csproj": {
-                "projectPath": "H:\\git\\licenta\\FlashCards.Core\\FlashCards.Core.csproj"
+              "C:\\git\\bachelor-s-thesis\\FlashCards.Core\\FlashCards.Core.csproj": {
+                "projectPath": "C:\\git\\bachelor-s-thesis\\FlashCards.Core\\FlashCards.Core.csproj"
               },
-              "H:\\git\\licenta\\FlashCards.Data\\FlashCards.Data.csproj": {
-                "projectPath": "H:\\git\\licenta\\FlashCards.Data\\FlashCards.Data.csproj"
+              "C:\\git\\bachelor-s-thesis\\FlashCards.Data\\FlashCards.Data.csproj": {
+                "projectPath": "C:\\git\\bachelor-s-thesis\\FlashCards.Data\\FlashCards.Data.csproj"
               }
             }
           }
@@ -249,11 +245,10 @@
           "auditLevel": "low",
           "auditMode": "direct"
         },
-        "SdkAnalysisLevel": "10.0.300"
+        "SdkAnalysisLevel": "9.0.300"
       },
       "frameworks": {
-        "net9.0-android": {
-          "framework": "net9.0-android35.0",
+        "net9.0-android35.0": {
           "targetAlias": "net9.0-android",
           "dependencies": {
             "CommunityToolkit.Maui": {
@@ -275,7 +270,7 @@
             "Microsoft.NET.ILLink.Tasks": {
               "suppressParent": "All",
               "target": "Package",
-              "version": "[9.0.16, )",
+              "version": "[9.0.8, )",
               "autoReferenced": true
             },
             "Npgsql.EntityFrameworkCore.PostgreSQL": {
@@ -296,16 +291,8 @@
           "warn": true,
           "downloadDependencies": [
             {
-              "name": "Microsoft.Android.Ref.35",
-              "version": "[35.0.105, 35.0.105]"
-            },
-            {
-              "name": "Microsoft.Android.Runtime.35.android-arm64",
-              "version": "[35.0.105, 35.0.105]"
-            },
-            {
-              "name": "Microsoft.Android.Runtime.35.android-x64",
-              "version": "[35.0.105, 35.0.105]"
+              "name": "Microsoft.NETCore.App.Ref",
+              "version": "[9.0.15, 9.0.15]"
             }
           ],
           "frameworkReferences": {
@@ -316,10 +303,9 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.300/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.304/PortableRuntimeIdentifierGraph.json"
         },
-        "net9.0-ios": {
-          "framework": "net9.0-ios26.4",
+        "net9.0-ios26.4": {
           "targetAlias": "net9.0-ios",
           "dependencies": {
             "CommunityToolkit.Maui": {
@@ -341,7 +327,7 @@
             "Microsoft.NET.ILLink.Tasks": {
               "suppressParent": "All",
               "target": "Package",
-              "version": "[9.0.16, )",
+              "version": "[9.0.8, )",
               "autoReferenced": true
             },
             "Npgsql.EntityFrameworkCore.PostgreSQL": {
@@ -362,12 +348,8 @@
           "warn": true,
           "downloadDependencies": [
             {
-              "name": "Microsoft.iOS.Ref.net9.0_26.4",
-              "version": "[26.4.9015, 26.4.9015]"
-            },
-            {
-              "name": "Microsoft.iOS.Runtime.iossimulator-x64.net9.0_26.4",
-              "version": "[26.4.9015, 26.4.9015]"
+              "name": "Microsoft.NETCore.App.Ref",
+              "version": "[9.0.15, 9.0.15]"
             }
           ],
           "frameworkReferences": {
@@ -378,10 +360,9 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.300/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.304/PortableRuntimeIdentifierGraph.json"
         },
-        "net9.0-maccatalyst": {
-          "framework": "net9.0-maccatalyst26.4",
+        "net9.0-maccatalyst26.4": {
           "targetAlias": "net9.0-maccatalyst",
           "dependencies": {
             "CommunityToolkit.Maui": {
@@ -403,7 +384,7 @@
             "Microsoft.NET.ILLink.Tasks": {
               "suppressParent": "All",
               "target": "Package",
-              "version": "[9.0.16, )",
+              "version": "[9.0.8, )",
               "autoReferenced": true
             },
             "Npgsql.EntityFrameworkCore.PostgreSQL": {
@@ -425,12 +406,8 @@
           "warn": true,
           "downloadDependencies": [
             {
-              "name": "Microsoft.MacCatalyst.Ref.net9.0_26.4",
-              "version": "[26.4.9015, 26.4.9015]"
-            },
-            {
-              "name": "Microsoft.MacCatalyst.Runtime.maccatalyst-x64.net9.0_26.4",
-              "version": "[26.4.9015, 26.4.9015]"
+              "name": "Microsoft.NETCore.App.Ref",
+              "version": "[9.0.15, 9.0.15]"
             }
           ],
           "frameworkReferences": {
@@ -441,10 +418,9 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.300/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.304/PortableRuntimeIdentifierGraph.json"
         },
-        "net9.0-windows10.0.19041.0": {
-          "framework": "net9.0-windows10.0.19041",
+        "net9.0-windows10.0.19041": {
           "targetAlias": "net9.0-windows10.0.19041.0",
           "dependencies": {
             "CommunityToolkit.Maui": {
@@ -493,7 +469,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.300\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.304\\RuntimeIdentifierGraph.json"
         }
       },
       "runtimes": {

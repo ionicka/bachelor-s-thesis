@@ -87,6 +87,7 @@
       "Microsoft.EntityFrameworkCore/8.0.0": {
         "dependencies": {
           "Microsoft.EntityFrameworkCore.Abstractions": "8.0.0",
+          "Microsoft.EntityFrameworkCore.Analyzers": "8.0.0",
           "Microsoft.Extensions.Caching.Memory": "8.0.0",
           "Microsoft.Extensions.Logging": "9.0.9"
         },
@@ -105,6 +106,7 @@
           }
         }
       },
+      "Microsoft.EntityFrameworkCore.Analyzers/8.0.0": {},
       "Microsoft.EntityFrameworkCore.Relational/8.0.0": {
         "dependencies": {
           "Microsoft.EntityFrameworkCore": "8.0.0",
@@ -268,6 +270,14 @@
       },
       "Microsoft.Maui.Controls/9.0.120": {
         "dependencies": {
+          "Microsoft.Maui.Controls.Build.Tasks": "9.0.120",
+          "Microsoft.Maui.Controls.Core": "9.0.120",
+          "Microsoft.Maui.Controls.Xaml": "9.0.120",
+          "Microsoft.Maui.Resizetizer": "9.0.120"
+        }
+      },
+      "Microsoft.Maui.Controls.Build.Tasks/9.0.120": {
+        "dependencies": {
           "Microsoft.Maui.Controls.Core": "9.0.120",
           "Microsoft.Maui.Controls.Xaml": "9.0.120"
         }
@@ -415,6 +425,7 @@
           "Microsoft.Maui.Graphics": "9.0.120",
           "Microsoft.Maui.Graphics.Win2D.WinUI.Desktop": "9.0.120",
           "Microsoft.Web.WebView2": "1.0.3179.45",
+          "Microsoft.Windows.SDK.BuildTools": "10.0.22621.756",
           "Microsoft.WindowsAppSDK": "1.7.250909003"
         },
         "runtime": {
@@ -461,6 +472,7 @@
           }
         }
       },
+      "Microsoft.Maui.Resizetizer/9.0.120": {},
       "Microsoft.Web.WebView2/1.0.3179.45": {
         "native": {
           "runtimes/win-x64/native/WebView2Loader.dll": {
@@ -468,9 +480,11 @@
           }
         }
       },
+      "Microsoft.Windows.SDK.BuildTools/10.0.22621.756": {},
       "Microsoft.WindowsAppSDK/1.7.250909003": {
         "dependencies": {
-          "Microsoft.Web.WebView2": "1.0.3179.45"
+          "Microsoft.Web.WebView2": "1.0.3179.45",
+          "Microsoft.Windows.SDK.BuildTools": "10.0.22621.756"
         },
         "runtime": {
           "lib/net6.0-windows10.0.18362.0/Microsoft.Graphics.Imaging.Projection.dll": {
@@ -618,7 +632,8 @@
       },
       "FlashCards.Core/1.0.0": {
         "dependencies": {
-          "BCrypt.Net-Next": "4.0.3"
+          "BCrypt.Net-Next": "4.0.3",
+          "Microsoft.Extensions.Logging": "9.0.9"
         },
         "runtime": {
           "FlashCards.Core.dll": {
@@ -709,6 +724,13 @@
       "sha512": "sha512-VR22s3+zoqlVI7xauFKn1znSIFHO8xuILT+noSwS8bZCKcHz0ydkTDQMuaxSa5WBaQrZmwtTz9rmRvJ7X8mSPQ==",
       "path": "microsoft.entityframeworkcore.abstractions/8.0.0",
       "hashPath": "microsoft.entityframeworkcore.abstractions.8.0.0.nupkg.sha512"
+    },
+    "Microsoft.EntityFrameworkCore.Analyzers/8.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-ZXxEeLs2zoZ1TA+QoMMcw4f3Tirf8PzgdDax8RoWo0dxI2KmqiEGWYjhm2B/XyWfglc6+mNRyB8rZiQSmxCpeg==",
+      "path": "microsoft.entityframeworkcore.analyzers/8.0.0",
+      "hashPath": "microsoft.entityframeworkcore.analyzers.8.0.0.nupkg.sha512"
     },
     "Microsoft.EntityFrameworkCore.Relational/8.0.0": {
       "type": "package",
@@ -815,6 +837,13 @@
       "path": "microsoft.maui.controls/9.0.120",
       "hashPath": "microsoft.maui.controls.9.0.120.nupkg.sha512"
     },
+    "Microsoft.Maui.Controls.Build.Tasks/9.0.120": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-r9BcM8eZYd93AS42DaQ2O/rgBw24YtWScnY0NAc97IbGktu9+jcSYqPJzi8kgA7vjdAqhQMdjzoH5hQk2qoC0g==",
+      "path": "microsoft.maui.controls.build.tasks/9.0.120",
+      "hashPath": "microsoft.maui.controls.build.tasks.9.0.120.nupkg.sha512"
+    },
     "Microsoft.Maui.Controls.Core/9.0.120": {
       "type": "package",
       "serviceable": true,
@@ -857,12 +886,26 @@
       "path": "microsoft.maui.graphics.win2d.winui.desktop/9.0.120",
       "hashPath": "microsoft.maui.graphics.win2d.winui.desktop.9.0.120.nupkg.sha512"
     },
+    "Microsoft.Maui.Resizetizer/9.0.120": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-npXjLP1/MjSY4bThiZXJGPAyermhMoDpEiaos9O0oSAC+jp0ykbCtzaUds/wrR6CbG24wongDJu9bilo1RR1RQ==",
+      "path": "microsoft.maui.resizetizer/9.0.120",
+      "hashPath": "microsoft.maui.resizetizer.9.0.120.nupkg.sha512"
+    },
     "Microsoft.Web.WebView2/1.0.3179.45": {
       "type": "package",
       "serviceable": true,
       "sha512": "sha512-3pokSH5CnN0G6rGhGFo1y87inxYhNxBQ2Vdf0wlvBj99KHxQJormjDACmqRnFeUsmuNFIhWwfAL1ztq7wD5qRA==",
       "path": "microsoft.web.webview2/1.0.3179.45",
       "hashPath": "microsoft.web.webview2.1.0.3179.45.nupkg.sha512"
+    },
+    "Microsoft.Windows.SDK.BuildTools/10.0.22621.756": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-7ZL2sFSioYm1Ry067Kw1hg0SCcW5kuVezC2SwjGbcPE61Nn+gTbH86T73G3LcEOVj0S3IZzNuE/29gZvOLS7VA==",
+      "path": "microsoft.windows.sdk.buildtools/10.0.22621.756",
+      "hashPath": "microsoft.windows.sdk.buildtools.10.0.22621.756.nupkg.sha512"
     },
     "Microsoft.WindowsAppSDK/1.7.250909003": {
       "type": "package",
