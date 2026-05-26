@@ -115,11 +115,23 @@ public partial class EditeazaCuvantViewModel : ObservableObject
         Pronuntie = dto.Pronuntie ?? "";
         Etichete = dto.Etichete ?? "";
 
-        SelectedTipIndex = EnumLabels.ToateTipurile.IndexOf(dto.Tip);
-        SelectedDomeniuIndex = EnumLabels.ToateDomenii.IndexOf(dto.Domeniu);
-        SelectedNivelIndex = EnumLabels.ToateNivelele.IndexOf(dto.Nivel);
+        // ─── Picker-e: setăm și forțăm notificare explicită ───
+        int tipIdx = EnumLabels.ToateTipurile.IndexOf(dto.Tip);
+        int domeniuIdx = EnumLabels.ToateDomenii.IndexOf(dto.Domeniu);
+        int nivelIdx = EnumLabels.ToateNivelele.IndexOf(dto.Nivel);
 
-        // Exemple
+        // Setăm temporar la -1 pentru a forța schimbarea
+        SelectedTipIndex = -1;
+        SelectedDomeniuIndex = -1;
+        SelectedNivelIndex = -1;
+
+        await Task.Delay(10); // mic respiro pentru Picker
+
+        SelectedTipIndex = tipIdx >= 0 ? tipIdx : 0;
+        SelectedDomeniuIndex = domeniuIdx >= 0 ? domeniuIdx : 0;
+        SelectedNivelIndex = nivelIdx >= 0 ? nivelIdx : 0;
+
+        // ─── Exemple ───
         Exemple.Clear();
         foreach (var ex in dto.Exemple)
             Exemple.Add(new ExempluVm(this) { Text = ex });
@@ -127,7 +139,7 @@ public partial class EditeazaCuvantViewModel : ObservableObject
             Exemple.Add(new ExempluVm(this));
         ActualizeazaStareExemple();
 
-        // Imagini
+        // ─── Imagini ───
         Imagini.Clear();
         foreach (var img in dto.Imagini)
             Imagini.Add(new ImagineVm(this, _imageStorage) { NumeFisier = img });
