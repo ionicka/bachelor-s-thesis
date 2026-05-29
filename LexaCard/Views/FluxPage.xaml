@@ -63,8 +63,8 @@
                     <!-- IMAGINI - dispare complet daca CaleImagini e null -->
                     <Grid IsVisible="{Binding AreImagini}">
                         <Image Source="{Binding ImagineCurenta}"
-                               Aspect="AspectFill"
-                               HeightRequest="200" />
+       Aspect="AspectFill"
+       HeightRequest="200" />
                         <Button Text="⇄"
                                 Command="{Binding SchimbaImagineCommand}"
                                 IsVisible="{Binding AreDuaImagini}"

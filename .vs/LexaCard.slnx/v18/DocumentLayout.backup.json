@@ -3,6 +3,14 @@
   "WorkspaceRootPath": "H:\\git\\licenta\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{6AA86A93-1880-41F5-814C-EE8DD49562A4}|LexaCard.Data\\LexaCard.Data.csproj|h:\\git\\licenta\\lexacard.data\\repositories\\seeddata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6AA86A93-1880-41F5-814C-EE8DD49562A4}|LexaCard.Data\\LexaCard.Data.csproj|solutionrelative:lexacard.data\\repositories\\seeddata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{14AE117D-09D4-AC1B-13B7-FF48A1F9F592}|LexaCard\\LexaCard.csproj|h:\\git\\licenta\\lexacard\\views\\fluxpage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{14AE117D-09D4-AC1B-13B7-FF48A1F9F592}|LexaCard\\LexaCard.csproj|solutionrelative:lexacard\\views\\fluxpage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{14AE117D-09D4-AC1B-13B7-FF48A1F9F592}|LexaCard\\LexaCard.csproj|h:\\git\\licenta\\lexacard\\views\\fluxpage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{14AE117D-09D4-AC1B-13B7-FF48A1F9F592}|LexaCard\\LexaCard.csproj|solutionrelative:lexacard\\views\\fluxpage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -17,10 +25,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{14AE117D-09D4-AC1B-13B7-FF48A1F9F592}|LexaCard\\LexaCard.csproj|h:\\git\\licenta\\lexacard\\mauiprogram.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{14AE117D-09D4-AC1B-13B7-FF48A1F9F592}|LexaCard\\LexaCard.csproj|solutionrelative:lexacard\\mauiprogram.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{6AA86A93-1880-41F5-814C-EE8DD49562A4}|LexaCard.Data\\LexaCard.Data.csproj|h:\\git\\licenta\\lexacard.data\\repositories\\seeddata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{6AA86A93-1880-41F5-814C-EE8DD49562A4}|LexaCard.Data\\LexaCard.Data.csproj|solutionrelative:lexacard.data\\repositories\\seeddata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{1F988E54-6B51-0485-F906-0F77D6C9D3CD}|LexaCard.Core\\LexaCard.Core.csproj|h:\\git\\licenta\\lexacard.core\\dtos\\dtos.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -74,24 +78,37 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 5,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 1,
+              "Title": "FluxPage.xaml",
+              "DocumentMoniker": "H:\\git\\licenta\\LexaCard\\Views\\FluxPage.xaml",
+              "RelativeDocumentMoniker": "LexaCard\\Views\\FluxPage.xaml",
+              "ToolTip": "H:\\git\\licenta\\LexaCard\\Views\\FluxPage.xaml",
+              "RelativeToolTip": "LexaCard\\Views\\FluxPage.xaml",
+              "ViewState": "AgIAAC8AAAAAAAAAAAAuwEAAAAAWAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2026-05-29T11:17:34.868Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
               "Title": "SeedData.cs",
               "DocumentMoniker": "H:\\git\\licenta\\LexaCard.Data\\Repositories\\SeedData.cs",
               "RelativeDocumentMoniker": "LexaCard.Data\\Repositories\\SeedData.cs",
               "ToolTip": "H:\\git\\licenta\\LexaCard.Data\\Repositories\\SeedData.cs",
               "RelativeToolTip": "LexaCard.Data\\Repositories\\SeedData.cs",
-              "ViewState": "AgIAADwAAAAAAAAAAAAqwHQAAAABAAAAAAAAAA==",
+              "ViewState": "AgIAAFIAAAAAAAAAAAAgwGoAAAAlAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-05-29T10:51:46.777Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 4,
               "Title": "Repositories.cs",
               "DocumentMoniker": "H:\\git\\licenta\\LexaCard.Data\\Repositories\\Repositories.cs",
               "RelativeDocumentMoniker": "LexaCard.Data\\Repositories\\Repositories.cs",
@@ -99,12 +116,11 @@
               "RelativeToolTip": "LexaCard.Data\\Repositories\\Repositories.cs",
               "ViewState": "AgIAAPkAAAAAAAAAAAAkwPMAAAAIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-29T10:24:36.822Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-05-29T10:24:36.822Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 12,
               "Title": "FelicitariPage.xaml.cs",
               "DocumentMoniker": "H:\\git\\licenta\\LexaCard\\Views\\FelicitariPage.xaml.cs",
               "RelativeDocumentMoniker": "LexaCard\\Views\\FelicitariPage.xaml.cs",
@@ -116,7 +132,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 13,
               "Title": "FelicitariPage.xaml",
               "DocumentMoniker": "H:\\git\\licenta\\LexaCard\\Views\\FelicitariPage.xaml",
               "RelativeDocumentMoniker": "LexaCard\\Views\\FelicitariPage.xaml",
@@ -128,7 +144,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 11,
               "Title": "SesiuneConfigViewModel.cs",
               "DocumentMoniker": "H:\\git\\licenta\\LexaCard\\ViewModels\\SesiuneConfigViewModel.cs",
               "RelativeDocumentMoniker": "LexaCard\\ViewModels\\SesiuneConfigViewModel.cs",
@@ -140,7 +156,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 2,
               "Title": "FluxPage.xaml.cs",
               "DocumentMoniker": "H:\\git\\licenta\\LexaCard\\Views\\FluxPage.xaml.cs",
               "RelativeDocumentMoniker": "LexaCard\\Views\\FluxPage.xaml.cs",
@@ -153,7 +169,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 3,
               "Title": "ViewModels.cs",
               "DocumentMoniker": "H:\\git\\licenta\\LexaCard\\ViewModels\\ViewModels.cs",
               "RelativeDocumentMoniker": "LexaCard\\ViewModels\\ViewModels.cs",
@@ -161,12 +177,11 @@
               "RelativeToolTip": "LexaCard\\ViewModels\\ViewModels.cs",
               "ViewState": "AgIAAKACAAAAAAAAAAAqwKwCAAAsAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-15T08:50:18.8Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-05-15T08:50:18.8Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 8,
               "Title": "AppShell.xaml",
               "DocumentMoniker": "H:\\git\\licenta\\LexaCard\\AppShell.xaml",
               "RelativeDocumentMoniker": "LexaCard\\AppShell.xaml",
@@ -178,7 +193,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 5,
               "Title": "MauiProgram.cs",
               "DocumentMoniker": "H:\\git\\licenta\\LexaCard\\MauiProgram.cs",
               "RelativeDocumentMoniker": "LexaCard\\MauiProgram.cs",
@@ -186,12 +201,11 @@
               "RelativeToolTip": "LexaCard\\MauiProgram.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAjAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-16T11:09:04.809Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-05-16T11:09:04.809Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 10,
               "Title": "MauiServices.cs",
               "DocumentMoniker": "H:\\git\\licenta\\LexaCard\\Services\\MauiServices.cs",
               "RelativeDocumentMoniker": "LexaCard\\Services\\MauiServices.cs",
@@ -203,7 +217,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 7,
               "Title": "Cuvant.cs",
               "DocumentMoniker": "H:\\git\\licenta\\LexaCard.Core\\Entities\\Cuvant.cs",
               "RelativeDocumentMoniker": "LexaCard.Core\\Entities\\Cuvant.cs",
@@ -215,7 +229,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 6,
               "Title": "Dtos.cs",
               "DocumentMoniker": "H:\\git\\licenta\\LexaCard.Core\\DTOs\\Dtos.cs",
               "RelativeDocumentMoniker": "LexaCard.Core\\DTOs\\Dtos.cs",
@@ -227,7 +241,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 14,
               "Title": "SesiuneConfigPage.xaml",
               "DocumentMoniker": "H:\\git\\licenta\\LexaCard\\Views\\SesiuneConfigPage.xaml",
               "RelativeDocumentMoniker": "LexaCard\\Views\\SesiuneConfigPage.xaml",
@@ -239,7 +253,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 9,
               "Title": "CardService.cs",
               "DocumentMoniker": "H:\\git\\licenta\\LexaCard.Core\\Services\\CardService.cs",
               "RelativeDocumentMoniker": "LexaCard.Core\\Services\\CardService.cs",
@@ -251,7 +265,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 16,
               "Title": "MainViewModel.cs",
               "DocumentMoniker": "H:\\git\\licenta\\LexaCard\\ViewModels\\MainViewModel.cs",
               "RelativeDocumentMoniker": "LexaCard\\ViewModels\\MainViewModel.cs",
@@ -263,7 +277,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 15,
               "Title": "SrsService.cs",
               "DocumentMoniker": "H:\\git\\licenta\\LexaCard.Core\\Services\\SrsService.cs",
               "RelativeDocumentMoniker": "LexaCard.Core\\Services\\SrsService.cs",
