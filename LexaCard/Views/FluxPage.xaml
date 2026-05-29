@@ -63,8 +63,9 @@
                     <!-- IMAGINI - dispare complet daca CaleImagini e null -->
                     <Grid IsVisible="{Binding AreImagini}">
                         <Image Source="{Binding ImagineCurenta}"
-       Aspect="AspectFill"
-       HeightRequest="200" />
+                               Aspect="AspectFit"
+                               HeightRequest="200"
+                               BackgroundColor="#0F1A2E" />
                         <Button Text="⇄"
                                 Command="{Binding SchimbaImagineCommand}"
                                 IsVisible="{Binding AreDuaImagini}"
@@ -88,11 +89,22 @@
                                    LineBreakMode="WordWrap"
                                    IsVisible="{Binding PropozitieRevelata,
                                                Converter={StaticResource InvertBool}}" />
-                            <!-- Dupa revelatie: termenul -->
-                            <Label Text="{Binding CardCurent.Termen}"
-                                   FontSize="38" FontAttributes="Bold"
-                                   TextColor="White" LineBreakMode="WordWrap"
-                                   IsVisible="{Binding PropozitieRevelata}" />
+                            <!-- Dupa revelatie: termenul + buton pronuntie -->
+                            <Grid IsVisible="{Binding PropozitieRevelata}"
+                                  ColumnDefinitions="*,Auto">
+                                <Label Grid.Column="0"
+                                       Text="{Binding CardCurent.Termen}"
+                                       FontSize="38" FontAttributes="Bold"
+                                       TextColor="White" LineBreakMode="WordWrap"
+                                       VerticalOptions="Center" />
+                                <Button Grid.Column="1"
+                                        Text="🔊"
+                                        Command="{Binding PronuntaCuvantCommand}"
+                                        BackgroundColor="Transparent"
+                                        FontSize="22"
+                                        WidthRequest="48" HeightRequest="48"
+                                        Padding="0" VerticalOptions="Center" />
+                            </Grid>
                             <Label Text="{Binding CardCurent.Pronuntie}"
                                    FontSize="15" TextColor="#8899BB"
                                    IsVisible="{Binding PropozitieRevelata}" />
@@ -128,18 +140,27 @@
                     <Frame BackgroundColor="#16213E" CornerRadius="16"
                            Padding="20" BorderColor="#0F3460">
                         <VerticalStackLayout Spacing="10">
-                            <Grid ColumnDefinitions="*,Auto">
+                        <Grid ColumnDefinitions="*,Auto">
                                 <Label Grid.Column="0"
                                        Text="EXEMPLU IN CONTEXT"
                                        TextColor="#E94560" FontSize="11"
                                        FontAttributes="Bold" CharacterSpacing="1.5"
                                        VerticalOptions="Center" />
-                                <Button Grid.Column="1" Text="→"
-                                        Command="{Binding SchimbaExempluCommand}"
-                                        BackgroundColor="#1A3060"
-                                        TextColor="#8899BB" FontSize="14"
-                                        CornerRadius="8"
-                                        HeightRequest="28" Padding="8,0" />
+                                <StackLayout Grid.Column="1" Orientation="Horizontal" Spacing="4">
+                                    <Button Text="🔊"
+                                            Command="{Binding PronuntaExempluCommand}"
+                                            IsVisible="{Binding PropozitieRevelata}"
+                                            BackgroundColor="Transparent"
+                                            FontSize="16"
+                                            WidthRequest="36" HeightRequest="28"
+                                            Padding="0" />
+                                    <Button Text="→"
+                                            Command="{Binding SchimbaExempluCommand}"
+                                            BackgroundColor="#1A3060"
+                                            TextColor="#8899BB" FontSize="14"
+                                            CornerRadius="8"
+                                            HeightRequest="28" Padding="8,0" />
+                                </StackLayout>
                             </Grid>
                             <!-- Blur (inainte de revelatie) -->
                             <Label Text="{Binding ExempluCurentBlur}"

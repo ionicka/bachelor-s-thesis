@@ -420,6 +420,54 @@ public partial class FluxViewModel : ObservableObject
     }
 
     [RelayCommand]
+    async Task PronuntaCuvantAsync()
+    {
+        if (CardCurent == null) return;
+        try
+        {
+            var settings = new SpeechOptions
+            {
+                Locale = await GetEnglishLocale(),
+                Pitch = 1.0f,
+                Volume = 1.0f
+            };
+            await TextToSpeech.Default.SpeakAsync(CardCurent.Termen, settings);
+        }
+        catch
+        {
+            // Fallback fara locale
+            await TextToSpeech.Default.SpeakAsync(CardCurent.Termen);
+        }
+    }
+
+    [RelayCommand]
+    async Task PronuntaExempluAsync()
+    {
+        if (CardCurent == null) return;
+        try
+        {
+            var settings = new SpeechOptions
+            {
+                Locale = await GetEnglishLocale(),
+                Pitch = 1.0f,
+                Volume = 1.0f
+            };
+            await TextToSpeech.Default.SpeakAsync(ExempluCurentRevelat, settings);
+        }
+        catch
+        {
+            await TextToSpeech.Default.SpeakAsync(ExempluCurentRevelat);
+        }
+    }
+
+    private static async Task<Locale?> GetEnglishLocale()
+    {
+        var locales = await TextToSpeech.Default.GetLocalesAsync();
+        return locales.FirstOrDefault(l =>
+            l.Language.StartsWith("en", StringComparison.OrdinalIgnoreCase));
+    }
+
+    [RelayCommand]
     void SchimbaImagine()
     {
         if (CardCurent == null || CardCurent.Imagini.Count < 2) return;

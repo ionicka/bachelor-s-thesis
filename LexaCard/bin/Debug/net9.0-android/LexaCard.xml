@@ -1,0 +1,718 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>LexaCard</name>
+    </assembly>
+    <members>
+        <member name="T:LexaCard.ViewModels.MainViewModel">
+            <inheritdoc/>
+            <inheritdoc/>
+        </member>
+        <member name="P:LexaCard.ViewModels.MainViewModel.NumeUtilizator">
+            <inheritdoc cref="F:LexaCard.ViewModels.MainViewModel._numeUtilizator"/>
+        </member>
+        <member name="P:LexaCard.ViewModels.MainViewModel.InitialaUtilizator">
+            <inheritdoc cref="F:LexaCard.ViewModels.MainViewModel._initialaUtilizator"/>
+        </member>
+        <member name="P:LexaCard.ViewModels.MainViewModel.Salut">
+            <inheritdoc cref="F:LexaCard.ViewModels.MainViewModel._salut"/>
+        </member>
+        <member name="P:LexaCard.ViewModels.MainViewModel.Streak">
+            <inheritdoc cref="F:LexaCard.ViewModels.MainViewModel._streak"/>
+        </member>
+        <member name="P:LexaCard.ViewModels.MainViewModel.Monede">
+            <inheritdoc cref="F:LexaCard.ViewModels.MainViewModel._monede"/>
+        </member>
+        <member name="P:LexaCard.ViewModels.MainViewModel.NrNotificari">
+            <inheritdoc cref="F:LexaCard.ViewModels.MainViewModel._nrNotificari"/>
+        </member>
+        <member name="P:LexaCard.ViewModels.MainViewModel.AreNotificari">
+            <inheritdoc cref="F:LexaCard.ViewModels.MainViewModel._areNotificari"/>
+        </member>
+        <member name="P:LexaCard.ViewModels.MainViewModel.CarduriAzi">
+            <inheritdoc cref="F:LexaCard.ViewModels.MainViewModel._carduriAzi"/>
+        </member>
+        <member name="P:LexaCard.ViewModels.MainViewModel.ProgressZi">
+            <inheritdoc cref="F:LexaCard.ViewModels.MainViewModel._progressZi"/>
+        </member>
+        <member name="P:LexaCard.ViewModels.MainViewModel.ZileSaptamana">
+            <inheritdoc cref="F:LexaCard.ViewModels.MainViewModel._zileSaptamana"/>
+        </member>
+        <member name="F:LexaCard.ViewModels.MainViewModel.mergeVocabularCommand">
+            <summary>The backing field for <see cref="P:LexaCard.ViewModels.MainViewModel.MergeVocabularCommand"/>.</summary>
+        </member>
+        <member name="P:LexaCard.ViewModels.MainViewModel.MergeVocabularCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:LexaCard.ViewModels.MainViewModel.MergeVocabularAsync"/>.</summary>
+        </member>
+        <member name="T:LexaCard.ViewModels.SesiuneConfigViewModel">
+            <inheritdoc/>
+            <inheritdoc/>
+            <inheritdoc/>
+            <inheritdoc/>
+            <inheritdoc/>
+            <inheritdoc/>
+        </member>
+        <member name="P:LexaCard.ViewModels.SesiuneConfigViewModel.NrRevizuiri">
+            <inheritdoc cref="F:LexaCard.ViewModels.SesiuneConfigViewModel._nrRevizuiri"/>
+        </member>
+        <member name="P:LexaCard.ViewModels.SesiuneConfigViewModel.NrCuvinteNoi">
+            <inheritdoc cref="F:LexaCard.ViewModels.SesiuneConfigViewModel._nrCuvinteNoi"/>
+        </member>
+        <member name="P:LexaCard.ViewModels.SesiuneConfigViewModel.TotalDisponibil">
+            <inheritdoc cref="F:LexaCard.ViewModels.SesiuneConfigViewModel._totalDisponibil"/>
+        </member>
+        <member name="P:LexaCard.ViewModels.SesiuneConfigViewModel.EstimareTimp">
+            <inheritdoc cref="F:LexaCard.ViewModels.SesiuneConfigViewModel._estimareTimp"/>
+        </member>
+        <member name="P:LexaCard.ViewModels.SesiuneConfigViewModel.PoateIncepe">
+            <inheritdoc cref="F:LexaCard.ViewModels.SesiuneConfigViewModel._poateIncepe"/>
+        </member>
+        <member name="P:LexaCard.ViewModels.SesiuneConfigViewModel.RevizuiriInSesiune">
+            <inheritdoc cref="F:LexaCard.ViewModels.SesiuneConfigViewModel._revizuiriInSesiune"/>
+        </member>
+        <member name="P:LexaCard.ViewModels.SesiuneConfigViewModel.NoiFInSesiune">
+            <inheritdoc cref="F:LexaCard.ViewModels.SesiuneConfigViewModel._noiFInSesiune"/>
+        </member>
+        <member name="F:LexaCard.ViewModels.SesiuneConfigViewModel.adaugaCarduriCommand">
+            <summary>The backing field for <see cref="P:LexaCard.ViewModels.SesiuneConfigViewModel.AdaugaCarduriCommand"/>.</summary>
+        </member>
+        <member name="P:LexaCard.ViewModels.SesiuneConfigViewModel.AdaugaCarduriCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IRelayCommand"/> instance wrapping <see cref="M:LexaCard.ViewModels.SesiuneConfigViewModel.AdaugaCarduri"/>.</summary>
+        </member>
+        <member name="F:LexaCard.ViewModels.SesiuneConfigViewModel.scadeCarduriCommand">
+            <summary>The backing field for <see cref="P:LexaCard.ViewModels.SesiuneConfigViewModel.ScadeCarduriCommand"/>.</summary>
+        </member>
+        <member name="P:LexaCard.ViewModels.SesiuneConfigViewModel.ScadeCarduriCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IRelayCommand"/> instance wrapping <see cref="M:LexaCard.ViewModels.SesiuneConfigViewModel.ScadeCarduri"/>.</summary>
+        </member>
+        <member name="F:LexaCard.ViewModels.SesiuneConfigViewModel.seteazaCarduriCommand">
+            <summary>The backing field for <see cref="P:LexaCard.ViewModels.SesiuneConfigViewModel.SeteazaCarduriCommand"/>.</summary>
+        </member>
+        <member name="P:LexaCard.ViewModels.SesiuneConfigViewModel.SeteazaCarduriCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IRelayCommand`1"/> instance wrapping <see cref="M:LexaCard.ViewModels.SesiuneConfigViewModel.SeteazaCarduri(System.String)"/>.</summary>
+        </member>
+        <member name="F:LexaCard.ViewModels.SesiuneConfigViewModel.inceptSesiuneCommand">
+            <summary>The backing field for <see cref="P:LexaCard.ViewModels.SesiuneConfigViewModel.InceptSesiuneCommand"/>.</summary>
+        </member>
+        <member name="P:LexaCard.ViewModels.SesiuneConfigViewModel.InceptSesiuneCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:LexaCard.ViewModels.SesiuneConfigViewModel.InceptSesiuneAsync"/>.</summary>
+        </member>
+        <member name="F:LexaCard.ViewModels.SesiuneConfigViewModel.inapoiCommand">
+            <summary>The backing field for <see cref="P:LexaCard.ViewModels.SesiuneConfigViewModel.InapoiCommand"/>.</summary>
+        </member>
+        <member name="P:LexaCard.ViewModels.SesiuneConfigViewModel.InapoiCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:LexaCard.ViewModels.SesiuneConfigViewModel.InapoiAsync"/>.</summary>
+        </member>
+        <member name="T:LexaCard.ViewModels.LoginViewModel">
+            <inheritdoc/>
+            <inheritdoc/>
+            <inheritdoc/>
+        </member>
+        <member name="P:LexaCard.ViewModels.LoginViewModel.Email">
+            <inheritdoc cref="F:LexaCard.ViewModels.LoginViewModel._email"/>
+        </member>
+        <member name="P:LexaCard.ViewModels.LoginViewModel.Parola">
+            <inheritdoc cref="F:LexaCard.ViewModels.LoginViewModel._parola"/>
+        </member>
+        <member name="P:LexaCard.ViewModels.LoginViewModel.MesajEroare">
+            <inheritdoc cref="F:LexaCard.ViewModels.LoginViewModel._mesajEroare"/>
+        </member>
+        <member name="P:LexaCard.ViewModels.LoginViewModel.SeIncarca">
+            <inheritdoc cref="F:LexaCard.ViewModels.LoginViewModel._seIncarca"/>
+        </member>
+        <member name="F:LexaCard.ViewModels.LoginViewModel.logheazaCommand">
+            <summary>The backing field for <see cref="P:LexaCard.ViewModels.LoginViewModel.LogheazaCommand"/>.</summary>
+        </member>
+        <member name="P:LexaCard.ViewModels.LoginViewModel.LogheazaCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:LexaCard.ViewModels.LoginViewModel.LogheazaAsync"/>.</summary>
+        </member>
+        <member name="F:LexaCard.ViewModels.LoginViewModel.mergeInregistrareCommand">
+            <summary>The backing field for <see cref="P:LexaCard.ViewModels.LoginViewModel.MergeInregistrareCommand"/>.</summary>
+        </member>
+        <member name="P:LexaCard.ViewModels.LoginViewModel.MergeInregistrareCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:LexaCard.ViewModels.LoginViewModel.MergeInregistrareAsync"/>.</summary>
+        </member>
+        <member name="T:LexaCard.ViewModels.InregistrareViewModel">
+            <inheritdoc/>
+            <inheritdoc/>
+            <inheritdoc/>
+        </member>
+        <member name="P:LexaCard.ViewModels.InregistrareViewModel.NumeUtilizator">
+            <inheritdoc cref="F:LexaCard.ViewModels.InregistrareViewModel._numeUtilizator"/>
+        </member>
+        <member name="P:LexaCard.ViewModels.InregistrareViewModel.Email">
+            <inheritdoc cref="F:LexaCard.ViewModels.InregistrareViewModel._email"/>
+        </member>
+        <member name="P:LexaCard.ViewModels.InregistrareViewModel.Parola">
+            <inheritdoc cref="F:LexaCard.ViewModels.InregistrareViewModel._parola"/>
+        </member>
+        <member name="P:LexaCard.ViewModels.InregistrareViewModel.ConfirmaParola">
+            <inheritdoc cref="F:LexaCard.ViewModels.InregistrareViewModel._confirmaParola"/>
+        </member>
+        <member name="P:LexaCard.ViewModels.InregistrareViewModel.MesajEroare">
+            <inheritdoc cref="F:LexaCard.ViewModels.InregistrareViewModel._mesajEroare"/>
+        </member>
+        <member name="P:LexaCard.ViewModels.InregistrareViewModel.SeIncarca">
+            <inheritdoc cref="F:LexaCard.ViewModels.InregistrareViewModel._seIncarca"/>
+        </member>
+        <member name="F:LexaCard.ViewModels.InregistrareViewModel.inregistreazaCommand">
+            <summary>The backing field for <see cref="P:LexaCard.ViewModels.InregistrareViewModel.InregistreazaCommand"/>.</summary>
+        </member>
+        <member name="P:LexaCard.ViewModels.InregistrareViewModel.InregistreazaCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:LexaCard.ViewModels.InregistrareViewModel.InregistreazaAsync"/>.</summary>
+        </member>
+        <member name="F:LexaCard.ViewModels.InregistrareViewModel.inapoiCommand">
+            <summary>The backing field for <see cref="P:LexaCard.ViewModels.InregistrareViewModel.InapoiCommand"/>.</summary>
+        </member>
+        <member name="P:LexaCard.ViewModels.InregistrareViewModel.InapoiCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:LexaCard.ViewModels.InregistrareViewModel.InapoiAsync"/>.</summary>
+        </member>
+        <member name="T:LexaCard.ViewModels.FluxViewModel">
+            <inheritdoc/>
+            <inheritdoc/>
+            <inheritdoc/>
+            <inheritdoc/>
+            <inheritdoc/>
+            <inheritdoc/>
+            <inheritdoc/>
+            <inheritdoc/>
+            <inheritdoc/>
+            <inheritdoc/>
+            <inheritdoc/>
+        </member>
+        <member name="P:LexaCard.ViewModels.FluxViewModel.CardCurent">
+            <inheritdoc cref="F:LexaCard.ViewModels.FluxViewModel._cardCurent"/>
+        </member>
+        <member name="P:LexaCard.ViewModels.FluxViewModel.PropozitieRevelata">
+            <inheritdoc cref="F:LexaCard.ViewModels.FluxViewModel._propozitieRevelata"/>
+        </member>
+        <member name="P:LexaCard.ViewModels.FluxViewModel.SeIncarca">
+            <inheritdoc cref="F:LexaCard.ViewModels.FluxViewModel._seIncarca"/>
+        </member>
+        <member name="P:LexaCard.ViewModels.FluxViewModel.ModTastare">
+            <inheritdoc cref="F:LexaCard.ViewModels.FluxViewModel._modTastare"/>
+        </member>
+        <member name="P:LexaCard.ViewModels.FluxViewModel.TextTastat">
+            <inheritdoc cref="F:LexaCard.ViewModels.FluxViewModel._textTastat"/>
+        </member>
+        <member name="P:LexaCard.ViewModels.FluxViewModel.SesiuneGoala">
+            <inheritdoc cref="F:LexaCard.ViewModels.FluxViewModel._sesiuneGoala"/>
+        </member>
+        <member name="P:LexaCard.ViewModels.FluxViewModel.NrCorect">
+            <inheritdoc cref="F:LexaCard.ViewModels.FluxViewModel._nrCorect"/>
+        </member>
+        <member name="P:LexaCard.ViewModels.FluxViewModel.NrGresit">
+            <inheritdoc cref="F:LexaCard.ViewModels.FluxViewModel._nrGresit"/>
+        </member>
+        <member name="P:LexaCard.ViewModels.FluxViewModel.MesajFeedback">
+            <inheritdoc cref="F:LexaCard.ViewModels.FluxViewModel._mesajFeedback"/>
+        </member>
+        <member name="P:LexaCard.ViewModels.FluxViewModel.ColorFeedback">
+            <inheritdoc cref="F:LexaCard.ViewModels.FluxViewModel._colorFeedback"/>
+        </member>
+        <member name="P:LexaCard.ViewModels.FluxViewModel.AsteaptaMailDeparte">
+            <inheritdoc cref="F:LexaCard.ViewModels.FluxViewModel._asteaptaMailDeparte"/>
+        </member>
+        <member name="P:LexaCard.ViewModels.FluxViewModel.ProgressText">
+            <inheritdoc cref="F:LexaCard.ViewModels.FluxViewModel._progressText"/>
+        </member>
+        <member name="P:LexaCard.ViewModels.FluxViewModel.IndexImagine">
+            <inheritdoc cref="F:LexaCard.ViewModels.FluxViewModel._indexImagine"/>
+        </member>
+        <member name="P:LexaCard.ViewModels.FluxViewModel.IndexExemplu">
+            <inheritdoc cref="F:LexaCard.ViewModels.FluxViewModel._indexExemplu"/>
+        </member>
+        <member name="P:LexaCard.ViewModels.FluxViewModel.AratDefinitieRo">
+            <inheritdoc cref="F:LexaCard.ViewModels.FluxViewModel._aratDefinitieRo"/>
+        </member>
+        <member name="M:LexaCard.ViewModels.FluxViewModel.OnCardCurentChanged(LexaCard.Core.DTOs.CardDto)">
+            <summary>Executes the logic for when <see cref="P:LexaCard.ViewModels.FluxViewModel.CardCurent"/> just changed.</summary>
+            <param name="value">The new property value that was set.</param>
+            <remarks>This method is invoked right after the value of <see cref="P:LexaCard.ViewModels.FluxViewModel.CardCurent"/> is changed.</remarks>
+        </member>
+        <member name="F:LexaCard.ViewModels.FluxViewModel.pronuntaCuvantCommand">
+            <summary>The backing field for <see cref="P:LexaCard.ViewModels.FluxViewModel.PronuntaCuvantCommand"/>.</summary>
+        </member>
+        <member name="P:LexaCard.ViewModels.FluxViewModel.PronuntaCuvantCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:LexaCard.ViewModels.FluxViewModel.PronuntaCuvantAsync"/>.</summary>
+        </member>
+        <member name="F:LexaCard.ViewModels.FluxViewModel.schimbaImagineCommand">
+            <summary>The backing field for <see cref="P:LexaCard.ViewModels.FluxViewModel.SchimbaImagineCommand"/>.</summary>
+        </member>
+        <member name="P:LexaCard.ViewModels.FluxViewModel.SchimbaImagineCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IRelayCommand"/> instance wrapping <see cref="M:LexaCard.ViewModels.FluxViewModel.SchimbaImagine"/>.</summary>
+        </member>
+        <member name="F:LexaCard.ViewModels.FluxViewModel.schimbaExempluCommand">
+            <summary>The backing field for <see cref="P:LexaCard.ViewModels.FluxViewModel.SchimbaExempluCommand"/>.</summary>
+        </member>
+        <member name="P:LexaCard.ViewModels.FluxViewModel.SchimbaExempluCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IRelayCommand"/> instance wrapping <see cref="M:LexaCard.ViewModels.FluxViewModel.SchimbaExemplu"/>.</summary>
+        </member>
+        <member name="F:LexaCard.ViewModels.FluxViewModel.toggleTraducereCommand">
+            <summary>The backing field for <see cref="P:LexaCard.ViewModels.FluxViewModel.ToggleTraducereCommand"/>.</summary>
+        </member>
+        <member name="P:LexaCard.ViewModels.FluxViewModel.ToggleTraducereCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IRelayCommand"/> instance wrapping <see cref="M:LexaCard.ViewModels.FluxViewModel.ToggleTraducere"/>.</summary>
+        </member>
+        <member name="F:LexaCard.ViewModels.FluxViewModel.revelazaPropozitiaCommand">
+            <summary>The backing field for <see cref="P:LexaCard.ViewModels.FluxViewModel.RevelazaPropozitiaCommand"/>.</summary>
+        </member>
+        <member name="P:LexaCard.ViewModels.FluxViewModel.RevelazaPropozitiaCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IRelayCommand"/> instance wrapping <see cref="M:LexaCard.ViewModels.FluxViewModel.RevelazaPropozitia"/>.</summary>
+        </member>
+        <member name="F:LexaCard.ViewModels.FluxViewModel.raspundeRecunoastereCommand">
+            <summary>The backing field for <see cref="P:LexaCard.ViewModels.FluxViewModel.RaspundeRecunoastereCommand"/>.</summary>
+        </member>
+        <member name="P:LexaCard.ViewModels.FluxViewModel.RaspundeRecunoastereCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand`1"/> instance wrapping <see cref="M:LexaCard.ViewModels.FluxViewModel.RaspundeRecunoastereAsync(System.String)"/>.</summary>
+        </member>
+        <member name="F:LexaCard.ViewModels.FluxViewModel.mailDeparteCommand">
+            <summary>The backing field for <see cref="P:LexaCard.ViewModels.FluxViewModel.MailDeparteCommand"/>.</summary>
+        </member>
+        <member name="P:LexaCard.ViewModels.FluxViewModel.MailDeparteCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:LexaCard.ViewModels.FluxViewModel.MailDeparte"/>.</summary>
+        </member>
+        <member name="F:LexaCard.ViewModels.FluxViewModel.raspundeTastareCommand">
+            <summary>The backing field for <see cref="P:LexaCard.ViewModels.FluxViewModel.RaspundeTastareCommand"/>.</summary>
+        </member>
+        <member name="P:LexaCard.ViewModels.FluxViewModel.RaspundeTastareCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:LexaCard.ViewModels.FluxViewModel.RaspundeTastareAsync"/>.</summary>
+        </member>
+        <member name="F:LexaCard.ViewModels.FluxViewModel.mergeInapoiCommand">
+            <summary>The backing field for <see cref="P:LexaCard.ViewModels.FluxViewModel.MergeInapoiCommand"/>.</summary>
+        </member>
+        <member name="P:LexaCard.ViewModels.FluxViewModel.MergeInapoiCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:LexaCard.ViewModels.FluxViewModel.MergeInapoiAsync"/>.</summary>
+        </member>
+        <member name="F:LexaCard.ViewModels.FluxViewModel.practicaMailMultCommand">
+            <summary>The backing field for <see cref="P:LexaCard.ViewModels.FluxViewModel.PracticaMailMultCommand"/>.</summary>
+        </member>
+        <member name="P:LexaCard.ViewModels.FluxViewModel.PracticaMailMultCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:LexaCard.ViewModels.FluxViewModel.PracticaMailMultAsync"/>.</summary>
+        </member>
+        <member name="T:LexaCard.ViewModels.StatisticiViewModel">
+            <inheritdoc/>
+        </member>
+        <member name="P:LexaCard.ViewModels.StatisticiViewModel.Statistici">
+            <inheritdoc cref="F:LexaCard.ViewModels.StatisticiViewModel._statistici"/>
+        </member>
+        <member name="P:LexaCard.ViewModels.StatisticiViewModel.SeIncarca">
+            <inheritdoc cref="F:LexaCard.ViewModels.StatisticiViewModel._seIncarca"/>
+        </member>
+        <member name="T:LexaCard.ViewModels.SetariViewModel">
+            <inheritdoc/>
+            <inheritdoc/>
+            <inheritdoc/>
+            <inheritdoc/>
+            <inheritdoc/>
+        </member>
+        <member name="P:LexaCard.ViewModels.SetariViewModel.NumeUtilizator">
+            <inheritdoc cref="F:LexaCard.ViewModels.SetariViewModel._numeUtilizator"/>
+        </member>
+        <member name="P:LexaCard.ViewModels.SetariViewModel.Email">
+            <inheritdoc cref="F:LexaCard.ViewModels.SetariViewModel._email"/>
+        </member>
+        <member name="P:LexaCard.ViewModels.SetariViewModel.CarduriNoiPerZi">
+            <inheritdoc cref="F:LexaCard.ViewModels.SetariViewModel._carduriNoiPerZi"/>
+        </member>
+        <member name="P:LexaCard.ViewModels.SetariViewModel.MaxCarduriPerSesiune">
+            <inheritdoc cref="F:LexaCard.ViewModels.SetariViewModel._maxCarduriPerSesiune"/>
+        </member>
+        <member name="F:LexaCard.ViewModels.SetariViewModel.adaugaCarduriCommand">
+            <summary>The backing field for <see cref="P:LexaCard.ViewModels.SetariViewModel.AdaugaCarduriCommand"/>.</summary>
+        </member>
+        <member name="P:LexaCard.ViewModels.SetariViewModel.AdaugaCarduriCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IRelayCommand"/> instance wrapping <see cref="M:LexaCard.ViewModels.SetariViewModel.AdaugaCarduri"/>.</summary>
+        </member>
+        <member name="F:LexaCard.ViewModels.SetariViewModel.scadeCarduriCommand">
+            <summary>The backing field for <see cref="P:LexaCard.ViewModels.SetariViewModel.ScadeCarduriCommand"/>.</summary>
+        </member>
+        <member name="P:LexaCard.ViewModels.SetariViewModel.ScadeCarduriCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IRelayCommand"/> instance wrapping <see cref="M:LexaCard.ViewModels.SetariViewModel.ScadeCarduri"/>.</summary>
+        </member>
+        <member name="F:LexaCard.ViewModels.SetariViewModel.salveazaSetarileCommand">
+            <summary>The backing field for <see cref="P:LexaCard.ViewModels.SetariViewModel.SalveazaSetarileCommand"/>.</summary>
+        </member>
+        <member name="P:LexaCard.ViewModels.SetariViewModel.SalveazaSetarileCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:LexaCard.ViewModels.SetariViewModel.SalveazaSetarileAsync"/>.</summary>
+        </member>
+        <member name="F:LexaCard.ViewModels.SetariViewModel.deconecteazaCommand">
+            <summary>The backing field for <see cref="P:LexaCard.ViewModels.SetariViewModel.DeconecteazaCommand"/>.</summary>
+        </member>
+        <member name="P:LexaCard.ViewModels.SetariViewModel.DeconecteazaCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:LexaCard.ViewModels.SetariViewModel.DeconecteazaAsync"/>.</summary>
+        </member>
+        <member name="T:LexaCard.Resource">
+            <summary>
+            Android Resource Designer class.
+            Exposes the Android Resource designer assembly into the project Namespace.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Maui.Controls.ColorAnimationExtensions_Button.TextColorTo(Microsoft.Maui.Controls.Button,Microsoft.Maui.Graphics.Color,System.UInt32,System.UInt32,Microsoft.Maui.Easing,System.Threading.CancellationToken)">
+            <summary>
+            Animates the TextColor of an <see cref = "T:Microsoft.Maui.ITextStyle"/> to the given color
+            </summary>
+            <param name = "element"></param>
+            <param name = "color">The target color to animate the <see cref = "P:Microsoft.Maui.ITextStyle.TextColor"/> to</param>
+            <param name = "rate">The time, in milliseconds, between the frames of the animation</param>
+            <param name = "length">The duration, in milliseconds, of the animation</param>
+            <param name = "easing">The easing function to be used in the animation</param>
+            <param name = "token"><see cref = "T:System.Threading.CancellationToken"/></param>
+            <returns>Value indicating if the animation completed successfully or not</returns>
+        </member>
+        <member name="M:Microsoft.Maui.Controls.ColorAnimationExtensions_DatePicker.TextColorTo(Microsoft.Maui.Controls.DatePicker,Microsoft.Maui.Graphics.Color,System.UInt32,System.UInt32,Microsoft.Maui.Easing,System.Threading.CancellationToken)">
+            <summary>
+            Animates the TextColor of an <see cref = "T:Microsoft.Maui.ITextStyle"/> to the given color
+            </summary>
+            <param name = "element"></param>
+            <param name = "color">The target color to animate the <see cref = "P:Microsoft.Maui.ITextStyle.TextColor"/> to</param>
+            <param name = "rate">The time, in milliseconds, between the frames of the animation</param>
+            <param name = "length">The duration, in milliseconds, of the animation</param>
+            <param name = "easing">The easing function to be used in the animation</param>
+            <param name = "token"><see cref = "T:System.Threading.CancellationToken"/></param>
+            <returns>Value indicating if the animation completed successfully or not</returns>
+        </member>
+        <member name="M:Microsoft.Maui.Controls.ColorAnimationExtensions_Editor.TextColorTo(Microsoft.Maui.Controls.Editor,Microsoft.Maui.Graphics.Color,System.UInt32,System.UInt32,Microsoft.Maui.Easing,System.Threading.CancellationToken)">
+            <summary>
+            Animates the TextColor of an <see cref = "T:Microsoft.Maui.ITextStyle"/> to the given color
+            </summary>
+            <param name = "element"></param>
+            <param name = "color">The target color to animate the <see cref = "P:Microsoft.Maui.ITextStyle.TextColor"/> to</param>
+            <param name = "rate">The time, in milliseconds, between the frames of the animation</param>
+            <param name = "length">The duration, in milliseconds, of the animation</param>
+            <param name = "easing">The easing function to be used in the animation</param>
+            <param name = "token"><see cref = "T:System.Threading.CancellationToken"/></param>
+            <returns>Value indicating if the animation completed successfully or not</returns>
+        </member>
+        <member name="M:Microsoft.Maui.Controls.ColorAnimationExtensions_Entry.TextColorTo(Microsoft.Maui.Controls.Entry,Microsoft.Maui.Graphics.Color,System.UInt32,System.UInt32,Microsoft.Maui.Easing,System.Threading.CancellationToken)">
+            <summary>
+            Animates the TextColor of an <see cref = "T:Microsoft.Maui.ITextStyle"/> to the given color
+            </summary>
+            <param name = "element"></param>
+            <param name = "color">The target color to animate the <see cref = "P:Microsoft.Maui.ITextStyle.TextColor"/> to</param>
+            <param name = "rate">The time, in milliseconds, between the frames of the animation</param>
+            <param name = "length">The duration, in milliseconds, of the animation</param>
+            <param name = "easing">The easing function to be used in the animation</param>
+            <param name = "token"><see cref = "T:System.Threading.CancellationToken"/></param>
+            <returns>Value indicating if the animation completed successfully or not</returns>
+        </member>
+        <member name="M:Microsoft.Maui.Controls.ColorAnimationExtensions_InputView.TextColorTo(Microsoft.Maui.Controls.InputView,Microsoft.Maui.Graphics.Color,System.UInt32,System.UInt32,Microsoft.Maui.Easing,System.Threading.CancellationToken)">
+            <summary>
+            Animates the TextColor of an <see cref = "T:Microsoft.Maui.ITextStyle"/> to the given color
+            </summary>
+            <param name = "element"></param>
+            <param name = "color">The target color to animate the <see cref = "P:Microsoft.Maui.ITextStyle.TextColor"/> to</param>
+            <param name = "rate">The time, in milliseconds, between the frames of the animation</param>
+            <param name = "length">The duration, in milliseconds, of the animation</param>
+            <param name = "easing">The easing function to be used in the animation</param>
+            <param name = "token"><see cref = "T:System.Threading.CancellationToken"/></param>
+            <returns>Value indicating if the animation completed successfully or not</returns>
+        </member>
+        <member name="M:Microsoft.Maui.Controls.ColorAnimationExtensions_Label.TextColorTo(Microsoft.Maui.Controls.Label,Microsoft.Maui.Graphics.Color,System.UInt32,System.UInt32,Microsoft.Maui.Easing,System.Threading.CancellationToken)">
+            <summary>
+            Animates the TextColor of an <see cref = "T:Microsoft.Maui.ITextStyle"/> to the given color
+            </summary>
+            <param name = "element"></param>
+            <param name = "color">The target color to animate the <see cref = "P:Microsoft.Maui.ITextStyle.TextColor"/> to</param>
+            <param name = "rate">The time, in milliseconds, between the frames of the animation</param>
+            <param name = "length">The duration, in milliseconds, of the animation</param>
+            <param name = "easing">The easing function to be used in the animation</param>
+            <param name = "token"><see cref = "T:System.Threading.CancellationToken"/></param>
+            <returns>Value indicating if the animation completed successfully or not</returns>
+        </member>
+        <member name="M:Microsoft.Maui.Controls.ColorAnimationExtensions_Picker.TextColorTo(Microsoft.Maui.Controls.Picker,Microsoft.Maui.Graphics.Color,System.UInt32,System.UInt32,Microsoft.Maui.Easing,System.Threading.CancellationToken)">
+            <summary>
+            Animates the TextColor of an <see cref = "T:Microsoft.Maui.ITextStyle"/> to the given color
+            </summary>
+            <param name = "element"></param>
+            <param name = "color">The target color to animate the <see cref = "P:Microsoft.Maui.ITextStyle.TextColor"/> to</param>
+            <param name = "rate">The time, in milliseconds, between the frames of the animation</param>
+            <param name = "length">The duration, in milliseconds, of the animation</param>
+            <param name = "easing">The easing function to be used in the animation</param>
+            <param name = "token"><see cref = "T:System.Threading.CancellationToken"/></param>
+            <returns>Value indicating if the animation completed successfully or not</returns>
+        </member>
+        <member name="M:Microsoft.Maui.Controls.ColorAnimationExtensions_RadioButton.TextColorTo(Microsoft.Maui.Controls.RadioButton,Microsoft.Maui.Graphics.Color,System.UInt32,System.UInt32,Microsoft.Maui.Easing,System.Threading.CancellationToken)">
+            <summary>
+            Animates the TextColor of an <see cref = "T:Microsoft.Maui.ITextStyle"/> to the given color
+            </summary>
+            <param name = "element"></param>
+            <param name = "color">The target color to animate the <see cref = "P:Microsoft.Maui.ITextStyle.TextColor"/> to</param>
+            <param name = "rate">The time, in milliseconds, between the frames of the animation</param>
+            <param name = "length">The duration, in milliseconds, of the animation</param>
+            <param name = "easing">The easing function to be used in the animation</param>
+            <param name = "token"><see cref = "T:System.Threading.CancellationToken"/></param>
+            <returns>Value indicating if the animation completed successfully or not</returns>
+        </member>
+        <member name="M:Microsoft.Maui.Controls.ColorAnimationExtensions_SearchBar.TextColorTo(Microsoft.Maui.Controls.SearchBar,Microsoft.Maui.Graphics.Color,System.UInt32,System.UInt32,Microsoft.Maui.Easing,System.Threading.CancellationToken)">
+            <summary>
+            Animates the TextColor of an <see cref = "T:Microsoft.Maui.ITextStyle"/> to the given color
+            </summary>
+            <param name = "element"></param>
+            <param name = "color">The target color to animate the <see cref = "P:Microsoft.Maui.ITextStyle.TextColor"/> to</param>
+            <param name = "rate">The time, in milliseconds, between the frames of the animation</param>
+            <param name = "length">The duration, in milliseconds, of the animation</param>
+            <param name = "easing">The easing function to be used in the animation</param>
+            <param name = "token"><see cref = "T:System.Threading.CancellationToken"/></param>
+            <returns>Value indicating if the animation completed successfully or not</returns>
+        </member>
+        <member name="M:Microsoft.Maui.Controls.ColorAnimationExtensions_TimePicker.TextColorTo(Microsoft.Maui.Controls.TimePicker,Microsoft.Maui.Graphics.Color,System.UInt32,System.UInt32,Microsoft.Maui.Easing,System.Threading.CancellationToken)">
+            <summary>
+            Animates the TextColor of an <see cref = "T:Microsoft.Maui.ITextStyle"/> to the given color
+            </summary>
+            <param name = "element"></param>
+            <param name = "color">The target color to animate the <see cref = "P:Microsoft.Maui.ITextStyle.TextColor"/> to</param>
+            <param name = "rate">The time, in milliseconds, between the frames of the animation</param>
+            <param name = "length">The duration, in milliseconds, of the animation</param>
+            <param name = "easing">The easing function to be used in the animation</param>
+            <param name = "token"><see cref = "T:System.Threading.CancellationToken"/></param>
+            <returns>Value indicating if the animation completed successfully or not</returns>
+        </member>
+        <member name="T:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs">
+            <summary>
+            A helper type providing cached, reusable <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instances
+            for all properties generated with <see cref="T:CommunityToolkit.Mvvm.ComponentModel.ObservablePropertyAttribute"/>.
+            </summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.NumeUtilizator">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "NumeUtilizator" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.InitialaUtilizator">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "InitialaUtilizator" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.Salut">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "Salut" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.Streak">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "Streak" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.Monede">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "Monede" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.NrNotificari">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "NrNotificari" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.AreNotificari">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "AreNotificari" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.CarduriAzi">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "CarduriAzi" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.ProgressZi">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "ProgressZi" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.ZileSaptamana">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "ZileSaptamana" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.NrRevizuiri">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "NrRevizuiri" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.NrCuvinteNoi">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "NrCuvinteNoi" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.TotalDisponibil">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "TotalDisponibil" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.EstimareTimp">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "EstimareTimp" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.PoateIncepe">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "PoateIncepe" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.RevizuiriInSesiune">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "RevizuiriInSesiune" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.NoiFInSesiune">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "NoiFInSesiune" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.Email">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "Email" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.Parola">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "Parola" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.MesajEroare">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "MesajEroare" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.SeIncarca">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "SeIncarca" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.ConfirmaParola">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "ConfirmaParola" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.CardCurent">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "CardCurent" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.PropozitieRevelata">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "PropozitieRevelata" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.ModTastare">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "ModTastare" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.TextTastat">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "TextTastat" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.SesiuneGoala">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "SesiuneGoala" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.NrCorect">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "NrCorect" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.NrGresit">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "NrGresit" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.MesajFeedback">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "MesajFeedback" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.ColorFeedback">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "ColorFeedback" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.AsteaptaMailDeparte">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "AsteaptaMailDeparte" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.ProgressText">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "ProgressText" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.IndexImagine">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "IndexImagine" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.IndexExemplu">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "IndexExemplu" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.AratDefinitieRo">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "AratDefinitieRo" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.Statistici">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "Statistici" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.CarduriNoiPerZi">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "CarduriNoiPerZi" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.MaxCarduriPerSesiune">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "MaxCarduriPerSesiune" generated properties.</summary>
+        </member>
+        <member name="T:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs">
+            <summary>
+            A helper type providing cached, reusable <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instances
+            for all properties generated with <see cref="T:CommunityToolkit.Mvvm.ComponentModel.ObservablePropertyAttribute"/>.
+            </summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.NumeUtilizator">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "NumeUtilizator" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.InitialaUtilizator">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "InitialaUtilizator" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.Salut">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "Salut" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.Streak">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "Streak" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.Monede">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "Monede" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.NrNotificari">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "NrNotificari" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.AreNotificari">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "AreNotificari" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.CarduriAzi">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "CarduriAzi" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.ProgressZi">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "ProgressZi" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.ZileSaptamana">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "ZileSaptamana" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.NrRevizuiri">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "NrRevizuiri" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.NrCuvinteNoi">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "NrCuvinteNoi" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.TotalDisponibil">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "TotalDisponibil" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.EstimareTimp">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "EstimareTimp" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.PoateIncepe">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "PoateIncepe" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.RevizuiriInSesiune">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "RevizuiriInSesiune" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.NoiFInSesiune">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "NoiFInSesiune" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.Email">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "Email" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.Parola">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "Parola" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.MesajEroare">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "MesajEroare" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.SeIncarca">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "SeIncarca" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.ConfirmaParola">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "ConfirmaParola" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.CardCurent">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "CardCurent" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.PropozitieRevelata">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "PropozitieRevelata" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.ModTastare">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "ModTastare" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.TextTastat">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "TextTastat" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.SesiuneGoala">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "SesiuneGoala" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.NrCorect">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "NrCorect" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.NrGresit">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "NrGresit" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.MesajFeedback">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "MesajFeedback" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.ColorFeedback">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "ColorFeedback" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.AsteaptaMailDeparte">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "AsteaptaMailDeparte" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.ProgressText">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "ProgressText" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.IndexImagine">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "IndexImagine" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.IndexExemplu">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "IndexExemplu" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.AratDefinitieRo">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "AratDefinitieRo" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.Statistici">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "Statistici" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.CarduriNoiPerZi">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "CarduriNoiPerZi" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.MaxCarduriPerSesiune">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "MaxCarduriPerSesiune" generated properties.</summary>
+        </member>
+    </members>
+</doc>
