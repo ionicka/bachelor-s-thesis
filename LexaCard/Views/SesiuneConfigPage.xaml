@@ -8,175 +8,182 @@
              Shell.NavBarIsVisible="False"
              BackgroundColor="#0D0D1A">
 
+    <ContentPage.Resources>
+        <conv:InvertBoolConverter x:Key="InvertBool" />
+    </ContentPage.Resources>
+
     <Grid RowDefinitions="Auto,*,Auto" Padding="20">
 
         <!-- Header -->
-        <Grid Grid.Row="0" ColumnDefinitions="Auto,*" Padding="0,44,0,16">
+        <Grid Grid.Row="0" ColumnDefinitions="Auto,*" Padding="0,44,0,20">
             <Button Grid.Column="0" Text="←"
                     Command="{Binding InapoiCommand}"
-                    BackgroundColor="Transparent"
-                    TextColor="White" FontSize="22"
-                    WidthRequest="44" HeightRequest="44" Padding="0"
-                    HorizontalOptions="Start" />
+                    BackgroundColor="Transparent" TextColor="White"
+                    FontSize="22" WidthRequest="44" HeightRequest="44" Padding="0" />
             <Label Grid.Column="1" Text="Sesiune noua"
-                   FontSize="22" FontAttributes="Bold"
-                   TextColor="White" VerticalOptions="Center"
-                   HorizontalOptions="Start" Margin="12,0,0,0" />
+                   FontSize="22" FontAttributes="Bold" TextColor="White"
+                   VerticalOptions="Center" Margin="12,0,0,0" />
         </Grid>
 
-        <!-- Continut -->
         <ScrollView Grid.Row="1">
             <VerticalStackLayout Spacing="14">
 
-                <!-- Revizuiri de azi -->
-                <Frame BackgroundColor="#16213E" BorderColor="#0F3460"
-                       CornerRadius="16" Padding="20">
-                    <Grid ColumnDefinitions="*,Auto">
-                        <VerticalStackLayout Grid.Column="0" Spacing="4">
-                            <Label Text="De revizuit azi"
-                                   TextColor="#8899BB" FontSize="13"
-                                   HorizontalOptions="Start" />
-                            <Label Text="{Binding NrRevizuiri, StringFormat='{0} cuvinte'}"
-                                   TextColor="#E94560" FontSize="24"
+                <!-- Disponibil -->
+                <Grid ColumnDefinitions="*,12,*" HeightRequest="88">
+                    <Frame Grid.Column="0" BackgroundColor="#16213E"
+                           BorderColor="#E94560" CornerRadius="16" Padding="14">
+                        <VerticalStackLayout Spacing="2" VerticalOptions="Center">
+                            <Label Text="🔄 De revizuit"
+                                   TextColor="#8899BB" FontSize="11"
+                                   HorizontalOptions="Center" />
+                            <Label Text="{Binding NrRevizuiri}"
+                                   TextColor="#E94560" FontSize="30"
                                    FontAttributes="Bold"
-                                   HorizontalOptions="Start" />
+                                   HorizontalOptions="Center" />
                         </VerticalStackLayout>
-                        <Label Grid.Column="1" Text="🔄" FontSize="36"
-                               VerticalOptions="Center" />
-                    </Grid>
-                </Frame>
-
-                <!-- Cuvinte noi disponibile -->
-                <Frame BackgroundColor="#16213E" BorderColor="#0F3460"
-                       CornerRadius="16" Padding="20">
-                    <Grid ColumnDefinitions="*,Auto">
-                        <VerticalStackLayout Grid.Column="0" Spacing="4">
-                            <Label Text="Cuvinte noi disponibile"
-                                   TextColor="#8899BB" FontSize="13"
-                                   HorizontalOptions="Start" />
-                            <Label Text="{Binding NrCuvinteNoi, StringFormat='{0} cuvinte'}"
-                                   TextColor="#4CAF50" FontSize="24"
+                    </Frame>
+                    <Frame Grid.Column="2" BackgroundColor="#16213E"
+                           BorderColor="#4CAF50" CornerRadius="16" Padding="14">
+                        <VerticalStackLayout Spacing="2" VerticalOptions="Center">
+                            <Label Text="✨ Cuvinte noi"
+                                   TextColor="#8899BB" FontSize="11"
+                                   HorizontalOptions="Center" />
+                            <Label Text="{Binding NrCuvinteNoi}"
+                                   TextColor="#4CAF50" FontSize="30"
                                    FontAttributes="Bold"
-                                   HorizontalOptions="Start" />
+                                   HorizontalOptions="Center" />
                         </VerticalStackLayout>
-                        <Label Grid.Column="1" Text="✨" FontSize="36"
-                               VerticalOptions="Center" />
-                    </Grid>
-                </Frame>
+                    </Frame>
+                </Grid>
 
-                <!-- Configurare cuvinte noi -->
+                <!-- Selector total -->
                 <Frame BackgroundColor="#16213E" BorderColor="#7B2FBE"
                        CornerRadius="16" Padding="20">
-                    <VerticalStackLayout Spacing="14">
+                    <VerticalStackLayout Spacing="16">
 
-                        <Label Text="Cate cuvinte noi vrei azi?"
-                               TextColor="White" FontSize="16"
-                               FontAttributes="Bold"
-                               HorizontalOptions="Start" />
+                        <Label Text="Cate carduri vrei in sesiune?"
+                               TextColor="White" FontSize="15"
+                               FontAttributes="Bold" HorizontalOptions="Start" />
 
-                        <!-- Numar mare centrat -->
-                        <Label Text="{Binding CuvinteNoi, StringFormat='{0} cuvinte noi'}"
+                        <!-- Numarul mare -->
+                        <Label Text="{Binding TotalSesiune, StringFormat='{0} carduri'}"
                                TextColor="#9B6FDE" FontSize="30"
-                               FontAttributes="Bold"
-                               HorizontalOptions="Center" />
+                               FontAttributes="Bold" HorizontalOptions="Center" />
 
-                        <!-- Butoane +/- -->
-                        <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
+                        <!-- Butoane +/- si preseturi -->
+                        <Grid ColumnDefinitions="52,*,52" ColumnSpacing="10">
                             <Button Grid.Column="0" Text="−"
-                                    Command="{Binding ScadeCuvinteCommand}"
-                                    BackgroundColor="#2E1060"
-                                    TextColor="White" FontSize="24"
-                                    FontAttributes="Bold"
-                                    WidthRequest="56" HeightRequest="56"
-                                    CornerRadius="28" Padding="0" />
+                                    Command="{Binding ScadeCarduriCommand}"
+                                    BackgroundColor="#2E1060" TextColor="White"
+                                    FontSize="24" FontAttributes="Bold"
+                                    CornerRadius="16" HeightRequest="52" Padding="0" />
 
-                            <Frame Grid.Column="1"
-                                   BackgroundColor="#0F0828"
-                                   BorderColor="#7B2FBE"
-                                   CornerRadius="12" Padding="0"
-                                   HeightRequest="56">
-                                <ProgressBar
-                                    Progress="{Binding ProgressCuvinte}"
-                                    ProgressColor="#7B2FBE"
-                                    VerticalOptions="Center"
-                                    Margin="4,0" />
-                            </Frame>
+                            <Grid Grid.Column="1"
+                                  ColumnDefinitions="*,*,*,*" ColumnSpacing="6">
+                                <Button Grid.Column="0" Text="5"
+                                        Command="{Binding SeteazaCarduriCommand}"
+                                        CommandParameter="5"
+                                        BackgroundColor="#1A1040" TextColor="#9B6FDE"
+                                        BorderColor="#7B2FBE" BorderWidth="1"
+                                        CornerRadius="12" HeightRequest="52" />
+                                <Button Grid.Column="1" Text="10"
+                                        Command="{Binding SeteazaCarduriCommand}"
+                                        CommandParameter="10"
+                                        BackgroundColor="#1A1040" TextColor="#9B6FDE"
+                                        BorderColor="#7B2FBE" BorderWidth="1"
+                                        CornerRadius="12" HeightRequest="52" />
+                                <Button Grid.Column="2" Text="20"
+                                        Command="{Binding SeteazaCarduriCommand}"
+                                        CommandParameter="20"
+                                        BackgroundColor="#1A1040" TextColor="#9B6FDE"
+                                        BorderColor="#7B2FBE" BorderWidth="1"
+                                        CornerRadius="12" HeightRequest="52" />
+                                <Button Grid.Column="3" Text="50"
+                                        Command="{Binding SeteazaCarduriCommand}"
+                                        CommandParameter="50"
+                                        BackgroundColor="#1A1040" TextColor="#9B6FDE"
+                                        BorderColor="#7B2FBE" BorderWidth="1"
+                                        CornerRadius="12" HeightRequest="52" />
+                            </Grid>
 
                             <Button Grid.Column="2" Text="+"
-                                    Command="{Binding AdaugaCuvinteCommand}"
-                                    BackgroundColor="#7B2FBE"
-                                    TextColor="White" FontSize="24"
-                                    FontAttributes="Bold"
-                                    WidthRequest="56" HeightRequest="56"
-                                    CornerRadius="28" Padding="0" />
+                                    Command="{Binding AdaugaCarduriCommand}"
+                                    BackgroundColor="#7B2FBE" TextColor="White"
+                                    FontSize="24" FontAttributes="Bold"
+                                    CornerRadius="16" HeightRequest="52" Padding="0" />
                         </Grid>
 
-                        <!-- Butoane rapide -->
-                        <Grid ColumnDefinitions="*,*,*,*" ColumnSpacing="8">
-                            <Button Grid.Column="0" Text="5"
-                                    Command="{Binding SeteazaCuvinteCommand}"
-                                    CommandParameter="5"
-                                    BackgroundColor="#1A1040" TextColor="#9B6FDE"
-                                    BorderColor="#7B2FBE" BorderWidth="1"
-                                    CornerRadius="10" HeightRequest="44" />
-                            <Button Grid.Column="1" Text="10"
-                                    Command="{Binding SeteazaCuvinteCommand}"
-                                    CommandParameter="10"
-                                    BackgroundColor="#1A1040" TextColor="#9B6FDE"
-                                    BorderColor="#7B2FBE" BorderWidth="1"
-                                    CornerRadius="10" HeightRequest="44" />
-                            <Button Grid.Column="2" Text="20"
-                                    Command="{Binding SeteazaCuvinteCommand}"
-                                    CommandParameter="20"
-                                    BackgroundColor="#1A1040" TextColor="#9B6FDE"
-                                    BorderColor="#7B2FBE" BorderWidth="1"
-                                    CornerRadius="10" HeightRequest="44" />
-                            <Button Grid.Column="3" Text="50"
-                                    Command="{Binding SeteazaCuvinteCommand}"
-                                    CommandParameter="50"
-                                    BackgroundColor="#1A1040" TextColor="#9B6FDE"
-                                    BorderColor="#7B2FBE" BorderWidth="1"
-                                    CornerRadius="10" HeightRequest="44" />
-                        </Grid>
+                        <Label Text="Max 50 carduri per sesiune"
+                               TextColor="#556688" FontSize="11"
+                               HorizontalOptions="Center" />
 
                     </VerticalStackLayout>
                 </Frame>
 
-                <!-- Rezumat sesiune -->
+                <!-- Compozitia sesiunii -->
                 <Frame BackgroundColor="#16213E" BorderColor="#0F3460"
-                       CornerRadius="16" Padding="20">
-                    <VerticalStackLayout Spacing="6">
-                        <Label Text="Rezumat sesiune"
-                               TextColor="#8899BB" FontSize="13"
-                               HorizontalOptions="Start" />
-                        <HorizontalStackLayout Spacing="6">
-                            <Label Text="{Binding TotalSesiune}"
-                                   FontAttributes="Bold" FontSize="24"
-                                   TextColor="#E94560" />
-                            <Label Text="carduri totale"
-                                   TextColor="White" FontSize="16"
-                                   VerticalOptions="End" />
-                        </HorizontalStackLayout>
+                       CornerRadius="16" Padding="20"
+                       IsVisible="{Binding PoateIncepe}">
+                    <VerticalStackLayout Spacing="10">
+                        <Label Text="Compozitia sesiunii"
+                               TextColor="#8899BB" FontSize="13" />
+
+                        <Grid ColumnDefinitions="*,*" ColumnSpacing="12">
+                            <VerticalStackLayout Grid.Column="0" Spacing="2">
+                                <Label Text="{Binding RevizuiriInSesiune}"
+                                       TextColor="#E94560" FontSize="22"
+                                       FontAttributes="Bold"
+                                       HorizontalOptions="Center" />
+                                <Label Text="Revizuiri" TextColor="#8899BB"
+                                       FontSize="12" HorizontalOptions="Center" />
+                            </VerticalStackLayout>
+                            <VerticalStackLayout Grid.Column="1" Spacing="2">
+                                <Label Text="{Binding NoiFInSesiune}"
+                                       TextColor="#4CAF50" FontSize="22"
+                                       FontAttributes="Bold"
+                                       HorizontalOptions="Center" />
+                                <Label Text="Cuvinte noi" TextColor="#8899BB"
+                                       FontSize="12" HorizontalOptions="Center" />
+                            </VerticalStackLayout>
+                        </Grid>
+
                         <Label Text="{Binding EstimareTimp}"
-                               TextColor="#8899BB" FontSize="13"
-                               HorizontalOptions="Start" />
+                               TextColor="#8899BB" FontSize="12"
+                               HorizontalOptions="Center" />
                     </VerticalStackLayout>
+                </Frame>
+
+                <!-- Nimic disponibil -->
+                <Frame IsVisible="{Binding PoateIncepe,
+                                   Converter={x:StaticResource InvertBool}}"
+                       BackgroundColor="#1A0A0A" BorderColor="#E94560"
+                       CornerRadius="16" Padding="16">
+                    <Label Text="⚠️ Nu ai carduri disponibile momentan."
+                           TextColor="#E94560" FontSize="13"
+                           HorizontalOptions="Center"
+                           HorizontalTextAlignment="Center" />
                 </Frame>
 
             </VerticalStackLayout>
         </ScrollView>
 
-        <!-- Buton Start -->
+        <!-- Start -->
         <Button Grid.Row="2"
                 Text="Incepe sesiunea"
                 Command="{Binding InceptSesiuneCommand}"
+                IsEnabled="{Binding PoateIncepe}"
                 BackgroundColor="#7B2FBE"
-                TextColor="White"
-                CornerRadius="16"
-                HeightRequest="58"
-                FontSize="18"
-                FontAttributes="Bold"
-                Margin="0,12,0,28" />
+                TextColor="White" CornerRadius="16"
+                HeightRequest="58" FontSize="18"
+                FontAttributes="Bold" Margin="0,12,0,28">
+            <Button.Triggers>
+                <DataTrigger TargetType="Button"
+                             Binding="{Binding PoateIncepe}" Value="False">
+                    <Setter Property="BackgroundColor" Value="#2E1060" />
+                    <Setter Property="TextColor"       Value="#556688" />
+                </DataTrigger>
+            </Button.Triggers>
+        </Button>
 
     </Grid>
 </ContentPage>

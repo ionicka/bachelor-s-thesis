@@ -32,14 +32,17 @@ public class CardService : ICardService
     /// 1. Toate revizuirile programate pentru azi (prioritate maxima)
     /// 2. X cuvinte noi (configurate de utilizator)
     /// </summary>
-    public async Task<List<CardDto>> GetSesiuneAsync(int utilizatorId, int cuvinteNoi)
+    public async Task<List<CardDto>> GetSesiuneAsync(
+        int utilizatorId, int cuvinteNoi, int maxRevizuiri = 100)
     {
-        var revizuiri = await _cardRepo.GetRevizuiriAziAsync(utilizatorId);
+        // Intai revizuirile programate (limitate)
+        var toateRevizuirile = await _cardRepo.GetRevizuiriAziAsync(utilizatorId);
+        var revizuiri = toateRevizuirile.Take(maxRevizuiri).ToList();
+
+        // Completam cu cuvinte noi pana la limita
         var noi = await _cardRepo.GetCuvinteNoiAsync(utilizatorId, cuvinteNoi);
 
-        // Revizuirile vin primele, apoi cuvintele noi
-        var sesiune = revizuiri.Concat(noi).ToList();
-        return sesiune;
+        return revizuiri.Concat(noi).ToList();
     }
 
     public async Task<List<CardDto>> GetToateCuvinteleAsync(int utilizatorId) =>

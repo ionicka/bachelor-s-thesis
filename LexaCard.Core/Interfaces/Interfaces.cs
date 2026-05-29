@@ -62,7 +62,8 @@ public interface ICardService
 {
     // Returneaza cardurile pentru sesiunea curenta
     // (revizuiri de azi + X cuvinte noi configurate de utilizator)
-    Task<List<CardDto>> GetSesiuneAsync(int utilizatorId, int cuvinteNoi);
+    Task<List<CardDto>> GetSesiuneAsync(
+        int utilizatorId, int cuvinteNoi, int maxRevizuiri = 100);
     // Practica libera - toate cuvintele
     Task<List<CardDto>> GetToateCuvinteleAsync(int utilizatorId);
     Task<RezultatRaspunsDto> ProceseazaRaspunsAsync(

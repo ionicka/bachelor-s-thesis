@@ -46,9 +46,6 @@ public partial class LoginViewModel : ObservableObject
             if (r.Succes && r.Utilizator != null)
             {
                 _session.SetUtilizator(r.Utilizator);
-                int sesId = await _sesiuneService
-                    .IncepeSesuineAsync(r.Utilizator.Id);
-                _session.SetSesiune(sesId);
                 await Shell.Current.GoToAsync("//MainPage");
             }
             else
@@ -170,6 +167,53 @@ public partial class FluxViewModel : ObservableObject
     [ObservableProperty] string _colorFeedback = "Transparent";
     [ObservableProperty] bool _asteaptaMailDeparte = false;
     [ObservableProperty] string _progressText = "";
+    [ObservableProperty] int _indexImagine = 0;
+    [ObservableProperty] int _indexExemplu = 0;
+    [ObservableProperty] bool _aratDefinitieRo = false;
+
+    public string? ImagineCurenta =>
+        CardCurent?.Imagini.ElementAtOrDefault(IndexImagine);
+
+    public bool AreImagini =>
+        CardCurent?.Imagini.Count > 0;
+
+    public bool AreDuaImagini =>
+        (CardCurent?.Imagini.Count ?? 0) >= 2;
+
+    public string ExempluCurentBlur =>
+        CardCurent == null ? "" :
+        (CardCurent.Exemple.ElementAtOrDefault(IndexExemplu) ?? "")
+            .Replace("[TERMEN]", new string('_', CardCurent.Termen.Length));
+
+    public string ExempluCurentRevelat =>
+        CardCurent == null ? "" :
+        (CardCurent.Exemple.ElementAtOrDefault(IndexExemplu) ?? "")
+            .Replace("[TERMEN]", CardCurent.Termen);
+
+    // Returneaza partile exemplului pentru colorare: inainte|cuvant|dupa
+    public (string Inainte, string Cuvant, string Dupa) ExempluParti
+    {
+        get
+        {
+            if (CardCurent == null) return ("", "", "");
+            var ex = CardCurent.Exemple.ElementAtOrDefault(IndexExemplu) ?? "";
+            int idx = ex.IndexOf("[TERMEN]");
+            if (idx < 0) return (ex, "", "");
+            return (
+                ex[..idx],
+                CardCurent.Termen,
+                ex[(idx + "[TERMEN]".Length)..]
+            );
+        }
+    }
+
+    public string DefinitieAfisata =>
+        _aratDefinitieRo && CardCurent?.DefinitieRo != null
+            ? CardCurent.DefinitieRo
+            : CardCurent?.Definitie ?? "";
+
+    public string BtnTradLabel =>
+        _aratDefinitieRo ? "🇬🇧 EN" : "🇷🇴 RO";
 
     public FluxViewModel(
         ICardService cardService,
@@ -181,18 +225,48 @@ public partial class FluxViewModel : ObservableObject
         _sesiuneService = sesiuneService;
     }
 
+    partial void OnCardCurentChanged(CardDto? value)
+    {
+        OnPropertyChanged(nameof(ImagineCurenta));
+        OnPropertyChanged(nameof(AreImagini));
+        OnPropertyChanged(nameof(AreDuaImagini));
+        OnPropertyChanged(nameof(ExempluCurentBlur));
+        OnPropertyChanged(nameof(ExempluCurentRevelat));
+        OnPropertyChanged(nameof(ExempluParti));
+        OnPropertyChanged(nameof(DefinitieAfisata));
+        OnPropertyChanged(nameof(BtnTradLabel));
+    }
+
     public async Task InitializeazaAsync()
     {
         if (_session.UtilizatorCurent == null) return;
+
+        // Sesiune noua marcata explicit din SesiuneConfigPage
+        if (_sesiuneNoua)
+        {
+            _sesiuneIncarcata = false;
+            _sesiuneNoua = false;
+            ResetareCompleta();
+        }
+
         if (_sesiuneIncarcata) return;
 
         ResetareCompleta();
         SeIncarca = true;
         try
         {
+            // Porneste o sesiune noua in BD
+            if (_session.UtilizatorCurent != null)
+            {
+                int sesId = await _sesiuneService.IncepeSesuineAsync(
+                    _session.UtilizatorCurent.Id);
+                _session.SetSesiune(sesId);
+            }
+
             int cuvinteNoi = _session.CuvinteNoiSesiune;
+            int maxRevizuiri = _session.RevizuiriSesiune;
             var carduri = await _cardService.GetSesiuneAsync(
-                _session.UtilizatorCurent.Id, cuvinteNoi);
+                _session.UtilizatorCurent.Id, cuvinteNoi, maxRevizuiri);
 
             _sesiuneIncarcata = true;
 
@@ -225,9 +299,18 @@ public partial class FluxViewModel : ObservableObject
         finally { SeIncarca = false; }
     }
 
+    // Setat explicit de SesiuneConfigPage inainte de navigare
+    private bool _sesiuneNoua = false;
+
+    public void MarcheazaSesiuneNoua()
+    {
+        _sesiuneNoua = true;
+    }
+
     public void ResetSesiune()
     {
         _sesiuneIncarcata = false;
+        _sesiuneNoua = false;
         ResetareCompleta();
     }
 
@@ -240,6 +323,7 @@ public partial class FluxViewModel : ObservableObject
         _cardVazut = 0;
         CardCurent = null;
         SesiuneGoala = false;
+        SeIncarca = false;   // FIX: reseteaza loading
         PropozitieRevelata = false;
         ModTastare = false;
         TextTastat = string.Empty;
@@ -275,6 +359,9 @@ public partial class FluxViewModel : ObservableObject
         MesajFeedback = string.Empty;
         ColorFeedback = "Transparent";
         AsteaptaMailDeparte = false;
+        IndexImagine = 0;
+        IndexExemplu = 0;
+        AratDefinitieRo = false;
 
         if (_coada.TryDequeue(out var urmator))
         {
@@ -296,9 +383,12 @@ public partial class FluxViewModel : ObservableObject
             return;
         }
 
-        SesiuneGoala = true;
+        // Ambele cozi goale - ascundem cardul inainte de orice await
+        CardCurent = null;
+        PropozitieRevelata = false;
+        AsteaptaMailDeparte = false;
 
-        // Inchide sesiunea in baza de date
+        // Inchide sesiunea in BD INAINTE de a seta SesiuneGoala
         if (_session.SesiuneCurenta.HasValue)
         {
             try
@@ -311,6 +401,9 @@ public partial class FluxViewModel : ObservableObject
             }
             catch { }
         }
+
+        // Acum sesiunea e salvata in BD, declanseaza PropertyChanged
+        SesiuneGoala = true;
     }
 
     private void ActualizeazaProgress()
@@ -324,6 +417,32 @@ public partial class FluxViewModel : ObservableObject
     {
         // Creste contorul doar cand cardul nu mai apare in sesiune
         _cardVazut = Math.Min(_cardVazut + 1, _totalCarduri);
+    }
+
+    [RelayCommand]
+    void SchimbaImagine()
+    {
+        if (CardCurent == null || CardCurent.Imagini.Count < 2) return;
+        IndexImagine = IndexImagine == 0 ? 1 : 0;
+        OnPropertyChanged(nameof(ImagineCurenta));
+    }
+
+    [RelayCommand]
+    void SchimbaExemplu()
+    {
+        if (CardCurent == null || CardCurent.Exemple.Count == 0) return;
+        IndexExemplu = (IndexExemplu + 1) % CardCurent.Exemple.Count;
+        OnPropertyChanged(nameof(ExempluCurentBlur));
+        OnPropertyChanged(nameof(ExempluCurentRevelat));
+        OnPropertyChanged(nameof(ExempluParti));
+    }
+
+    [RelayCommand]
+    void ToggleTraducere()
+    {
+        AratDefinitieRo = !AratDefinitieRo;
+        OnPropertyChanged(nameof(DefinitieAfisata));
+        OnPropertyChanged(nameof(BtnTradLabel));
     }
 
     [RelayCommand]
@@ -452,18 +571,8 @@ public partial class FluxViewModel : ObservableObject
     [RelayCommand]
     async Task PracticaMailMultAsync()
     {
-        if (_session.UtilizatorCurent == null) return;
-        ResetareCompleta();
-        SeIncarca = true;
-        try
-        {
-            var carduri = await _cardService.GetToateCuvinteleAsync(
-                _session.UtilizatorCurent.Id);
-            foreach (var card in carduri)
-                _coada.Enqueue(new CardSesiune(card, card.TipRaspunsRecomandat));
-            await AfiseazaUrmatorCard();
-        }
-        finally { SeIncarca = false; }
+        // Navigheaza inapoi la config cu modul practica libera
+        await Shell.Current.GoToAsync("//SesiuneConfigPage?practica=true");
     }
 
     private async Task TrimiteRaspunsAsync(

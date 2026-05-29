@@ -29,21 +29,27 @@ public static class MauiProgram
         // ── PostgreSQL ────────────────────────────────────────────
         string connStr = LexaDbContext.ConnectionString;
 
+        // DbContextFactory permite crearea de contexte independente
+        // rezolva NpgsqlOperationInProgressException
+        builder.Services.AddDbContextFactory<LexaDbContext>(opt =>
+            opt.UseNpgsql(connStr));
+
+        // Pastram si AddDbContext pentru compatibilitate
         builder.Services.AddDbContext<LexaDbContext>(opt =>
             opt.UseNpgsql(connStr));
 
-        // ── Repositories ──────────────────────────────────────────
-        builder.Services.AddScoped<ICardRepository>(_ =>
+        // ── Repositories — Transient pentru a evita conflicte de conexiune ──
+        builder.Services.AddTransient<ICardRepository>(_ =>
             new CardRepository(connStr));
-        builder.Services.AddScoped<IProgresRepository, ProgresRepository>();
-        builder.Services.AddScoped<IUtilizatorRepository, UtilizatorRepository>();
-        builder.Services.AddScoped<ISesiuneRepository, SesiuneRepository>();
-        builder.Services.AddScoped<IRaspunsRepository, RaspunsRepository>();
+        builder.Services.AddTransient<IProgresRepository, ProgresRepository>();
+        builder.Services.AddTransient<IUtilizatorRepository, UtilizatorRepository>();
+        builder.Services.AddTransient<ISesiuneRepository, SesiuneRepository>();
+        builder.Services.AddTransient<IRaspunsRepository, RaspunsRepository>();
 
-        // ── Services Core ─────────────────────────────────────────
-        builder.Services.AddScoped<ISrsService, SrsService>();
-        builder.Services.AddScoped<ICardService, CardService>();
-        builder.Services.AddScoped<IAuthService, AuthService>();
+        // ── Services Core — Transient ─────────────────────────────
+        builder.Services.AddTransient<ISrsService, SrsService>();
+        builder.Services.AddTransient<ICardService, CardService>();
+        builder.Services.AddTransient<IAuthService, AuthService>();
         builder.Services.AddTransient<ISesiuneService, SesiuneService>();
 
         // ── Services MAUI ─────────────────────────────────────────
@@ -77,11 +83,22 @@ public static class MauiProgram
 
         var app = builder.Build();
 
-        // Creeaza baza de date si aplica seed data
+        // Creeaza schema si populeaza cu date la prima rulare
         using (var scope = app.Services.CreateScope())
         {
             var ctx = scope.ServiceProvider.GetRequiredService<LexaDbContext>();
+
+            // Sterge si recreaza baza de date (doar in development)
+            // ctx.Database.EnsureDeleted();
+
+            // Creeaza tabelele dupa schema din entitati
             ctx.Database.EnsureCreated();
+
+            // Seed data — doar daca nu exista cuvinte
+            if (!ctx.Cuvinte.Any())
+            {
+                SeedData.Populeaza(ctx);
+            }
         }
 
         return app;

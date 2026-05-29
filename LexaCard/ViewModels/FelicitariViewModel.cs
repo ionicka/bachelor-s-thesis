@@ -2,32 +2,51 @@ namespace LexaCard.ViewModels;
 
 public class FelicitariViewModel
 {
-    public int    Streak   { get; }
-    public int    NrCorect { get; }
-    public int    NrGresit { get; }
-    public string Titlu    { get; }
-    public string Mesaj    { get; }
-    public string Emoji    { get; }
+    public int Streak { get; }
+    public int NrCorect { get; }
+    public int NrGresit { get; }
+    public string TitluSesiune { get; }
+    public string EmojiSesiune { get; }
+    public bool AratStreak { get; }
+    public string TitluStreak { get; }
+    public string MesajStreak { get; }
+    public string EmojiStreak { get; }
     public double RataSucces { get; }
+    public bool PrimaZi { get; }
 
-    public FelicitariViewModel(int streak, int nrCorect, int nrGresit)
+    public FelicitariViewModel(int streak, int nrCorect, int nrGresit,
+                                bool primaSessioneAZilei)
     {
-        Streak   = streak;
+        Streak = streak;
         NrCorect = nrCorect;
         NrGresit = nrGresit;
+        PrimaZi = primaSessioneAZilei;
 
         int total = nrCorect + nrGresit;
-        RataSucces = total == 0 ? 100 : Math.Round((double)nrCorect / total * 100);
+        RataSucces = total == 0 ? 100
+            : Math.Round((double)nrCorect / total * 100);
 
-        (Emoji, Titlu, Mesaj) = streak switch
+        // Mesaj sesiune — mereu
+        (EmojiSesiune, TitluSesiune) = RataSucces switch
         {
-            >= 30 => ("🏆", "Legendar!", "30 de zile consecutive! Esti extraordinar!"),
-            >= 14 => ("🌟", "Incredible!", $"{streak} zile la rand! Continuarea e cheia!"),
-            >= 7  => ("🔥", "In flacari!", $"{streak} zile consecutive! Mentine ritmul!"),
-            >= 3  => ("⚡", "Excelent!", $"{streak} zile la rand! Progresezi rapid!"),
-            2     => ("✨", "Bun inceput!", "2 zile consecutive! Continua maine!"),
-            1     => ("🎉", "Felicitari!", "Sesiune finalizata! Revino maine!"),
-            _     => ("🎉", "Felicitari!", "Sesiune finalizata! Revino maine!")
+            100 => ("🏆", "Perfect!"),
+            >= 80 => ("🌟", "Excelent!"),
+            >= 60 => ("👍", "Bine facut!"),
+            >= 40 => ("📚", "Continua!"),
+            _ => ("💪", "Nu te opri!")
+        };
+
+        // Mesaj streak — doar la prima sesiune a zilei
+        AratStreak = primaSessioneAZilei && streak > 0;
+        (EmojiStreak, TitluStreak, MesajStreak) = streak switch
+        {
+            >= 30 => ("🏆", $"{streak} zile la rand!", "Esti o legenda! Continua!"),
+            >= 14 => ("🌟", $"{streak} zile la rand!", "Doua saptamani consecutive!"),
+            >= 7 => ("🔥", $"{streak} zile la rand!", "O saptamana intreaga! Bravo!"),
+            >= 3 => ("⚡", $"{streak} zile la rand!", "Mergi excelent! Continua!"),
+            2 => ("✨", "2 zile la rand!", "Ai inceput un streak! Revino maine!"),
+            1 => ("🎉", "Prima zi!", "Bun inceput! Revino maine!"),
+            _ => ("🎉", "", "")
         };
     }
 }

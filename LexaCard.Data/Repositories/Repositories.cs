@@ -29,8 +29,9 @@ public class CardRepository : ICardRepository
                 c.""Id""               AS CuvantId,
                 c.""Termen"",
                 c.""Definitie"",
-                c.""ExempluPropozitie"",
-                c.""CaleImagine"",
+                    c.""DefinitieRo"",
+                c.""ExemplePropozitii"",
+                c.""CaleImagini"",
                 c.""Pronuntie"",
                 c.""Nivel"",
                 p.""NivelCunoastere"",
@@ -66,8 +67,9 @@ public class CardRepository : ICardRepository
                 c.""Id""               AS CuvantId,
                 c.""Termen"",
                 c.""Definitie"",
-                c.""ExempluPropozitie"",
-                c.""CaleImagine"",
+                    c.""DefinitieRo"",
+                c.""ExemplePropozitii"",
+                c.""CaleImagini"",
                 c.""Pronuntie"",
                 c.""Nivel"",
                 0 AS NivelCunoastere,
@@ -101,8 +103,9 @@ public class CardRepository : ICardRepository
                 c.""Id""               AS CuvantId,
                 c.""Termen"",
                 c.""Definitie"",
-                c.""ExempluPropozitie"",
-                c.""CaleImagine"",
+                    c.""DefinitieRo"",
+                c.""ExemplePropozitii"",
+                c.""CaleImagini"",
                 c.""Pronuntie"",
                 c.""Nivel"",
                 COALESCE(p.""NivelCunoastere"", 0)     AS NivelCunoastere,
@@ -127,8 +130,9 @@ public class CardRepository : ICardRepository
                 c.""Id""               AS CuvantId,
                 c.""Termen"",
                 c.""Definitie"",
-                c.""ExempluPropozitie"",
-                c.""CaleImagine"",
+                    c.""DefinitieRo"",
+                c.""ExemplePropozitii"",
+                c.""CaleImagini"",
                 c.""Pronuntie"",
                 c.""Nivel"",
                 COALESCE(p.""NivelCunoastere"", 0)     AS NivelCunoastere,
@@ -157,17 +161,32 @@ public class CardRepository : ICardRepository
         double rata = total == 0 ? 0
             : Math.Round((double)r.NrRaspunsuriCorecte / total * 100, 1);
 
-        string blur = r.ExempluPropozitie.Replace("[TERMEN]", new string('_', r.Termen.Length));
-        string rev = r.ExempluPropozitie.Replace("[TERMEN]", r.Termen);
+        // Exemple — split dupa |
+        var exemple = r.ExemplePropozitii
+            .Split('|', StringSplitOptions.RemoveEmptyEntries)
+            .ToList();
+
+        // Primul exemplu pentru blur/revelat
+        string primulExemplu = exemple.FirstOrDefault() ?? r.Termen;
+        string blur = primulExemplu.Replace("[TERMEN]", new string('_', r.Termen.Length));
+        string rev = primulExemplu.Replace("[TERMEN]", r.Termen);
         string casute = string.Concat(r.Termen.Select(c => c == ' ' ? "  " : "□"));
+
+        // Imagini — split dupa |
+        var imagini = (r.CaleImagini ?? "")
+            .Split('|', StringSplitOptions.RemoveEmptyEntries)
+            .ToList();
+        string? primaImagine = imagini.FirstOrDefault();
 
         var tip = r.NivelCunoastere >= 3
             ? TipRaspuns.RemintireActiva
             : TipRaspuns.Recunoastere;
 
         return new CardDto(
-            r.CuvantId, r.Termen, r.Definitie,
-            blur, rev, casute, r.CaleImagine, r.Pronuntie,
+            r.CuvantId, r.Termen,
+            r.Definitie, r.DefinitieRo,
+            blur, rev, casute,
+            exemple, imagini, primaImagine, r.Pronuntie,
             (NivelCuvant)r.Nivel, (byte)r.NivelCunoastere,
             rata, r.EsteNou == 1, r.EsteDeRevizuit == 1, tip);
     }
@@ -177,8 +196,9 @@ public class CardRepository : ICardRepository
         public int CuvantId { get; set; }
         public string Termen { get; set; } = "";
         public string Definitie { get; set; } = "";
-        public string ExempluPropozitie { get; set; } = "";
-        public string? CaleImagine { get; set; }
+        public string? DefinitieRo { get; set; }
+        public string ExemplePropozitii { get; set; } = "";
+        public string? CaleImagini { get; set; }
         public string? Pronuntie { get; set; }
         public int Nivel { get; set; }
         public int NivelCunoastere { get; set; }

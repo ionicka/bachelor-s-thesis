@@ -26,4 +26,9 @@
                   Shell.NavBarIsVisible="False"
                   ContentTemplate="{DataTemplate views:FluxPage}" />
 
+    <ShellContent Route="FelicitariPage"
+                  Shell.TabBarIsVisible="False"
+                  Shell.NavBarIsVisible="False"
+                  ContentTemplate="{DataTemplate views:FelicitariPage}" />
+
 </Shell>

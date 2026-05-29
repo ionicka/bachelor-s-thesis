@@ -5,11 +5,14 @@ namespace LexaCard.Core.DTOs;
 public record CardDto(
     int CuvantId,
     string Termen,
-    string Definitie,
-    string PropozitieBlur,
-    string PropozitieRevelata,
+    string Definitie,           // engleza
+    string? DefinitieRo,        // romana
+    string PropozitieBlur,      // primul exemplu cu blank
+    string PropozitieRevelata,  // primul exemplu cu termen
     string CasuteLitere,
-    string? CaleImagine,
+    List<string> Exemple,       // toate 3 exemplele cu [TERMEN]
+    List<string> Imagini,       // caile imaginilor
+    string? CaleImagine,        // prima imagine (compatibilitate)
     string? Pronuntie,
     NivelCuvant Nivel,
     byte NivelCunoastere,

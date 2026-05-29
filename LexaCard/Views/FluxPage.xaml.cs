@@ -24,11 +24,13 @@ public partial class FluxPage : ContentPage
     protected override async void OnAppearing()
     {
         base.OnAppearing();
+
         if (!_abonata)
         {
             _vm.PropertyChanged += OnVmPropertyChanged;
             _abonata = true;
         }
+
         await _vm.InitializeazaAsync();
     }
 
@@ -48,15 +50,19 @@ public partial class FluxPage : ContentPage
             var stats = await _cardService.GetStatisticiAsync(
                 _session.UtilizatorCurent.Id);
 
-            if (stats.SesiuniFinalizateAzi != 1) return;
+            bool primaAZilei = stats.SesiuniFinalizateAzi == 1;
 
+            // Salvam datele in FelicitariViewModel singleton
+            // si navigam direct (nu modal)
             var felicitariVm = new FelicitariViewModel(
                 stats.ZileCurenteStreak,
                 _vm.NrCorect,
-                _vm.NrGresit);
+                _vm.NrGresit,
+                primaAZilei);
 
-            await Navigation.PushModalAsync(
-                new FelicitariPage(felicitariVm), animated: true);
+            // Navigare directa Shell - fara modal
+            FelicitariPage.ViewModel = felicitariVm;
+            await Shell.Current.GoToAsync("//FelicitariPage");
         }
         catch { }
     }

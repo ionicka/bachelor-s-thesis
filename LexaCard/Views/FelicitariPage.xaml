@@ -7,106 +7,118 @@
              Shell.NavBarIsVisible="False"
              BackgroundColor="#0D0D1A">
 
-    <Grid RowDefinitions="*,Auto" Padding="28">
+    <Grid RowDefinitions="*,Auto" Padding="24">
 
         <ScrollView Grid.Row="0">
-            <VerticalStackLayout Spacing="24" VerticalOptions="Center"
-                                 Padding="0,40,0,0">
+            <VerticalStackLayout Spacing="20" Padding="0,32,0,0">
 
-                <!-- Emoji mare -->
-                <Label Text="{Binding Emoji}"
-                       FontSize="90"
-                       HorizontalOptions="Center" />
-
-                <!-- Titlu -->
-                <Label Text="{Binding Titlu}"
-                       FontSize="36" FontAttributes="Bold"
-                       TextColor="White"
-                       HorizontalOptions="Center"
-                       HorizontalTextAlignment="Center" />
-
-                <!-- Mesaj -->
-                <Label Text="{Binding Mesaj}"
-                       FontSize="16" TextColor="#8899BB"
-                       HorizontalOptions="Center"
-                       HorizontalTextAlignment="Center" />
-
-                <!-- Streak mare -->
-                <Frame BackgroundColor="#1A0A40" BorderColor="#7B2FBE"
-                       CornerRadius="20" Padding="24" Margin="0,8,0,0">
-                    <VerticalStackLayout Spacing="4">
-                        <Label Text="🔥 Streak curent"
-                               TextColor="#8899BB" FontSize="13"
-                               HorizontalOptions="Center" />
-                        <Label Text="{Binding Streak, StringFormat='{0} zile'}"
-                               FontSize="48" FontAttributes="Bold"
-                               TextColor="#FF6B35"
-                               HorizontalOptions="Center" />
-                    </VerticalStackLayout>
-                </Frame>
-
-                <!-- Statistici sesiune -->
+                <!-- Sectiunea sesiune — mereu vizibila -->
                 <Frame BackgroundColor="#16213E" BorderColor="#0F3460"
-                       CornerRadius="20" Padding="24">
+                       CornerRadius="24" Padding="28">
                     <VerticalStackLayout Spacing="16">
-                        <Label Text="Sesiunea de azi"
-                               TextColor="#8899BB" FontSize="13"
-                               HorizontalOptions="Center" />
 
-                        <Grid ColumnDefinitions="*,*,*" ColumnSpacing="12">
-                            <!-- Corecte -->
+                        <Label Text="{Binding EmojiSesiune}"
+                               FontSize="72" HorizontalOptions="Center" />
+
+                        <Label Text="{Binding TitluSesiune}"
+                               FontSize="32" FontAttributes="Bold"
+                               TextColor="White"
+                               HorizontalOptions="Center"
+                               HorizontalTextAlignment="Center" />
+
+                        <Label Text="Sesiune finalizata!"
+                               FontSize="15" TextColor="#8899BB"
+                               HorizontalOptions="Center"
+                               HorizontalTextAlignment="Center" />
+
+                        <!-- Statistici -->
+                        <Grid ColumnDefinitions="*,*,*" ColumnSpacing="8"
+                              Margin="0,8,0,0">
                             <VerticalStackLayout Grid.Column="0" Spacing="4"
                                                  HorizontalOptions="Center">
                                 <Label Text="{Binding NrCorect}"
-                                       FontSize="32" FontAttributes="Bold"
+                                       FontSize="36" FontAttributes="Bold"
                                        TextColor="#4CAF50"
                                        HorizontalOptions="Center" />
-                                <Label Text="Corecte"
-                                       TextColor="#8899BB" FontSize="12"
-                                       HorizontalOptions="Center" />
+                                <Label Text="Corecte" TextColor="#8899BB"
+                                       FontSize="12" HorizontalOptions="Center" />
                             </VerticalStackLayout>
 
-                            <!-- Rata succes -->
                             <VerticalStackLayout Grid.Column="1" Spacing="4"
                                                  HorizontalOptions="Center">
                                 <Label Text="{Binding RataSucces, StringFormat='{0}%'}"
-                                       FontSize="32" FontAttributes="Bold"
+                                       FontSize="36" FontAttributes="Bold"
                                        TextColor="#FFD700"
                                        HorizontalOptions="Center" />
-                                <Label Text="Rata"
-                                       TextColor="#8899BB" FontSize="12"
-                                       HorizontalOptions="Center" />
+                                <Label Text="Rata" TextColor="#8899BB"
+                                       FontSize="12" HorizontalOptions="Center" />
                             </VerticalStackLayout>
 
-                            <!-- Gresite -->
                             <VerticalStackLayout Grid.Column="2" Spacing="4"
                                                  HorizontalOptions="Center">
                                 <Label Text="{Binding NrGresit}"
-                                       FontSize="32" FontAttributes="Bold"
+                                       FontSize="36" FontAttributes="Bold"
                                        TextColor="#FF6B6B"
                                        HorizontalOptions="Center" />
-                                <Label Text="Gresite"
-                                       TextColor="#8899BB" FontSize="12"
-                                       HorizontalOptions="Center" />
+                                <Label Text="Gresite" TextColor="#8899BB"
+                                       FontSize="12" HorizontalOptions="Center" />
                             </VerticalStackLayout>
                         </Grid>
+
+                    </VerticalStackLayout>
+                </Frame>
+
+                <!-- Sectiunea streak — doar prima sesiune a zilei -->
+                <Frame IsVisible="{Binding AratStreak}"
+                       BackgroundColor="#1A0A40" BorderColor="#7B2FBE"
+                       CornerRadius="24" Padding="28">
+                    <VerticalStackLayout Spacing="12">
+
+                        <Label Text="{Binding EmojiStreak}"
+                               FontSize="56" HorizontalOptions="Center" />
+
+                        <Label Text="{Binding TitluStreak}"
+                               FontSize="26" FontAttributes="Bold"
+                               TextColor="#FF6B35"
+                               HorizontalOptions="Center"
+                               HorizontalTextAlignment="Center" />
+
+                        <Label Text="{Binding MesajStreak}"
+                               FontSize="15" TextColor="#8899BB"
+                               HorizontalOptions="Center"
+                               HorizontalTextAlignment="Center" />
+
+                        <Frame BackgroundColor="#2A1060" BorderColor="#9B5FDE"
+                               CornerRadius="14" Padding="16,10"
+                               HorizontalOptions="Center">
+                            <Label Text="{Binding Streak, StringFormat='🔥 {0} zile consecutive'}"
+                                   FontSize="18" FontAttributes="Bold"
+                                   TextColor="#FF6B35"
+                                   HorizontalOptions="Center" />
+                        </Frame>
+
                     </VerticalStackLayout>
                 </Frame>
 
             </VerticalStackLayout>
         </ScrollView>
 
-        <!-- Buton jos -->
-        <Button Grid.Row="1"
-                Text="Continua →"
-                Clicked="OnContinuaClicked"
-                BackgroundColor="#7B2FBE"
-                TextColor="White"
-                CornerRadius="16"
-                HeightRequest="58"
-                FontSize="18"
-                FontAttributes="Bold"
-                Margin="0,12,0,16" />
+        <!-- Butoane jos -->
+        <VerticalStackLayout Grid.Row="1" Spacing="10" Margin="0,12,0,20">
+            <Button Text="Practica mai mult"
+                    Clicked="OnPracticaClicked"
+                    BackgroundColor="#16213E"
+                    TextColor="#8899BB"
+                    BorderColor="#2E3A5C" BorderWidth="1"
+                    CornerRadius="16" HeightRequest="50"
+                    FontSize="15" />
+            <Button Text="Inapoi la meniu →"
+                    Clicked="OnContinuaClicked"
+                    BackgroundColor="#7B2FBE"
+                    TextColor="White"
+                    CornerRadius="16" HeightRequest="56"
+                    FontSize="17" FontAttributes="Bold" />
+        </VerticalStackLayout>
 
     </Grid>
 </ContentPage>

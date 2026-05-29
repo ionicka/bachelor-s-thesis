@@ -11,29 +11,29 @@ public partial class SesiuneConfigViewModel : ObservableObject
     private readonly ISessionStateService _session;
     private readonly FluxViewModel _fluxVm;
 
+    private const int MAX_CARDURI = 50;
+    private const int MIN_CARDURI = 1;
+
     [ObservableProperty] int _nrRevizuiri = 0;
     [ObservableProperty] int _nrCuvinteNoi = 0;
-    [ObservableProperty] int _maxCuvinteNoi = 50;
-    [ObservableProperty] int _totalSesiune = 0;
+    [ObservableProperty] int _totalDisponibil = 0;
     [ObservableProperty] string _estimareTimp = "";
+    [ObservableProperty] bool _poateIncepe = false;
+    [ObservableProperty] int _revizuiriInSesiune = 0;
+    [ObservableProperty] int _noiFInSesiune = 0;
 
-    private int _cuvinteNoi = 10;
-    public int CuvinteNoi
+    private int _totalSesiune = 10;
+    public int TotalSesiune
     {
-        get => _cuvinteNoi;
+        get => _totalSesiune;
         set
         {
-            int clamped = Math.Clamp(value, 0, _maxCuvinteNoi);
-            if (SetProperty(ref _cuvinteNoi, clamped))
-            {
-                OnPropertyChanged(nameof(ProgressCuvinte));
-                ActualizeazaRezumat();
-            }
+            int max = Math.Min(MAX_CARDURI, _totalDisponibil);
+            int clamped = Math.Clamp(value, 0, Math.Max(0, max));
+            if (SetProperty(ref _totalSesiune, clamped))
+                ActualizeazaTot();
         }
     }
-
-    public double ProgressCuvinte =>
-        _maxCuvinteNoi > 0 ? (double)_cuvinteNoi / _maxCuvinteNoi : 0;
 
     public SesiuneConfigViewModel(
         ICardService cardService,
@@ -54,44 +54,53 @@ public partial class SesiuneConfigViewModel : ObservableObject
 
         NrRevizuiri = stats.CuvinteDeRevizuitAzi;
         NrCuvinteNoi = stats.CuvinteNoi;
-        MaxCuvinteNoi = Math.Max(50, NrCuvinteNoi);
+        TotalDisponibil = NrRevizuiri + NrCuvinteNoi;
 
-        int defaultNoi = _session.UtilizatorCurent.CarduriNoiPerZi;
-        CuvinteNoi = NrCuvinteNoi > 0
-            ? Math.Min(defaultNoi, NrCuvinteNoi)
-            : 0;
+        // Default: 10 sau totalul disponibil
+        int defaultVal = Math.Min(10, TotalDisponibil);
+        TotalSesiune = defaultVal;
 
-        ActualizeazaRezumat();
+        ActualizeazaTot();
     }
 
-    private void ActualizeazaRezumat()
+    private void ActualizeazaTot()
     {
-        TotalSesiune = NrRevizuiri + CuvinteNoi;
+        // Calculeaza compozitia sesiunii
+        RevizuiriInSesiune = Math.Min(NrRevizuiri, TotalSesiune);
+        int ramas = TotalSesiune - RevizuiriInSesiune;
+        NoiFInSesiune = Math.Min(NrCuvinteNoi, ramas);
+
         int min = (int)Math.Ceiling(TotalSesiune * 0.5);
         EstimareTimp = TotalSesiune > 0
             ? $"Estimat: ~{min} minute"
-            : "Nimic programat — alege cuvinte noi";
+            : "";
+
+        PoateIncepe = TotalSesiune > 0 && TotalDisponibil > 0;
     }
 
     [RelayCommand]
-    void AdaugaCuvinte() => CuvinteNoi += 1;
+    void AdaugaCarduri() => TotalSesiune += 1;
 
     [RelayCommand]
-    void ScadeCuvinte() => CuvinteNoi -= 1;
+    void ScadeCarduri() => TotalSesiune -= 1;
 
     [RelayCommand]
-    void SeteazaCuvinte(string valoare)
+    void SeteazaCarduri(string valoare)
     {
         if (int.TryParse(valoare, out int val))
-            CuvinteNoi = val;
+            TotalSesiune = val;
     }
 
     [RelayCommand]
     async Task InceptSesiuneAsync()
     {
         if (_session.UtilizatorCurent == null) return;
-        _session.SetCuvinteNoi(CuvinteNoi);
-        _fluxVm.ResetSesiune();
+        if (!PoateIncepe) return;
+
+        // Seteaza compozitia sesiunii
+        _session.SetRevizuiriSesiune(RevizuiriInSesiune);
+        _session.SetCuvinteNoi(NoiFInSesiune);
+        _fluxVm.MarcheazaSesiuneNoua();
         await Shell.Current.GoToAsync("//FluxPage");
     }
 
