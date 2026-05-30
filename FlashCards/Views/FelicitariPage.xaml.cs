@@ -2,28 +2,40 @@
 
 namespace FlashCards.Views;
 
-[QueryProperty(nameof(Streak), "streak")]
-[QueryProperty(nameof(NrCorect), "corect")]
-[QueryProperty(nameof(NrGresit), "gresit")]
-[QueryProperty(nameof(PrimaAZilei), "prima")]
-public partial class FelicitariPage : ContentPage
+public partial class FelicitariPage : ContentPage, IQueryAttributable
 {
-    public int Streak { get; set; }
-    public int NrCorect { get; set; }
-    public int NrGresit { get; set; }
-    public bool PrimaAZilei { get; set; }
+    private int _streak;
+    private int _nrCorect;
+    private int _nrGresit;
+    private bool _primaAZilei;
 
     public FelicitariPage()
     {
         InitializeComponent();
     }
 
+    // Apelat DE FIECARE DATĂ când navighezi cu query params,
+    // chiar dacă pagina e deja instantiată (ShellContent reutilizat)
+    public void ApplyQueryAttributes(IDictionary<string, object> query)
+    {
+        _streak = ToInt(query, "streak");
+        _nrCorect = ToInt(query, "corect");
+        _nrGresit = ToInt(query, "gresit");
+        _primaAZilei = ToBool(query, "prima");
+
+        System.Diagnostics.Debug.WriteLine(
+            $"[FELICITARI PAGE] ApplyQuery: streak={_streak}, corect={_nrCorect}, gresit={_nrGresit}, prima={_primaAZilei}");
+
+        // Setăm BindingContext IMEDIAT, cu valorile sosite
+        BindingContext = new FelicitariViewModel(
+            _streak, _nrCorect, _nrGresit, _primaAZilei);
+    }
+
     protected override void OnAppearing()
     {
         base.OnAppearing();
-        // Construim VM-ul după ce query params au sosit
-        BindingContext = new FelicitariViewModel(
-            Streak, NrCorect, NrGresit, PrimaAZilei);
+        System.Diagnostics.Debug.WriteLine(
+            $"[FELICITARI PAGE] OnAppearing: streak={_streak}, corect={_nrCorect}, gresit={_nrGresit}");
     }
 
     private async void OnContinuaClicked(object sender, EventArgs e)
@@ -31,4 +43,17 @@ public partial class FelicitariPage : ContentPage
 
     private async void OnPracticaClicked(object sender, EventArgs e)
         => await Shell.Current.GoToAsync("//SesiuneConfigPage");
+
+    // ─── Helpers pentru conversia robustă a query params ───
+    private static int ToInt(IDictionary<string, object> q, string key)
+    {
+        if (!q.TryGetValue(key, out var v) || v == null) return 0;
+        return int.TryParse(v.ToString(), out int n) ? n : 0;
+    }
+
+    private static bool ToBool(IDictionary<string, object> q, string key)
+    {
+        if (!q.TryGetValue(key, out var v) || v == null) return false;
+        return bool.TryParse(v.ToString(), out bool b) && b;
+    }
 }

@@ -16,11 +16,9 @@ public enum TipRaspuns
 
 public enum NivelCuvant
 {
-    Incepator = 1,
-    ElementarInferior = 2,
-    ElementarSuperior = 3,
-    Intermediar = 4,
-    Avansat = 5
+    Elementar = 1,
+    Intermediar = 2,
+    Avansat = 3
 }
 
 public enum RolUtilizator
@@ -47,8 +45,7 @@ public enum DomeniuCuvant
     Cultura = 5,
     Sport = 6,
     Politica = 7,
-    Calatorii = 8,
-    Emotii = 9
+    Calatorii = 8
 }
 
 public enum ModInvatare

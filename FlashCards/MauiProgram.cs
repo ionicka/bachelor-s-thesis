@@ -1,12 +1,10 @@
 using CommunityToolkit.Maui;
 using FlashCards.Core.Interfaces;
 using FlashCards.Core.Services;
-using FlashCards.Data.Context;
 using FlashCards.Data.Repositories;
 using FlashCards.Services;
 using FlashCards.ViewModels;
 using FlashCards.Views;
-using FlashCards.Core.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
@@ -32,7 +30,8 @@ public static class MauiProgram
 
         builder.Services.AddSingleton(config);
 
-        builder.Services.AddDbContext<LexaDbContext>(opt =>
+        // Factory: fiecare repo primește contextul lui propriu, nu se intersectează
+        builder.Services.AddDbContextFactory<LexaDbContext>(opt =>
             opt.UseNpgsql(connStr));
 
         builder.Services.AddTransient<ICardRepository>(_ =>

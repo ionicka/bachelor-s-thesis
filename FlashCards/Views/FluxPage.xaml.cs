@@ -51,12 +51,18 @@ public partial class FluxPage : ContentPage
                 _session.UtilizatorCurent.Id);
             bool primaAZilei = stats.SesiuniFinalizateAzi == 1;
 
+            System.Diagnostics.Debug.WriteLine(
+                $"[FELICITARI] NrCorect={_vm.NrCorect}, NrGresit={_vm.NrGresit}");
+
             await Shell.Current.GoToAsync(
                 $"//FelicitariPage?streak={stats.ZileCurenteStreak}" +
                 $"&corect={_vm.NrCorect}" +
                 $"&gresit={_vm.NrGresit}" +
                 $"&prima={primaAZilei}");
         }
-        catch { }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine($"[FELICITARI] Eroare: {ex.Message}");
+        }
     }
 }

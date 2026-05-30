@@ -36,7 +36,7 @@ public class Cuvant
     [MaxLength(50)]
     public string Limba { get; set; } = "engleza";
 
-    public NivelCuvant Nivel { get; set; } = NivelCuvant.Incepator;
+    public NivelCuvant Nivel { get; set; } = NivelCuvant.Elementar;
     public TipCuvant Tip { get; set; } = TipCuvant.Substantiv;
     public DomeniuCuvant Domeniu { get; set; } = DomeniuCuvant.General;
 

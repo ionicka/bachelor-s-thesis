@@ -293,22 +293,90 @@
                 <!-- ─── MOD ÎNVĂȚARE ─────────────────────────────── -->
                 <VerticalStackLayout Spacing="8">
                     <Label Text="🎓 MOD DE ÎNVĂȚARE"
-                           TextColor="#E94560"
-                           FontSize="11"
-                           FontAttributes="Bold"
-                           CharacterSpacing="1.5" />
-                    <Frame BackgroundColor="#16213E"
-                           BorderColor="#0F3460"
-                           CornerRadius="12"
-                           Padding="6,0"
-                           HasShadow="False">
-                        <Picker ItemsSource="{Binding ModOptiuni}"
-                                SelectedIndex="{Binding ModIndex}"
-                                BackgroundColor="Transparent"
-                                TextColor="White"
-                                TitleColor="#556688"
-                                FontSize="14" />
-                    </Frame>
+           TextColor="#E94560"
+           FontSize="11"
+           FontAttributes="Bold"
+           CharacterSpacing="1.5" />
+
+                    <!-- 3 carduri orizontale -->
+                    <Grid ColumnDefinitions="*,*,*" ColumnSpacing="8">
+
+                        <!-- Card 1: Toate -->
+                        <Frame Grid.Column="0"
+               BackgroundColor="{Binding ModToateBg}"
+               BorderColor="#7B2FBE"
+               CornerRadius="14"
+               Padding="10"
+               HasShadow="False">
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding SeteazaModToateCommand}" />
+                            </Frame.GestureRecognizers>
+                            <VerticalStackLayout Spacing="4" HorizontalOptions="Center">
+                                <Label Text="🎲" FontSize="20" HorizontalOptions="Center" />
+                                <Label Text="Toate"
+                       TextColor="{Binding ModToateText}"
+                       FontSize="12"
+                       FontAttributes="Bold"
+                       HorizontalOptions="Center" />
+                                <Label Text="Mix"
+                       TextColor="{Binding ModToateText}"
+                       FontSize="10"
+                       HorizontalOptions="Center"
+                       Opacity="0.7" />
+                            </VerticalStackLayout>
+                        </Frame>
+
+                        <!-- Card 2: Flashcards -->
+                        <Frame Grid.Column="1"
+               BackgroundColor="{Binding ModFlashcardsBg}"
+               BorderColor="#4A90E2"
+               CornerRadius="14"
+               Padding="10"
+               HasShadow="False">
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding SeteazaModFlashcardsCommand}" />
+                            </Frame.GestureRecognizers>
+                            <VerticalStackLayout Spacing="4" HorizontalOptions="Center">
+                                <Label Text="👁" FontSize="20" HorizontalOptions="Center" />
+                                <Label Text="Flashcards"
+                       TextColor="{Binding ModFlashcardsText}"
+                       FontSize="12"
+                       FontAttributes="Bold"
+                       HorizontalOptions="Center" />
+                                <Label Text="Vizual"
+                       TextColor="{Binding ModFlashcardsText}"
+                       FontSize="10"
+                       HorizontalOptions="Center"
+                       Opacity="0.7" />
+                            </VerticalStackLayout>
+                        </Frame>
+
+                        <!-- Card 3: Tastare -->
+                        <Frame Grid.Column="2"
+               BackgroundColor="{Binding ModTastareBg}"
+               BorderColor="#E94560"
+               CornerRadius="14"
+               Padding="10"
+               HasShadow="False">
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding SeteazaModTastareCommand}" />
+                            </Frame.GestureRecognizers>
+                            <VerticalStackLayout Spacing="4" HorizontalOptions="Center">
+                                <Label Text="⌨" FontSize="20" HorizontalOptions="Center" />
+                                <Label Text="Tastare"
+                       TextColor="{Binding ModTastareText}"
+                       FontSize="12"
+                       FontAttributes="Bold"
+                       HorizontalOptions="Center" />
+                                <Label Text="Activ"
+                       TextColor="{Binding ModTastareText}"
+                       FontSize="10"
+                       HorizontalOptions="Center"
+                       Opacity="0.7" />
+                            </VerticalStackLayout>
+                        </Frame>
+
+                    </Grid>
                 </VerticalStackLayout>
 
                 <!-- ─── COMPOZIȚIA SESIUNII ─────────────────────── -->

@@ -25,15 +25,12 @@ public static class EnumLabels
         DomeniuCuvant.Sport => "Sport",
         DomeniuCuvant.Politica => "Politică",
         DomeniuCuvant.Calatorii => "Călătorii",
-        DomeniuCuvant.Emotii => "Emoții",
         _ => domeniu.ToString()
     };
 
     public static string Label(NivelCuvant nivel) => nivel switch
     {
-        NivelCuvant.Incepator => "Începător",
-        NivelCuvant.ElementarInferior => "Elementar inferior",
-        NivelCuvant.ElementarSuperior => "Elementar superior",
+        NivelCuvant.Elementar => "Elementar",
         NivelCuvant.Intermediar => "Intermediar",
         NivelCuvant.Avansat => "Avansat",
         _ => nivel.ToString()
@@ -51,7 +48,6 @@ public static class EnumLabels
         DomeniuCuvant.Sport => "⚽",
         DomeniuCuvant.Politica => "🏛️",
         DomeniuCuvant.Calatorii => "✈️",
-        DomeniuCuvant.Emotii => "💭",
         _ => "📖"
     };
 
@@ -76,25 +72,22 @@ public static class EnumLabels
     };
 
     public static readonly List<DomeniuCuvant> ToateDomenii = new()
-    {
-        DomeniuCuvant.General,
-        DomeniuCuvant.Business,
-        DomeniuCuvant.Tehnologie,
-        DomeniuCuvant.Sanatate,
-        DomeniuCuvant.Educatie,
-        DomeniuCuvant.Cultura,
-        DomeniuCuvant.Sport,
-        DomeniuCuvant.Politica,
-        DomeniuCuvant.Calatorii,
-        DomeniuCuvant.Emotii
-    };
+{
+    DomeniuCuvant.General,
+    DomeniuCuvant.Business,
+    DomeniuCuvant.Tehnologie,
+    DomeniuCuvant.Sanatate,
+    DomeniuCuvant.Educatie,
+    DomeniuCuvant.Cultura,
+    DomeniuCuvant.Sport,
+    DomeniuCuvant.Politica,
+    DomeniuCuvant.Calatorii
+};
 
     public static readonly List<NivelCuvant> ToateNivelele = new()
-    {
-        NivelCuvant.Incepator,
-        NivelCuvant.ElementarInferior,
-        NivelCuvant.ElementarSuperior,
-        NivelCuvant.Intermediar,
-        NivelCuvant.Avansat
-    };
+{
+    NivelCuvant.Elementar,
+    NivelCuvant.Intermediar,
+    NivelCuvant.Avansat
+};
 }

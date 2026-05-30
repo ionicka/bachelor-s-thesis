@@ -204,7 +204,7 @@ public class CuvantListItemVm
         DomeniuCuvant.Sport => "#4CAF50",
         DomeniuCuvant.Politica => "#8E44AD",
         DomeniuCuvant.Calatorii => "#16A085",
-        DomeniuCuvant.Emotii => "#E91E63",
+  
         _ => "#556688"
     };
 }

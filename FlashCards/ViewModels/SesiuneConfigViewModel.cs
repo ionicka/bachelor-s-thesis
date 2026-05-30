@@ -31,13 +31,41 @@ public partial class SesiuneConfigViewModel : ObservableObject
     [ObservableProperty] ObservableCollection<ChipFiltruDomeniuVm> _domeniuChips = new();
 
     // Mod învățare — single select
-    [ObservableProperty] int _modIndex = 0;
-    public List<string> ModOptiuni { get; } = new()
+    private int _modIndex = 0;
+    public int ModIndex
     {
-        "Toate (recunoaștere + tastare)",
-        "Doar flashcards (recunoaștere)",
-        "Doar tastare (active recall)"
-    };
+        get => _modIndex;
+        set
+        {
+            if (SetProperty(ref _modIndex, value))
+            {
+                OnPropertyChanged(nameof(EstimareTimp));
+                OnPropertyChanged(nameof(ModToateSelectat));
+                OnPropertyChanged(nameof(ModFlashcardsSelectat));
+                OnPropertyChanged(nameof(ModTastareSelectat));
+
+                OnPropertyChanged(nameof(ModToateBg));
+                OnPropertyChanged(nameof(ModFlashcardsBg));
+                OnPropertyChanged(nameof(ModTastareBg));
+                OnPropertyChanged(nameof(ModToateText));
+                OnPropertyChanged(nameof(ModFlashcardsText));
+                OnPropertyChanged(nameof(ModTastareText));
+            }
+        }
+    }
+
+    public bool ModToateSelectat => ModIndex == 0;
+    public bool ModFlashcardsSelectat => ModIndex == 1;
+    public bool ModTastareSelectat => ModIndex == 2;
+
+    // Culori pentru cele 3 carduri mod
+    public string ModToateBg => ModToateSelectat ? "#7B2FBE" : "#16213E";
+    public string ModFlashcardsBg => ModFlashcardsSelectat ? "#4A90E2" : "#16213E";
+    public string ModTastareBg => ModTastareSelectat ? "#E94560" : "#16213E";
+
+    public string ModToateText => ModToateSelectat ? "#FFFFFF" : "#8899BB";
+    public string ModFlashcardsText => ModFlashcardsSelectat ? "#FFFFFF" : "#8899BB";
+    public string ModTastareText => ModTastareSelectat ? "#FFFFFF" : "#8899BB";
 
     // Nr carduri
     private int _nrCarduri = 10;
@@ -183,11 +211,14 @@ public partial class SesiuneConfigViewModel : ObservableObject
             SeCalculeazaDisponibilitate = false;
         }
     }
+    [RelayCommand]
+    void SeteazaModToate() => ModIndex = 0;
 
-    partial void OnModIndexChanged(int value)
-    {
-        OnPropertyChanged(nameof(EstimareTimp));
-    }
+    [RelayCommand]
+    void SeteazaModFlashcards() => ModIndex = 1;
+
+    [RelayCommand]
+    void SeteazaModTastare() => ModIndex = 2;
 
     [RelayCommand]
     void AdaugaCarduri() => NrCarduri = Math.Min(MAX_CARDURI, NrCarduri + 1);
@@ -237,11 +268,9 @@ public partial class SesiuneConfigViewModel : ObservableObject
 
     private static string CuloareNivel(NivelCuvant n) => n switch
     {
-        NivelCuvant.Incepator => "#4CAF50",
-        NivelCuvant.ElementarInferior => "#7FBE3F",
-        NivelCuvant.ElementarSuperior => "#FFD700",
-        NivelCuvant.Intermediar => "#FF8C00",
-        NivelCuvant.Avansat => "#E94560",
+        NivelCuvant.Elementar => "#4CAF50",   // verde — ușor
+        NivelCuvant.Intermediar => "#FF8C00", // portocaliu — mediu
+        NivelCuvant.Avansat => "#E94560",     // roșu — greu
         _ => "#556688"
     };
 
@@ -256,7 +285,7 @@ public partial class SesiuneConfigViewModel : ObservableObject
         DomeniuCuvant.Sport => "#4CAF50",
         DomeniuCuvant.Politica => "#8E44AD",
         DomeniuCuvant.Calatorii => "#16A085",
-        DomeniuCuvant.Emotii => "#E91E63",
+      
         _ => "#556688"
     };
 }

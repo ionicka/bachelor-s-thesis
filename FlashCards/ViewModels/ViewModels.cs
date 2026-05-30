@@ -191,21 +191,7 @@ public partial class FluxViewModel : ObservableObject
             .Replace("[TERMEN]", CardCurent.Termen);
 
     // Returneaza partile exemplului pentru colorare: inainte|cuvant|dupa
-    public (string Inainte, string Cuvant, string Dupa) ExempluParti
-    {
-        get
-        {
-            if (CardCurent == null) return ("", "", "");
-            var ex = CardCurent.Exemple.ElementAtOrDefault(IndexExemplu) ?? "";
-            int idx = ex.IndexOf("[TERMEN]");
-            if (idx < 0) return (ex, "", "");
-            return (
-                ex[..idx],
-                CardCurent.Termen,
-                ex[(idx + "[TERMEN]".Length)..]
-            );
-        }
-    }
+   
 
     public string DefinitieAfisata =>
         _aratDefinitieRo && CardCurent?.DefinitieRo != null
@@ -229,12 +215,13 @@ public partial class FluxViewModel : ObservableObject
 
     partial void OnCardCurentChanged(CardDto? value)
     {
+        // Versiune sigură — DOAR notificări, fără setări care pot loop-a
         OnPropertyChanged(nameof(ImagineCurenta));
         OnPropertyChanged(nameof(AreImagini));
         OnPropertyChanged(nameof(AreDuaImagini));
         OnPropertyChanged(nameof(ExempluCurentBlur));
         OnPropertyChanged(nameof(ExempluCurentRevelat));
-        OnPropertyChanged(nameof(ExempluParti));
+       
         OnPropertyChanged(nameof(DefinitieAfisata));
         OnPropertyChanged(nameof(BtnTradLabel));
     }
@@ -337,23 +324,6 @@ public partial class FluxViewModel : ObservableObject
         NrGresit = 0;
     }
 
-    // Insereaza un card aleatoriu in coada de retry (nu imediat dupa cel curent)
-    private void InsereazaAleatoriu(Queue<CardSesiune> coada, CardSesiune card)
-    {
-        var lista = coada.ToList();
-        // Insereaza undeva dupa primele 2 pozitii (nu imediat)
-        int minPos = Math.Min(2, lista.Count);
-        int pos = lista.Count == 0 ? 0
-            : Random.Shared.Next(minPos, Math.Max(minPos + 1, lista.Count + 1));
-        lista.Insert(pos, card);
-        // Reconstruieste coada
-        var nouaCoada = new Queue<CardSesiune>();
-        foreach (var c in lista) nouaCoada.Enqueue(c);
-        // Copiaza in coada originala
-        while (coada.Count > 0) coada.Dequeue();
-        foreach (var c in lista) coada.Enqueue(c);
-    }
-
     private async Task AfiseazaUrmatorCard()
     {
         PropozitieRevelata = false;
@@ -361,8 +331,8 @@ public partial class FluxViewModel : ObservableObject
         MesajFeedback = string.Empty;
         ColorFeedback = "Transparent";
         AsteaptaMailDeparte = false;
-        IndexImagine = 0;
-        IndexExemplu = 0;
+        IndexImagine = 0;      
+        IndexExemplu = 0;       
         AratDefinitieRo = false;
 
         if (_coada.TryDequeue(out var urmator))
@@ -385,13 +355,13 @@ public partial class FluxViewModel : ObservableObject
             return;
         }
 
-        // Ambele cozi goale - ascundem cardul inainte de orice await
+        // SAFETY: marchează că nu mai e card înainte de orice operație async
         CardCurent = null;
         PropozitieRevelata = false;
         AsteaptaMailDeparte = false;
 
-        // Inchide sesiunea in BD INAINTE de a seta SesiuneGoala
-        if (_session.SesiuneCurenta.HasValue)
+        // Închide sesiunea în BD doar dacă nu e deja închisă
+        if (_session.SesiuneCurenta.HasValue && !SesiuneGoala)
         {
             try
             {
@@ -404,7 +374,6 @@ public partial class FluxViewModel : ObservableObject
             catch { }
         }
 
-        // Acum sesiunea e salvata in BD, declanseaza PropertyChanged
         SesiuneGoala = true;
     }
 
@@ -484,7 +453,7 @@ public partial class FluxViewModel : ObservableObject
         IndexExemplu = (IndexExemplu + 1) % CardCurent.Exemple.Count;
         OnPropertyChanged(nameof(ExempluCurentBlur));
         OnPropertyChanged(nameof(ExempluCurentRevelat));
-        OnPropertyChanged(nameof(ExempluParti));
+        
     }
 
     [RelayCommand]
@@ -494,9 +463,16 @@ public partial class FluxViewModel : ObservableObject
         OnPropertyChanged(nameof(DefinitieAfisata));
         OnPropertyChanged(nameof(BtnTradLabel));
     }
-
     [RelayCommand]
-    void RevelazaPropozitia() => PropozitieRevelata = true;
+    void RevelazaPropozitia()
+    {
+        // Idempotent: dacă e deja revelată, nu face nimic
+        if (PropozitieRevelata) return;
+
+        PropozitieRevelata = true;
+        OnPropertyChanged(nameof(ExempluCurentRevelat));
+       
+    }
 
     [RelayCommand]
     async Task RaspundeRecunoastereAsync(string calitateStr)
@@ -527,26 +503,24 @@ public partial class FluxViewModel : ObservableObject
         {
             NrGresit++;
             _cardSesiuneCurent.IncrementeazaGresite();
-            // Reapare aleatoriu in coadaRetry
-            var listaRetry = _coadaRetry.ToList();
-            int posR = listaRetry.Count == 0 ? 0
-                : Random.Shared.Next(0, listaRetry.Count + 1);
-            listaRetry.Insert(posR, new CardSesiune(CardCurent, TipRaspuns.Recunoastere));
-            listaRetry.Insert(Math.Min(posR + 1, listaRetry.Count),
-                new CardSesiune(CardCurent, TipRaspuns.RemintireActiva));
-            _coadaRetry = new Queue<CardSesiune>(listaRetry);
+
+            // FIX: adaugă DOAR o singură copie, nu două
+            // Cardul reapare doar ca recunoaștere — dacă greșește iar, atunci se va re-evalua
+            if (_cardSesiuneCurent.NrGresite < 5)
+            {
+                _coadaRetry.Enqueue(new CardSesiune(
+                    CardCurent, TipRaspuns.Recunoastere,
+                    estePrimaVezut: false,
+                    nrGresite: _cardSesiuneCurent.NrGresite));
+            }
         }
         else
         {
             NrCorect++;
-            // Prima vedere si stie -> adauga tastarea aleatoriu in coada (nu imediat)
             if (_cardSesiuneCurent.EstePrimaVezut)
             {
-                var lista = _coada.ToList();
-                int pos = lista.Count == 0 ? 0
-                    : Random.Shared.Next(Math.Min(2, lista.Count), lista.Count + 1);
-                lista.Insert(pos, new CardSesiune(CardCurent, TipRaspuns.RemintireActiva));
-                _coada = new Queue<CardSesiune>(lista);
+                // FIX: o singură instanță, nu duplicat
+                _coada.Enqueue(new CardSesiune(CardCurent, TipRaspuns.RemintireActiva));
             }
         }
 
@@ -560,8 +534,22 @@ public partial class FluxViewModel : ObservableObject
         AsteaptaMailDeparte = true;
     }
 
+    private bool _navigareInCurs = false;
+
     [RelayCommand]
-    async Task MailDeparte() => await AfiseazaUrmatorCard();
+    async Task MailDeparte()
+    {
+        if (_navigareInCurs) return;
+        _navigareInCurs = true;
+        try
+        {
+            await AfiseazaUrmatorCard();
+        }
+        finally
+        {
+            _navigareInCurs = false;
+        }
+    }
 
     [RelayCommand]
     async Task RaspundeTastareAsync()

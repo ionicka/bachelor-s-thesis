@@ -3,7 +3,7 @@ using FlashCards.Core.DTOs;
 using FlashCards.Core.Entities;
 using FlashCards.Core.Enums;
 using FlashCards.Core.Interfaces;
-using FlashCards.Data.Context;
+
 using Microsoft.EntityFrameworkCore;
 using Npgsql;
 
@@ -170,7 +170,7 @@ public class CardRepository : ICardRepository
         string primulExemplu = exemple.FirstOrDefault() ?? r.Termen;
         string blur = primulExemplu.Replace("[TERMEN]", new string('_', r.Termen.Length));
         string rev = primulExemplu.Replace("[TERMEN]", r.Termen);
-        string casute = string.Concat(r.Termen.Select(c => c == ' ' ? "  " : "□"));
+        string casute = string.Concat(r.Termen.Select(c => c == ' ' ? "  " : "_"));
 
         // Imagini — split dupa |
         var imagini = (r.CaleImagini ?? "")
@@ -367,52 +367,71 @@ public class CardRepository : ICardRepository
 
 public class ProgresRepository : IProgresRepository
 {
-    private readonly LexaDbContext _ctx;
-    public ProgresRepository(LexaDbContext ctx) => _ctx = ctx;
+    private readonly IDbContextFactory<LexaDbContext> _factory;
+    public ProgresRepository(IDbContextFactory<LexaDbContext> factory) => _factory = factory;
 
-    public async Task<ProgresCuvant?> GetAsync(int utilizatorId, int cuvantId) =>
-        await _ctx.ProgresCuvinte
-            .FirstOrDefaultAsync(p =>
-                p.UtilizatorId == utilizatorId && p.CuvantId == cuvantId);
+    public async Task<ProgresCuvant?> GetAsync(int utilizatorId, int cuvantId)
+    {
+        using var ctx = await _factory.CreateDbContextAsync();
+        return await ctx.ProgresCuvinte
+            .FirstOrDefaultAsync(p => p.UtilizatorId == utilizatorId && p.CuvantId == cuvantId);
+    }
 
     public async Task<ProgresCuvant> GetSauCreeazaAsync(int utilizatorId, int cuvantId)
     {
-        var p = await GetAsync(utilizatorId, cuvantId);
-        if (p != null) return p;
-        p = new ProgresCuvant { UtilizatorId = utilizatorId, CuvantId = cuvantId };
-        _ctx.ProgresCuvinte.Add(p);
-        await _ctx.SaveChangesAsync();
-        return p;
+        using var ctx = await _factory.CreateDbContextAsync();
+        var existent = await ctx.ProgresCuvinte
+            .FirstOrDefaultAsync(p => p.UtilizatorId == utilizatorId && p.CuvantId == cuvantId);
+        if (existent != null) return existent;
+
+        var nou = new ProgresCuvant
+        {
+            UtilizatorId = utilizatorId,
+            CuvantId = cuvantId,
+            NivelCunoastere = 1,
+            DataPrimeiIntalniri = DateTime.UtcNow,
+            DataUrmatoareiRevizuiri = DateOnly.FromDateTime(DateTime.Now)
+        };
+        ctx.ProgresCuvinte.Add(nou);
+        await ctx.SaveChangesAsync();
+        return nou;
     }
 
     public async Task SalveazaAsync(ProgresCuvant progres)
     {
-        if (progres.Id == 0) _ctx.ProgresCuvinte.Add(progres);
-        else _ctx.ProgresCuvinte.Update(progres);
-        await _ctx.SaveChangesAsync();
+        using var ctx = await _factory.CreateDbContextAsync();
+        if (progres.Id == 0)
+            ctx.ProgresCuvinte.Add(progres);
+        else
+            ctx.ProgresCuvinte.Update(progres);
+        await ctx.SaveChangesAsync();
     }
 
-    public async Task<List<ProgresCuvant>> GetToateProgreselAsync(int utilizatorId) =>
-        await _ctx.ProgresCuvinte
+    public async Task<List<ProgresCuvant>> GetToateProgreselAsync(int utilizatorId)
+    {
+        using var ctx = await _factory.CreateDbContextAsync();
+        return await ctx.ProgresCuvinte
             .AsNoTracking()
-            .Where(p => p.UtilizatorId == utilizatorId)
             .Include(p => p.Cuvant)
+            .Where(p => p.UtilizatorId == utilizatorId)
             .ToListAsync();
+    }
 
     public async Task<int> GetNrRevizuiriAziAsync(int utilizatorId)
     {
-        var azi = DateOnly.FromDateTime(DateTime.UtcNow);
-        return await _ctx.ProgresCuvinte
-            .CountAsync(p =>
-                p.UtilizatorId == utilizatorId &&
-                p.DataUrmatoareiRevizuiri <= azi &&
-                p.NivelCunoastere < 7);
+        using var ctx = await _factory.CreateDbContextAsync();
+        var azi = DateOnly.FromDateTime(DateTime.Now);
+        return await ctx.ProgresCuvinte
+            .CountAsync(p => p.UtilizatorId == utilizatorId
+                          && p.DataUrmatoareiRevizuiri <= azi
+                          && p.NivelCunoastere < 7);
     }
 
     public async Task<int> GetNrCuvinteNoiAsync(int utilizatorId)
     {
-        return await _ctx.Cuvinte
-            .Where(c => !_ctx.ProgresCuvinte
+        using var ctx = await _factory.CreateDbContextAsync();
+        return await ctx.Cuvinte
+            .Where(c => !ctx.ProgresCuvinte
                 .Any(p => p.UtilizatorId == utilizatorId && p.CuvantId == c.Id))
             .CountAsync();
     }

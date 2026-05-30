@@ -29,7 +29,7 @@ public class CuvantEditDto
     public string? Pronuntie { get; set; }
     public TipCuvant Tip { get; set; } = TipCuvant.Substantiv;
     public DomeniuCuvant Domeniu { get; set; } = DomeniuCuvant.General;
-    public NivelCuvant Nivel { get; set; } = NivelCuvant.Incepator;
+    public NivelCuvant Nivel { get; set; } = NivelCuvant.Elementar;
     public string Limba { get; set; } = "engleza";
     public string? Etichete { get; set; }
 

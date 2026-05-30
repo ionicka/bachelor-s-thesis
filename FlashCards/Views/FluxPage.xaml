@@ -170,22 +170,12 @@
                                    IsVisible="{Binding PropozitieRevelata,
                                                Converter={StaticResource InvertBool}}" />
                             <!-- Revelat cu cuvantul bold+colorat -->
-                            <Label FontSize="15" FontAttributes="Italic"
-                                   LineHeight="1.5" LineBreakMode="WordWrap"
-                                   IsVisible="{Binding PropozitieRevelata}">
-                                <Label.FormattedText>
-                                    <FormattedString>
-                                        <Span Text="{Binding ExempluParti.Inainte}"
-                                              TextColor="#AABBCC" />
-                                        <Span Text="{Binding ExempluParti.Cuvant}"
-                                              TextColor="#FFD700"
-                                              FontAttributes="Bold"
-                                              FontSize="16" />
-                                        <Span Text="{Binding ExempluParti.Dupa}"
-                                              TextColor="#AABBCC" />
-                                    </FormattedString>
-                                </Label.FormattedText>
-                            </Label>
+
+                            <Label Text="{Binding ExempluCurentRevelat}"
+                                   TextColor="#AABBCC" FontSize="15"
+                                   FontAttributes="Italic" LineHeight="1.5"
+                                   LineBreakMode="WordWrap"
+                                   IsVisible="{Binding PropozitieRevelata}" />
                         </VerticalStackLayout>
                     </Frame>
 
@@ -221,20 +211,7 @@
 
         </Grid>
 
-        <!-- FEEDBACK BAR -->
-        <Frame Grid.Row="2"
-               BackgroundColor="{Binding ColorFeedback}"
-               BorderColor="Transparent"
-               CornerRadius="0" Padding="16,10"
-               IsVisible="{Binding MesajFeedback,
-                           Converter={StaticResource StringToBool}}"
-               HeightRequest="48">
-            <Label Text="{Binding MesajFeedback}"
-                   TextColor="White" FontSize="16"
-                   FontAttributes="Bold"
-                   HorizontalOptions="Center"
-                   VerticalOptions="Center" />
-        </Frame>
+     
 
 
         <!-- BUTOANE JOS -->
