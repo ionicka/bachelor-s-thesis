@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:FlashCards.ViewModels"
+             xmlns:conv="clr-namespace:FlashCards.Converters"
+             x:Class="FlashCards.Views.LoginPage"
+             x:DataType="vm:LoginViewModel"
+             Title="FlashCards"
+             BackgroundColor="#1A1A2E">
+
+    <ContentPage.Resources>
+        <conv:StringToBoolConverter x:Key="StringToBool" />
+        <conv:InvertBoolConverter   x:Key="InvertBool" />
+    </ContentPage.Resources>
+
+    <ScrollView>
+        <VerticalStackLayout Padding="32" Spacing="20" VerticalOptions="Center">
+
+            <Label Text="FlashCards"
+                   FontSize="40" FontAttributes="Bold"
+                   TextColor="White" HorizontalOptions="Center" />
+
+            <Label Text="Invata cuvinte noi zi de zi"
+                   FontSize="16" TextColor="#8899BB"
+                   HorizontalOptions="Center" />
+
+            <Frame BackgroundColor="#16213E" BorderColor="#0F3460"
+                   CornerRadius="16" Padding="24" Margin="0,16,0,0">
+                <VerticalStackLayout Spacing="16">
+
+                    <Label Text="Email" TextColor="#8899BB" FontSize="13" />
+                    <Entry Text="{Binding Email}"
+                           Placeholder="email@exemplu.com"
+                           Keyboard="Email"
+                           BackgroundColor="#0F3460"
+                           TextColor="White"
+                           PlaceholderColor="#556688" />
+
+                    <Label Text="Parola" TextColor="#8899BB" FontSize="13" />
+                    <Entry Text="{Binding Parola}"
+                           Placeholder="Parola ta"
+                           IsPassword="True"
+                           BackgroundColor="#0F3460"
+                           TextColor="White"
+                           PlaceholderColor="#556688" />
+
+                    <Label Text="{Binding MesajEroare}"
+                           TextColor="#FF6B6B" FontSize="13"
+                           IsVisible="{Binding MesajEroare,
+                                       Converter={StaticResource StringToBool}}" />
+
+                    <Button Text="Autentificare"
+                            Command="{Binding LogheazaCommand}"
+                            IsEnabled="{Binding SeIncarca,
+                                        Converter={StaticResource InvertBool}}"
+                            Style="{StaticResource BtnPrincipal}"
+                            HeightRequest="52" />
+
+                    <ActivityIndicator IsRunning="{Binding SeIncarca}"
+                                       IsVisible="{Binding SeIncarca}"
+                                       Color="#E94560"
+                                       HorizontalOptions="Center" />
+
+                </VerticalStackLayout>
+            </Frame>
+
+            <HorizontalStackLayout HorizontalOptions="Center" Spacing="6">
+                <Label Text="Nu ai cont?" TextColor="#8899BB" />
+                <Label Text="Inregistreaza-te"
+                       TextColor="#E94560"
+                       TextDecorations="Underline"
+                       FontAttributes="Bold">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer
+                            Command="{Binding MergeInregistrareCommand}" />
+                    </Label.GestureRecognizers>
+                </Label>
+            </HorizontalStackLayout>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

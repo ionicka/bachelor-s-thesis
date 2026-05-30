@@ -1,7 +1,0 @@
-<Solution>
-  <Project Path="LexaCard.Core/LexaCard.Core.csproj" />
-  <Project Path="LexaCard.Data/LexaCard.Data.csproj" />
-  <Project Path="LexaCard/LexaCard.csproj">
-    <Deploy Solution="Debug|*" />
-  </Project>
-</Solution>

@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "2jM9fJysNQw=",
+  "success": true,
+  "projectFilePath": "H:\\git\\licenta\\FlashCards.Core\\FlashCards.Core.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\john\\.nuget\\packages\\bcrypt.net-next\\4.0.3\\bcrypt.net-next.4.0.3.nupkg.sha512"
+  ],
+  "logs": []
+}

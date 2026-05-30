@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Shell xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+       xmlns:views="clr-namespace:FlashCards.Views"
+       x:Class="FlashCards.AppShell"
+       Shell.FlyoutBehavior="Disabled"
+       Shell.NavBarIsVisible="False">
+
+    <ShellContent Route="LoginPage"
+                  Shell.TabBarIsVisible="False"
+                  Shell.NavBarIsVisible="False"
+                  ContentTemplate="{DataTemplate views:LoginPage}" />
+
+    <ShellContent Route="MainPage"
+                  Shell.TabBarIsVisible="False"
+                  Shell.NavBarIsVisible="False"
+                  ContentTemplate="{DataTemplate views:MainPage}" />
+
+    <ShellContent Route="SesiuneConfigPage"
+                  Shell.TabBarIsVisible="False"
+                  Shell.NavBarIsVisible="False"
+                  ContentTemplate="{DataTemplate views:SesiuneConfigPage}" />
+
+    <ShellContent Route="FluxPage"
+                  Shell.TabBarIsVisible="False"
+                  Shell.NavBarIsVisible="False"
+                  ContentTemplate="{DataTemplate views:FluxPage}" />
+
+    <ShellContent Route="FelicitariPage"
+                  Shell.TabBarIsVisible="False"
+                  Shell.NavBarIsVisible="False"
+                  ContentTemplate="{DataTemplate views:FelicitariPage}" />
+
+</Shell>

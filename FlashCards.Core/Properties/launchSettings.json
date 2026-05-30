@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "FlashCards.Core": {
+      "commandName": "Project",
+      "debugEngines": "managed"
+    }
+  }
+}

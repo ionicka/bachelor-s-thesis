@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:FlashCards.ViewModels"
+             xmlns:conv="clr-namespace:FlashCards.Converters"
+             x:Class="FlashCards.Views.SesiuneConfigPage"
+             x:DataType="vm:SesiuneConfigViewModel"
+             Shell.NavBarIsVisible="False"
+             BackgroundColor="#0D0D1A">
+
+    <ContentPage.Resources>
+        <conv:InvertBoolConverter x:Key="InvertBool" />
+    </ContentPage.Resources>
+
+    <Grid RowDefinitions="Auto,*,Auto" Padding="20">
+
+        <!-- Header -->
+        <Grid Grid.Row="0" ColumnDefinitions="Auto,*" Padding="0,44,0,20">
+            <Button Grid.Column="0" Text="←"
+                    Command="{Binding InapoiCommand}"
+                    BackgroundColor="Transparent" TextColor="White"
+                    FontSize="22" WidthRequest="44" HeightRequest="44" Padding="0" />
+            <Label Grid.Column="1" Text="Sesiune noua"
+                   FontSize="22" FontAttributes="Bold" TextColor="White"
+                   VerticalOptions="Center" Margin="12,0,0,0" />
+        </Grid>
+
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Spacing="14">
+
+                <!-- Disponibil -->
+                <Grid ColumnDefinitions="*,12,*" HeightRequest="88">
+                    <Frame Grid.Column="0" BackgroundColor="#16213E"
+                           BorderColor="#E94560" CornerRadius="16" Padding="14">
+                        <VerticalStackLayout Spacing="2" VerticalOptions="Center">
+                            <Label Text="🔄 De revizuit"
+                                   TextColor="#8899BB" FontSize="11"
+                                   HorizontalOptions="Center" />
+                            <Label Text="{Binding NrRevizuiri}"
+                                   TextColor="#E94560" FontSize="30"
+                                   FontAttributes="Bold"
+                                   HorizontalOptions="Center" />
+                        </VerticalStackLayout>
+                    </Frame>
+                    <Frame Grid.Column="2" BackgroundColor="#16213E"
+                           BorderColor="#4CAF50" CornerRadius="16" Padding="14">
+                        <VerticalStackLayout Spacing="2" VerticalOptions="Center">
+                            <Label Text="✨ Cuvinte noi"
+                                   TextColor="#8899BB" FontSize="11"
+                                   HorizontalOptions="Center" />
+                            <Label Text="{Binding NrCuvinteNoi}"
+                                   TextColor="#4CAF50" FontSize="30"
+                                   FontAttributes="Bold"
+                                   HorizontalOptions="Center" />
+                        </VerticalStackLayout>
+                    </Frame>
+                </Grid>
+
+                <!-- Selector total -->
+                <Frame BackgroundColor="#16213E" BorderColor="#7B2FBE"
+                       CornerRadius="16" Padding="20">
+                    <VerticalStackLayout Spacing="16">
+
+                        <Label Text="Cate carduri vrei in sesiune?"
+                               TextColor="White" FontSize="15"
+                               FontAttributes="Bold" HorizontalOptions="Start" />
+
+                        <!-- Numarul mare -->
+                        <Label Text="{Binding TotalSesiune, StringFormat='{0} carduri'}"
+                               TextColor="#9B6FDE" FontSize="30"
+                               FontAttributes="Bold" HorizontalOptions="Center" />
+
+                        <!-- Butoane +/- si preseturi -->
+                        <Grid ColumnDefinitions="52,*,52" ColumnSpacing="10">
+                            <Button Grid.Column="0" Text="−"
+                                    Command="{Binding ScadeCarduriCommand}"
+                                    BackgroundColor="#2E1060" TextColor="White"
+                                    FontSize="24" FontAttributes="Bold"
+                                    CornerRadius="16" HeightRequest="52" Padding="0" />
+
+                            <Grid Grid.Column="1"
+                                  ColumnDefinitions="*,*,*,*" ColumnSpacing="6">
+                                <Button Grid.Column="0" Text="5"
+                                        Command="{Binding SeteazaCarduriCommand}"
+                                        CommandParameter="5"
+                                        BackgroundColor="#1A1040" TextColor="#9B6FDE"
+                                        BorderColor="#7B2FBE" BorderWidth="1"
+                                        CornerRadius="12" HeightRequest="52" />
+                                <Button Grid.Column="1" Text="10"
+                                        Command="{Binding SeteazaCarduriCommand}"
+                                        CommandParameter="10"
+                                        BackgroundColor="#1A1040" TextColor="#9B6FDE"
+                                        BorderColor="#7B2FBE" BorderWidth="1"
+                                        CornerRadius="12" HeightRequest="52" />
+                                <Button Grid.Column="2" Text="20"
+                                        Command="{Binding SeteazaCarduriCommand}"
+                                        CommandParameter="20"
+                                        BackgroundColor="#1A1040" TextColor="#9B6FDE"
+                                        BorderColor="#7B2FBE" BorderWidth="1"
+                                        CornerRadius="12" HeightRequest="52" />
+                                <Button Grid.Column="3" Text="50"
+                                        Command="{Binding SeteazaCarduriCommand}"
+                                        CommandParameter="50"
+                                        BackgroundColor="#1A1040" TextColor="#9B6FDE"
+                                        BorderColor="#7B2FBE" BorderWidth="1"
+                                        CornerRadius="12" HeightRequest="52" />
+                            </Grid>
+
+                            <Button Grid.Column="2" Text="+"
+                                    Command="{Binding AdaugaCarduriCommand}"
+                                    BackgroundColor="#7B2FBE" TextColor="White"
+                                    FontSize="24" FontAttributes="Bold"
+                                    CornerRadius="16" HeightRequest="52" Padding="0" />
+                        </Grid>
+
+                        <Label Text="Max 50 carduri per sesiune"
+                               TextColor="#556688" FontSize="11"
+                               HorizontalOptions="Center" />
+
+                    </VerticalStackLayout>
+                </Frame>
+
+                <!-- Compozitia sesiunii -->
+                <Frame BackgroundColor="#16213E" BorderColor="#0F3460"
+                       CornerRadius="16" Padding="20"
+                       IsVisible="{Binding PoateIncepe}">
+                    <VerticalStackLayout Spacing="10">
+                        <Label Text="Compozitia sesiunii"
+                               TextColor="#8899BB" FontSize="13" />
+
+                        <Grid ColumnDefinitions="*,*" ColumnSpacing="12">
+                            <VerticalStackLayout Grid.Column="0" Spacing="2">
+                                <Label Text="{Binding RevizuiriInSesiune}"
+                                       TextColor="#E94560" FontSize="22"
+                                       FontAttributes="Bold"
+                                       HorizontalOptions="Center" />
+                                <Label Text="Revizuiri" TextColor="#8899BB"
+                                       FontSize="12" HorizontalOptions="Center" />
+                            </VerticalStackLayout>
+                            <VerticalStackLayout Grid.Column="1" Spacing="2">
+                                <Label Text="{Binding NoiFInSesiune}"
+                                       TextColor="#4CAF50" FontSize="22"
+                                       FontAttributes="Bold"
+                                       HorizontalOptions="Center" />
+                                <Label Text="Cuvinte noi" TextColor="#8899BB"
+                                       FontSize="12" HorizontalOptions="Center" />
+                            </VerticalStackLayout>
+                        </Grid>
+
+                        <Label Text="{Binding EstimareTimp}"
+                               TextColor="#8899BB" FontSize="12"
+                               HorizontalOptions="Center" />
+                    </VerticalStackLayout>
+                </Frame>
+
+                <!-- Nimic disponibil -->
+                <Frame IsVisible="{Binding PoateIncepe,
+                                   Converter={x:StaticResource InvertBool}}"
+                       BackgroundColor="#1A0A0A" BorderColor="#E94560"
+                       CornerRadius="16" Padding="16">
+                    <Label Text="⚠️ Nu ai carduri disponibile momentan."
+                           TextColor="#E94560" FontSize="13"
+                           HorizontalOptions="Center"
+                           HorizontalTextAlignment="Center" />
+                </Frame>
+
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <!-- Start -->
+        <Button Grid.Row="2"
+                Text="Incepe sesiunea"
+                Command="{Binding InceptSesiuneCommand}"
+                IsEnabled="{Binding PoateIncepe}"
+                BackgroundColor="#7B2FBE"
+                TextColor="White" CornerRadius="16"
+                HeightRequest="58" FontSize="18"
+                FontAttributes="Bold" Margin="0,12,0,28">
+            <Button.Triggers>
+                <DataTrigger TargetType="Button"
+                             Binding="{Binding PoateIncepe}" Value="False">
+                    <Setter Property="BackgroundColor" Value="#2E1060" />
+                    <Setter Property="TextColor"       Value="#556688" />
+                </DataTrigger>
+            </Button.Triggers>
+        </Button>
+
+    </Grid>
+</ContentPage>

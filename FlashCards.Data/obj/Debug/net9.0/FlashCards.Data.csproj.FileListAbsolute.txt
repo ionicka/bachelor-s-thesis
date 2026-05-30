@@ -1,0 +1,16 @@
+H:\git\licenta\FlashCards.Data\bin\Debug\net9.0\FlashCards.Data.deps.json
+H:\git\licenta\FlashCards.Data\bin\Debug\net9.0\FlashCards.Data.dll
+H:\git\licenta\FlashCards.Data\bin\Debug\net9.0\FlashCards.Data.pdb
+H:\git\licenta\FlashCards.Data\bin\Debug\net9.0\FlashCards.Core.dll
+H:\git\licenta\FlashCards.Data\bin\Debug\net9.0\FlashCards.Core.pdb
+H:\git\licenta\FlashCards.Data\obj\Debug\net9.0\FlashCards.Data.csproj.AssemblyReference.cache
+H:\git\licenta\FlashCards.Data\obj\Debug\net9.0\FlashCards.Data.GeneratedMSBuildEditorConfig.editorconfig
+H:\git\licenta\FlashCards.Data\obj\Debug\net9.0\FlashCards.Data.AssemblyInfoInputs.cache
+H:\git\licenta\FlashCards.Data\obj\Debug\net9.0\FlashCards.Data.AssemblyInfo.cs
+H:\git\licenta\FlashCards.Data\obj\Debug\net9.0\FlashCards.Data.csproj.CoreCompileInputs.cache
+H:\git\licenta\FlashCards.Data\obj\Debug\net9.0\FlashCards.Data.sourcelink.json
+H:\git\licenta\FlashCards.Data\obj\Debug\net9.0\FlashCar.76B5CC56.Up2Date
+H:\git\licenta\FlashCards.Data\obj\Debug\net9.0\FlashCards.Data.dll
+H:\git\licenta\FlashCards.Data\obj\Debug\net9.0\refint\FlashCards.Data.dll
+H:\git\licenta\FlashCards.Data\obj\Debug\net9.0\FlashCards.Data.pdb
+H:\git\licenta\FlashCards.Data\obj\Debug\net9.0\ref\FlashCards.Data.dll

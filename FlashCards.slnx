@@ -1,0 +1,7 @@
+<Solution>
+  <Project Path="FlashCards.Core/FlashCards.Core.csproj" />
+  <Project Path="FlashCards.Data/FlashCards.Data.csproj" />
+  <Project Path="FlashCards/FlashCards.csproj">
+    <Deploy Solution="Debug|*" />
+  </Project>
+</Solution>

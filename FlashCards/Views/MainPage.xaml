@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:FlashCards.ViewModels"
+             x:Class="FlashCards.Views.MainPage"
+             x:DataType="vm:MainViewModel"
+             Shell.NavBarIsVisible="False"
+             BackgroundColor="#0D0D1A">
+
+    <Grid RowDefinitions="Auto,*,Auto">
+
+        <!-- ═══ TOP NAVBAR ═══════════════════════════════════════ -->
+        <Grid Grid.Row="0"
+              ColumnDefinitions="Auto,*,Auto,Auto,Auto"
+              Padding="16,50,16,12"
+              BackgroundColor="#0D0D1A">
+
+            <!-- Avatar + Salut -->
+            <HorizontalStackLayout Grid.Column="0" Spacing="10"
+                                   VerticalOptions="Center">
+                <!-- Avatar cerc -->
+                <Frame WidthRequest="42" HeightRequest="42"
+                       CornerRadius="21" Padding="0"
+                       BorderColor="#E94560"
+                       BackgroundColor="#16213E"
+                       IsClippedToBounds="True">
+                    <Label Text="{Binding InitialaUtilizator}"
+                           TextColor="White" FontSize="18"
+                           FontAttributes="Bold"
+                           HorizontalOptions="Center"
+                           VerticalOptions="Center" />
+                </Frame>
+                <VerticalStackLayout VerticalOptions="Center" Spacing="1">
+                    <Label Text="{Binding Salut}" TextColor="#8899BB" FontSize="12" />
+                    <Label Text="{Binding NumeUtilizator}"
+                           TextColor="White" FontSize="15"
+                           FontAttributes="Bold" />
+                </VerticalStackLayout>
+            </HorizontalStackLayout>
+
+            <!-- Streak (zile la rand) -->
+            <Frame Grid.Column="2"
+                   BackgroundColor="#1A1A2E"
+                   BorderColor="#FF8C00"
+                   CornerRadius="20" Padding="10,6"
+                   VerticalOptions="Center">
+                <HorizontalStackLayout Spacing="4">
+                    <Label Text="🔥" FontSize="16" VerticalOptions="Center" />
+                    <Label Text="{Binding Streak, StringFormat='{0}'}"
+                           TextColor="#FF8C00" FontSize="15"
+                           FontAttributes="Bold"
+                           VerticalOptions="Center" />
+                </HorizontalStackLayout>
+            </Frame>
+
+            <!-- Monede reward -->
+            <Frame Grid.Column="3"
+                   BackgroundColor="#1A1A2E"
+                   BorderColor="#FFD700"
+                   CornerRadius="20" Padding="10,6"
+                   VerticalOptions="Center"
+                   Margin="8,0">
+                <HorizontalStackLayout Spacing="4">
+                    <Label Text="🪙" FontSize="16" VerticalOptions="Center" />
+                    <Label Text="{Binding Monede}"
+                           TextColor="#FFD700" FontSize="15"
+                           FontAttributes="Bold"
+                           VerticalOptions="Center" />
+                </HorizontalStackLayout>
+            </Frame>
+
+            <!-- Notificari -->
+            <Frame Grid.Column="4"
+                   BackgroundColor="#1A1A2E"
+                   BorderColor="#2E3A5C"
+                   CornerRadius="20" Padding="10,6"
+                   VerticalOptions="Center">
+                <Grid>
+                    <Label Text="🔔" FontSize="18" VerticalOptions="Center" />
+                    <!-- Badge notificari -->
+                    <Frame BackgroundColor="#E94560"
+                           CornerRadius="8" Padding="3,1"
+                           HorizontalOptions="End" VerticalOptions="Start"
+                           IsVisible="{Binding AreNotificari}">
+                        <Label Text="{Binding NrNotificari}"
+                               TextColor="White" FontSize="9"
+                               FontAttributes="Bold" />
+                    </Frame>
+                </Grid>
+            </Frame>
+
+        </Grid>
+
+        <!-- ═══ CONTINUT PRINCIPAL ══════════════════════════════ -->
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Padding="16" Spacing="20">
+
+                <!-- Carduri de revizuit azi -->
+                <Frame BackgroundColor="#16213E" CornerRadius="20"
+                       Padding="20" BorderColor="#0F3460">
+                    <Grid ColumnDefinitions="*,Auto">
+                        <VerticalStackLayout Grid.Column="0" Spacing="6">
+                            <Label Text="De revizuit azi"
+                                   TextColor="#8899BB" FontSize="13" />
+                            <Label Text="{Binding CarduriAzi, StringFormat='{0} cuvinte'}"
+                                   TextColor="White" FontSize="22"
+                                   FontAttributes="Bold" />
+                            <Label Text="Cuvinte cu progres programate azi"
+                                   TextColor="#556688" FontSize="11" />
+                        </VerticalStackLayout>
+                        <Label Grid.Column="1" Text="📚"
+                               FontSize="48" VerticalOptions="Center" />
+                    </Grid>
+                </Frame>
+
+                <!-- Sectiunea Lectii (placeholder) -->
+                <Label Text="Lectii" TextColor="White"
+                       FontSize="20" FontAttributes="Bold" />
+
+                <Grid ColumnDefinitions="*,*" ColumnSpacing="12">
+
+                    <!-- Vocabular — activ -->
+                    <Grid Grid.Column="0">
+                        <Grid.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding MergeVocabularCommand}" />
+                        </Grid.GestureRecognizers>
+                        <Frame BackgroundColor="#1A1040"
+                               BorderColor="#7B2FBE"
+                               CornerRadius="20" Padding="0"
+                               HasShadow="False">
+                        <VerticalStackLayout Padding="16" Spacing="10">
+                            <Label Text="📖" FontSize="32" />
+                            <Label Text="Vocabular"
+                                   TextColor="White" FontSize="16"
+                                   FontAttributes="Bold" />
+                            <Label Text="{Binding CarduriAzi, StringFormat='{0} de invatat'}"
+                                   TextColor="#9B6FDE" FontSize="12" />
+                            <Frame BackgroundColor="#7B2FBE"
+                                   CornerRadius="12" Padding="8,4"
+                                   BorderColor="Transparent"
+                                   HorizontalOptions="Start">
+                                <Label Text="START" TextColor="White"
+                                       FontSize="11" FontAttributes="Bold" />
+                            </Frame>
+                        </VerticalStackLayout>
+                        </Frame>
+                    </Grid>
+
+                    <!-- Speak — coming soon -->
+                    <Frame Grid.Column="1"
+                           BackgroundColor="#0F1A2E"
+                           BorderColor="#1E3A5C"
+                           CornerRadius="20" Padding="16"
+                           Opacity="0.5">
+                        <VerticalStackLayout Spacing="10">
+                            <Label Text="🎙️" FontSize="32" />
+                            <Label Text="Speak"
+                                   TextColor="#8899BB" FontSize="16"
+                                   FontAttributes="Bold" />
+                            <Label Text="In curand..."
+                                   TextColor="#556688" FontSize="12" />
+                            <Frame BackgroundColor="#1E3A5C"
+                                   CornerRadius="12" Padding="8,4"
+                                   BorderColor="Transparent"
+                                   HorizontalOptions="Start">
+                                <Label Text="LOCKED" TextColor="#556688"
+                                       FontSize="11" FontAttributes="Bold" />
+                            </Frame>
+                        </VerticalStackLayout>
+                    </Frame>
+
+                </Grid>
+
+                <!-- Al doilea rand de lectii -->
+                <Grid ColumnDefinitions="*,*" ColumnSpacing="12">
+
+                    <Frame Grid.Column="0"
+                           BackgroundColor="#0F1A2E"
+                           BorderColor="#1E3A5C"
+                           CornerRadius="20" Padding="16"
+                           Opacity="0.5">
+                        <VerticalStackLayout Spacing="10">
+                            <Label Text="✍️" FontSize="32" />
+                            <Label Text="Lectii"
+                                   TextColor="#8899BB" FontSize="16"
+                                   FontAttributes="Bold" />
+                            <Label Text="In curand..."
+                                   TextColor="#556688" FontSize="12" />
+                        </VerticalStackLayout>
+                    </Frame>
+
+                    <Frame Grid.Column="1"
+                           BackgroundColor="#0F1A2E"
+                           BorderColor="#1E3A5C"
+                           CornerRadius="20" Padding="16"
+                           Opacity="0.5">
+                        <VerticalStackLayout Spacing="10">
+                            <Label Text="🧠" FontSize="32" />
+                            <Label Text="Astazi"
+                                   TextColor="#8899BB" FontSize="16"
+                                   FontAttributes="Bold" />
+                            <Label Text="In curand..."
+                                   TextColor="#556688" FontSize="12" />
+                        </VerticalStackLayout>
+                    </Frame>
+
+                </Grid>
+
+                <!-- Progres saptamana -->
+                <Label Text="Aceasta saptamana"
+                       TextColor="White" FontSize="20"
+                       FontAttributes="Bold" />
+
+                <Frame BackgroundColor="#16213E" CornerRadius="20"
+                       Padding="16" BorderColor="#0F3460">
+                    <CollectionView ItemsSource="{Binding ZileSaptamana}"
+                                    HeightRequest="80">
+                        <CollectionView.ItemsLayout>
+                            <LinearItemsLayout Orientation="Horizontal"
+                                               ItemSpacing="0" />
+                        </CollectionView.ItemsLayout>
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate x:DataType="vm:ZiCalendar">
+                                <VerticalStackLayout Spacing="6"
+                                                     HorizontalOptions="Center"
+                                                     WidthRequest="44">
+                                    <Frame WidthRequest="36" HeightRequest="36"
+                                           CornerRadius="18" Padding="0"
+                                           BackgroundColor="{Binding Culoare}"
+                                           BorderColor="Transparent"
+                                           HorizontalOptions="Center">
+                                        <Label Text="{Binding Eticheta}"
+                                               TextColor="White" FontSize="13"
+                                               FontAttributes="Bold"
+                                               HorizontalOptions="Center"
+                                               VerticalOptions="Center" />
+                                    </Frame>
+                                    <Label Text="{Binding Eticheta}"
+                                           TextColor="#8899BB" FontSize="11"
+                                           HorizontalOptions="Center" />
+                                </VerticalStackLayout>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </Frame>
+
+                <!-- Spatiu jos pentru navbar -->
+                <BoxView HeightRequest="20" BackgroundColor="Transparent" />
+
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <!-- ═══ BOTTOM NAVBAR ════════════════════════════════════ -->
+        <Grid Grid.Row="2"
+              ColumnDefinitions="*,*,*,*"
+              BackgroundColor="#111827"
+              Padding="0,12,0,24">
+
+            <!-- Astazi -->
+            <VerticalStackLayout Grid.Column="0" Spacing="4"
+                                 HorizontalOptions="Center"
+                                 VerticalOptions="Center">
+                <Label Text="🏠" FontSize="22" HorizontalOptions="Center" />
+                <Label Text="Astazi" TextColor="#E94560" FontSize="11"
+                       FontAttributes="Bold" HorizontalOptions="Center" />
+                <!-- Punct activ -->
+                <BoxView WidthRequest="6" HeightRequest="6"
+                         CornerRadius="3" BackgroundColor="#E94560"
+                         HorizontalOptions="Center" />
+            </VerticalStackLayout>
+
+            <!-- Lectii -->
+            <VerticalStackLayout Grid.Column="1" Spacing="4"
+                                 HorizontalOptions="Center"
+                                 VerticalOptions="Center">
+                <Label Text="📝" FontSize="22" HorizontalOptions="Center"
+                       Opacity="0.4" />
+                <Label Text="Lectii" TextColor="#556688" FontSize="11"
+                       HorizontalOptions="Center" />
+            </VerticalStackLayout>
+
+            <!-- Vocabular -->
+            <VerticalStackLayout Grid.Column="2" Spacing="4"
+                                 HorizontalOptions="Center"
+                                 VerticalOptions="Center">
+                <VerticalStackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding MergeVocabularCommand}" />
+                </VerticalStackLayout.GestureRecognizers>
+                <Label Text="📖" FontSize="22" HorizontalOptions="Center"
+                       Opacity="0.4" />
+                <Label Text="Vocabular" TextColor="#556688" FontSize="11"
+                       HorizontalOptions="Center" />
+            </VerticalStackLayout>
+
+            <!-- Speak -->
+            <VerticalStackLayout Grid.Column="3" Spacing="4"
+                                 HorizontalOptions="Center"
+                                 VerticalOptions="Center">
+                <Label Text="🎙️" FontSize="22" HorizontalOptions="Center"
+                       Opacity="0.4" />
+                <Label Text="Speak" TextColor="#556688" FontSize="11"
+                       HorizontalOptions="Center" />
+            </VerticalStackLayout>
+
+        </Grid>
+
+    </Grid>
+
+</ContentPage>
