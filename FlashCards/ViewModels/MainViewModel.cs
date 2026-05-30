@@ -35,6 +35,10 @@ public partial class MainViewModel : ObservableObject
     {
         if (_session.UtilizatorCurent == null) return;
 
+      
+
+
+
         NumeUtilizator = _session.UtilizatorCurent.NumeUtilizator;
         InitialaUtilizator = NumeUtilizator.Length > 0
             ? NumeUtilizator[0].ToString().ToUpper() : "?";

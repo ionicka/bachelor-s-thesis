@@ -207,6 +207,158 @@ public class CardRepository : ICardRepository
         public int EsteDeRevizuit { get; set; }
         public int EsteNou { get; set; }
     }
+    public async Task<List<CardDto>> GetRevizuiriAziFiltrateAsync(
+    int utilizatorId,
+    List<NivelCuvant> niveluri,
+    List<DomeniuCuvant> domenii)
+    {
+        await using var conn = new NpgsqlConnection(_connStr);
+
+        // Construim WHERE dinamic pe baza filtrelor
+        var clauze = new List<string>
+    {
+        "p.\"UtilizatorId\" = @UId",
+        "p.\"DataUrmatoareiRevizuiri\" <= @Azi::date",
+        "p.\"NivelCunoastere\" < 7"
+    };
+
+        if (niveluri != null && niveluri.Count > 0)
+            clauze.Add("c.\"Nivel\" = ANY(@Niveluri)");
+        if (domenii != null && domenii.Count > 0)
+            clauze.Add("c.\"Domeniu\" = ANY(@Domenii)");
+
+        string sql = $@"
+        SELECT
+            c.""Id""               AS CuvantId,
+            c.""Termen"",
+            c.""Definitie"",
+            c.""DefinitieRo"",
+            c.""ExemplePropozitii"",
+            c.""CaleImagini"",
+            c.""Pronuntie"",
+            c.""Nivel"",
+            p.""NivelCunoastere"",
+            p.""NrRaspunsuriCorecte"",
+            p.""NrRaspunsuriGresite"",
+            1 AS EsteDeRevizuit,
+            0 AS EsteNou
+        FROM progres_cuvinte p
+        INNER JOIN cuvinte c ON c.""Id"" = p.""CuvantId""
+        WHERE {string.Join(" AND ", clauze)}
+        ORDER BY p.""NivelCunoastere"" ASC, p.""DataUrmatoareiRevizuiri"" ASC";
+
+        var rows = await conn.QueryAsync<CardRaw>(sql, new
+        {
+            UId = utilizatorId,
+            Azi = DateOnly.FromDateTime(DateTime.UtcNow).ToString("yyyy-MM-dd"),
+            Niveluri = niveluri?.Select(n => (int)n).ToArray() ?? Array.Empty<int>(),
+            Domenii = domenii?.Select(d => (int)d).ToArray() ?? Array.Empty<int>()
+        });
+        return rows.Select(MapToDto).ToList();
+    }
+
+    public async Task<List<CardDto>> GetCuvinteNoiFiltrateAsync(
+        int utilizatorId,
+        int max,
+        List<NivelCuvant> niveluri,
+        List<DomeniuCuvant> domenii)
+    {
+        if (max <= 0) return new List<CardDto>();
+
+        await using var conn = new NpgsqlConnection(_connStr);
+
+        var clauze = new List<string>
+    {
+        @"c.""Id"" NOT IN (SELECT ""CuvantId"" FROM progres_cuvinte WHERE ""UtilizatorId"" = @UId)"
+    };
+
+        if (niveluri != null && niveluri.Count > 0)
+            clauze.Add("c.\"Nivel\" = ANY(@Niveluri)");
+        if (domenii != null && domenii.Count > 0)
+            clauze.Add("c.\"Domeniu\" = ANY(@Domenii)");
+
+        string sql = $@"
+        SELECT
+            c.""Id""               AS CuvantId,
+            c.""Termen"",
+            c.""Definitie"",
+            c.""DefinitieRo"",
+            c.""ExemplePropozitii"",
+            c.""CaleImagini"",
+            c.""Pronuntie"",
+            c.""Nivel"",
+            0 AS NivelCunoastere,
+            0 AS NrRaspunsuriCorecte,
+            0 AS NrRaspunsuriGresite,
+            0 AS EsteDeRevizuit,
+            1 AS EsteNou
+        FROM cuvinte c
+        WHERE {string.Join(" AND ", clauze)}
+        ORDER BY c.""Nivel"" ASC, RANDOM()
+        LIMIT @Max";
+
+        var rows = await conn.QueryAsync<CardRaw>(sql, new
+        {
+            UId = utilizatorId,
+            Max = max,
+            Niveluri = niveluri?.Select(n => (int)n).ToArray() ?? Array.Empty<int>(),
+            Domenii = domenii?.Select(d => (int)d).ToArray() ?? Array.Empty<int>()
+        });
+        return rows.Select(MapToDto).ToList();
+    }
+
+    public async Task<DisponibilitateSesiuneDto> GetDisponibilitateAsync(
+        int utilizatorId,
+        List<NivelCuvant> niveluri,
+        List<DomeniuCuvant> domenii)
+    {
+        await using var conn = new NpgsqlConnection(_connStr);
+
+        // Pregătim parametrii o singură dată
+        var paramsObj = new
+        {
+            UId = utilizatorId,
+            Azi = DateOnly.FromDateTime(DateTime.UtcNow).ToString("yyyy-MM-dd"),
+            Niveluri = niveluri?.Select(n => (int)n).ToArray() ?? Array.Empty<int>(),
+            Domenii = domenii?.Select(d => (int)d).ToArray() ?? Array.Empty<int>()
+        };
+
+        // Clauze pentru filtrare nivel/domeniu (folosite în ambele query-uri)
+        var clauzeFiltru = new List<string>();
+        if (niveluri != null && niveluri.Count > 0)
+            clauzeFiltru.Add("c.\"Nivel\" = ANY(@Niveluri)");
+        if (domenii != null && domenii.Count > 0)
+            clauzeFiltru.Add("c.\"Domeniu\" = ANY(@Domenii)");
+
+        string filterAnd = clauzeFiltru.Count > 0
+            ? " AND " + string.Join(" AND ", clauzeFiltru)
+            : "";
+
+        // Revizuiri disponibile
+        string sqlRev = $@"
+        SELECT COUNT(*)
+        FROM progres_cuvinte p
+        INNER JOIN cuvinte c ON c.""Id"" = p.""CuvantId""
+        WHERE p.""UtilizatorId"" = @UId
+          AND p.""DataUrmatoareiRevizuiri"" <= @Azi::date
+          AND p.""NivelCunoastere"" < 7
+          {filterAnd}";
+
+        int nrRev = await conn.ExecuteScalarAsync<int>(sqlRev, paramsObj);
+
+        // Cuvinte noi disponibile
+        string sqlNoi = $@"
+        SELECT COUNT(*)
+        FROM cuvinte c
+        WHERE c.""Id"" NOT IN (
+            SELECT ""CuvantId"" FROM progres_cuvinte
+            WHERE ""UtilizatorId"" = @UId)
+          {filterAnd}";
+
+        int nrNoi = await conn.ExecuteScalarAsync<int>(sqlNoi, paramsObj);
+
+        return new DisponibilitateSesiuneDto(nrRev, nrNoi, nrRev + nrNoi);
+    }
 }
 
 // ===============================================================

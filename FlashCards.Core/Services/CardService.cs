@@ -1,4 +1,4 @@
-using FlashCards.Core.DTOs;
+﻿using FlashCards.Core.DTOs;
 using FlashCards.Core.Entities;
 using FlashCards.Core.Enums;
 using FlashCards.Core.Interfaces;
@@ -182,4 +182,41 @@ public class CardService : ICardService
             CalitatRaspuns.Nu_Stiu => "Nu-i bai! Revii in cateva zile.",
             _ => ""
         };
+
+    public async Task<List<CardDto>> GetSesiuneFiltrataAsync(
+    int utilizatorId, ConfigSesiuneDto config)
+    {
+        var sw = System.Diagnostics.Stopwatch.StartNew();
+
+        // Prioritate maximă revizuiri, apoi noi (păstrăm logica existentă)
+        var toateRevizuirile = await _cardRepo.GetRevizuiriAziFiltrateAsync(
+            utilizatorId, config.Niveluri, config.Domenii);
+
+        // Câte revizuiri încap, câte cuvinte noi mai trebuie
+        var revizuiri = toateRevizuirile.Take(config.NrCarduri).ToList();
+        int locuriRamase = config.NrCarduri - revizuiri.Count;
+
+        List<CardDto> noi = new();
+        if (locuriRamase > 0)
+        {
+            noi = await _cardRepo.GetCuvinteNoiFiltrateAsync(
+                utilizatorId, locuriRamase, config.Niveluri, config.Domenii);
+        }
+
+        sw.Stop();
+        _logger.LogInformation(
+            "Sesiune filtrată user {UserId}: {Rev} revizuiri + {Noi} noi (filtre: {NrNiv} niv, {NrDom} dom, mod={Mod}) in {Ms}ms",
+            utilizatorId, revizuiri.Count, noi.Count,
+            config.Niveluri.Count, config.Domenii.Count, config.Mod, sw.ElapsedMilliseconds);
+
+        return revizuiri.Concat(noi).ToList();
+    }
+
+    public async Task<DisponibilitateSesiuneDto> GetDisponibilitateAsync(
+        int utilizatorId,
+        List<NivelCuvant> niveluri,
+        List<DomeniuCuvant> domenii)
+    {
+        return await _cardRepo.GetDisponibilitateAsync(utilizatorId, niveluri, domenii);
+    }
 }

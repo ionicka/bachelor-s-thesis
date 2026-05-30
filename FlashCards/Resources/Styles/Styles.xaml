@@ -175,4 +175,14 @@
         </Setter>
     </Style>
 
+    <Style TargetType="ScrollView">
+        <Setter Property="HorizontalScrollBarVisibility" Value="Never" />
+        <Setter Property="VerticalScrollBarVisibility" Value="Never" />
+    </Style>
+
+    <Style TargetType="CollectionView">
+        <Setter Property="HorizontalScrollBarVisibility" Value="Never" />
+        <Setter Property="VerticalScrollBarVisibility" Value="Never" />
+    </Style>
+
 </ResourceDictionary>

@@ -1,4 +1,4 @@
-namespace FlashCards.Core.Enums;
+﻿namespace FlashCards.Core.Enums;
 
 public enum CalitatRaspuns
 {
@@ -49,4 +49,11 @@ public enum DomeniuCuvant
     Politica = 7,
     Calatorii = 8,
     Emotii = 9
+}
+
+public enum ModInvatare
+{
+    Toate = 0,        // Mix automat — recunoaștere + tastare (default)
+    DoarFlashcards = 1,  // Doar recunoaștere (vizual, no typing)
+    DoarTastare = 2   // Doar tastare (active recall pur)
 }

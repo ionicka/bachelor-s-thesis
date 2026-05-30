@@ -6,13 +6,27 @@ namespace FlashCards.Core.Interfaces;
 
 public interface ICardRepository
 {
-    // Revizuiri programate pentru azi
     Task<List<CardDto>> GetRevizuiriAziAsync(int utilizatorId);
-    // Cuvinte noi (nevazute niciodata de utilizator)
     Task<List<CardDto>> GetCuvinteNoiAsync(int utilizatorId, int max);
-    // Toate cuvintele (pentru practica libera)
     Task<List<CardDto>> GetToateCuvinteleAsync(int utilizatorId);
     Task<CardDto?> GetCardAsync(int utilizatorId, int cuvantId);
+
+    // ─── NOI ───
+    Task<List<CardDto>> GetRevizuiriAziFiltrateAsync(
+        int utilizatorId,
+        List<NivelCuvant> niveluri,
+        List<DomeniuCuvant> domenii);
+
+    Task<List<CardDto>> GetCuvinteNoiFiltrateAsync(
+        int utilizatorId,
+        int max,
+        List<NivelCuvant> niveluri,
+        List<DomeniuCuvant> domenii);
+
+    Task<DisponibilitateSesiuneDto> GetDisponibilitateAsync(
+        int utilizatorId,
+        List<NivelCuvant> niveluri,
+        List<DomeniuCuvant> domenii);
 }
 
 public interface IProgresRepository
@@ -60,15 +74,24 @@ public interface ISrsService
 
 public interface ICardService
 {
-    // Returneaza cardurile pentru sesiunea curenta
-    // (revizuiri de azi + X cuvinte noi configurate de utilizator)
     Task<List<CardDto>> GetSesiuneAsync(
         int utilizatorId, int cuvinteNoi, int maxRevizuiri = 100);
-    // Practica libera - toate cuvintele
+
     Task<List<CardDto>> GetToateCuvinteleAsync(int utilizatorId);
+
     Task<RezultatRaspunsDto> ProceseazaRaspunsAsync(
         int utilizatorId, RaspunsCardDto raspuns);
+
     Task<StatisticiDto> GetStatisticiAsync(int utilizatorId);
+
+    // ─── NOI ───
+    Task<List<CardDto>> GetSesiuneFiltrataAsync(
+        int utilizatorId, ConfigSesiuneDto config);
+
+    Task<DisponibilitateSesiuneDto> GetDisponibilitateAsync(
+        int utilizatorId,
+        List<NivelCuvant> niveluri,
+        List<DomeniuCuvant> domenii);
 }
 
 public interface IAuthService

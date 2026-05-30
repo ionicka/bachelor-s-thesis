@@ -1,4 +1,4 @@
-using FlashCards.Core.Enums;
+﻿using FlashCards.Core.Enums;
 
 namespace FlashCards.Core.DTOs;
 
@@ -86,4 +86,28 @@ public record RezultatSrs(
     byte NivelNou,
     int IntervalNou,
     DateOnly DataUrmatoareiRevizuiri
+);
+
+// ═════════════════════════════════════════════════════════════
+// Configurația sesiunii — toate preferințele user-ului
+// ═════════════════════════════════════════════════════════════
+public class ConfigSesiuneDto
+{
+    // Liste goale = "toate" (default natural)
+    public List<NivelCuvant> Niveluri { get; set; } = new();
+    public List<DomeniuCuvant> Domenii { get; set; } = new();
+
+    public ModInvatare Mod { get; set; } = ModInvatare.Toate;
+    public int NrCarduri { get; set; } = 10;
+
+    // Helper: are vreun filtru activ?
+    public bool AreFiltre =>
+        Niveluri.Count > 0 || Domenii.Count > 0;
+}
+
+// Numărători live pentru UI (cât e disponibil cu filtrele curente)
+public record DisponibilitateSesiuneDto(
+    int NrRevizuiri,
+    int NrCuvinteNoi,
+    int Total
 );
