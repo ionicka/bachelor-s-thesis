@@ -9,7 +9,7 @@ public class ImageStorageService : IImageStorageService
 
     // Extensii acceptate
     private static readonly string[] ExtensiiPermise =
-        { ".jpg", ".jpeg", ".png", ".webp", ".gif" };
+        { ".jpg", ".jpeg", ".png", ".webp", ".gif", ".bmp" };
 
     public ImageStorageService(ILogger<ImageStorageService> logger)
     {
@@ -18,7 +18,6 @@ public class ImageStorageService : IImageStorageService
             FileSystem.Current.AppDataDirectory,
             "imagini_cuvinte");
 
-        // Asigură că folderul există
         if (!Directory.Exists(_folderImagini))
         {
             Directory.CreateDirectory(_folderImagini);
@@ -26,6 +25,17 @@ public class ImageStorageService : IImageStorageService
         }
     }
 
+    // ─── Construire filtru fișiere reutilizabil ───
+    private static FilePickerFileType GetTipuriImagini() =>
+        new(new Dictionary<DevicePlatform, IEnumerable<string>>
+        {
+            { DevicePlatform.WinUI,   new[] { ".jpg", ".jpeg", ".png", ".webp", ".gif", ".bmp" } },
+            { DevicePlatform.Android, new[] { "image/*" } },
+            { DevicePlatform.iOS,     new[] { "public.image" } },
+            { DevicePlatform.macOS,   new[] { "public.image" } }
+        });
+
+    // ─── O singură imagine (rămâne neschimbată funcțional) ───
     public async Task<string?> AlegeSiSalveazaAsync()
     {
         try
@@ -33,30 +43,79 @@ public class ImageStorageService : IImageStorageService
             var optiuni = new PickOptions
             {
                 PickerTitle = "Alege o imagine",
-                FileTypes = FilePickerFileType.Images
+                FileTypes = GetTipuriImagini()
             };
 
             var rezultat = await FilePicker.Default.PickAsync(optiuni);
-            if (rezultat == null) return null;  // user a anulat
+            if (rezultat == null) return null;
 
-            // Validare extensie
-            string extensie = Path.GetExtension(rezultat.FileName).ToLowerInvariant();
+            return await SalveazaFisierAsync(rezultat);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Eroare la alegere/salvare imagine");
+            await Application.Current!.MainPage!.DisplayAlert(
+                "Eroare", "Nu s-a putut salva imaginea. Reîncearcă.", "OK");
+            return null;
+        }
+    }
+
+    // ─── Multiple imagini ───
+    public async Task<List<string>> AlegeSiSalveazaMultipleAsync(int maxImagini = 2)
+    {
+        var rezultate = new List<string>();
+        try
+        {
+            var optiuni = new PickOptions
+            {
+                PickerTitle = $"Alege până la {maxImagini} imagini",
+                FileTypes = GetTipuriImagini()
+            };
+
+            var fisiere = await FilePicker.Default.PickMultipleAsync(optiuni);
+            if (fisiere == null) return rezultate;
+
+            foreach (var fisier in fisiere.Take(maxImagini))
+            {
+                string? cale = await SalveazaFisierAsync(fisier);
+                if (!string.IsNullOrEmpty(cale))
+                    rezultate.Add(cale);
+            }
+
+            if (rezultate.Count == 0 && fisiere.Any())
+            {
+                await Application.Current!.MainPage!.DisplayAlert(
+                    "Atenție",
+                    "Niciuna dintre imagini nu a putut fi salvată.",
+                    "OK");
+            }
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Eroare la alegere multiple imagini");
+            await Application.Current!.MainPage!.DisplayAlert(
+                "Eroare", "Nu s-au putut salva imaginile.", "OK");
+        }
+        return rezultate;
+    }
+
+    // ─── Logica unificată de validare + salvare un fișier ───
+    private async Task<string?> SalveazaFisierAsync(FileResult fisier)
+    {
+        try
+        {
+            string extensie = Path.GetExtension(fisier.FileName).ToLowerInvariant();
             if (!ExtensiiPermise.Contains(extensie))
             {
-                _logger.LogWarning("Extensie respinsă: {Ext}", extensie);
-                await Application.Current!.MainPage!.DisplayAlert(
-                    "Format nesuportat",
-                    $"Doar imagini: {string.Join(", ", ExtensiiPermise)}",
-                    "OK");
+                _logger.LogWarning("Extensie respinsă: {Ext} pentru {Nume}",
+                    extensie, fisier.FileName);
                 return null;
             }
 
-            // Generează nume unic — evităm coliziuni dacă admin alege 2 imagini cu același nume
             string numeUnic = $"{Guid.NewGuid():N}{extensie}";
             string caleDestinatie = Path.Combine(_folderImagini, numeUnic);
 
-            // Copiază fișierul
-            using (var streamSursa = await rezultat.OpenReadAsync())
+            using (var streamSursa = await fisier.OpenReadAsync())
             using (var streamDestinatie = File.Create(caleDestinatie))
             {
                 await streamSursa.CopyToAsync(streamDestinatie);
@@ -69,11 +128,7 @@ public class ImageStorageService : IImageStorageService
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Eroare la alegere/salvare imagine");
-            await Application.Current!.MainPage!.DisplayAlert(
-                "Eroare",
-                "Nu s-a putut salva imaginea. Reîncearcă.",
-                "OK");
+            _logger.LogError(ex, "Eroare la salvarea fișierului {Nume}", fisier.FileName);
             return null;
         }
     }

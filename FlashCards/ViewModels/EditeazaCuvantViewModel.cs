@@ -181,12 +181,17 @@ public partial class EditeazaCuvantViewModel : ObservableObject
     [RelayCommand]
     async Task AdaugaImagine()
     {
-        if (Imagini.Count >= 2) return;
+        int loc_ramas = 2 - Imagini.Count;
+        if (loc_ramas <= 0) return;
 
-        var nume = await _imageStorage.AlegeSiSalveazaAsync();
-        if (string.IsNullOrEmpty(nume)) return;
+        // Permite multi-select — admin alege 1 sau 2 imagini odată
+        var numeFisiereSalvate = await _imageStorage.AlegeSiSalveazaMultipleAsync(loc_ramas);
+        if (numeFisiereSalvate.Count == 0) return;
 
-        Imagini.Add(new ImagineVm(this, _imageStorage) { NumeFisier = nume });
+        foreach (var nume in numeFisiereSalvate)
+        {
+            Imagini.Add(new ImagineVm(this, _imageStorage) { NumeFisier = nume });
+        }
         ActualizeazaStareImagini();
     }
 

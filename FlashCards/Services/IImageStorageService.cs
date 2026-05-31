@@ -9,6 +9,7 @@ public interface IImageStorageService
     /// Returnează null dacă userul anulează.
     /// </summary>
     Task<string?> AlegeSiSalveazaAsync();
+    Task<List<string>> AlegeSiSalveazaMultipleAsync(int maxImagini = 2);
 
     /// <summary>
     /// Calea absolută a unei imagini salvate (pentru Image.Source în XAML).
@@ -25,4 +26,5 @@ public interface IImageStorageService
     /// Verifică dacă fișierul există în storage.
     /// </summary>
     bool Exista(string numeFisier);
+
 }

@@ -16,6 +16,7 @@ public partial class LoginViewModel : ObservableObject
     private readonly IAuthService _auth;
     private readonly ISessionStateService _session;
     private readonly ISesiuneService _sesiuneService;
+    
 
     [ObservableProperty] string _email = string.Empty;
     [ObservableProperty] string _parola = string.Empty;
@@ -146,6 +147,7 @@ public partial class FluxViewModel : ObservableObject
     private readonly ICardService _cardService;
     private readonly ISessionStateService _session;
     private readonly ISesiuneService _sesiuneService;
+    private readonly IImageStorageService _imageStorage;
 
     private Queue<CardSesiune> _coada = new();
     private Queue<CardSesiune> _coadaRetry = new();
@@ -171,8 +173,15 @@ public partial class FluxViewModel : ObservableObject
     [ObservableProperty] int _indexExemplu = 0;
     [ObservableProperty] bool _aratDefinitieRo = false;
 
-    public string? ImagineCurenta =>
-        CardCurent?.Imagini.ElementAtOrDefault(IndexImagine);
+    public string? ImagineCurenta
+    {
+        get
+        {
+            var nume = CardCurent?.Imagini.ElementAtOrDefault(IndexImagine);
+            if (string.IsNullOrEmpty(nume)) return null;
+            return _imageStorage.GetCaleAbsoluta(nume);
+        }
+    }
 
     public bool AreImagini =>
         CardCurent?.Imagini.Count > 0;
@@ -190,8 +199,13 @@ public partial class FluxViewModel : ObservableObject
         (CardCurent.Exemple.ElementAtOrDefault(IndexExemplu) ?? "")
             .Replace("[TERMEN]", CardCurent.Termen);
 
+    public string ExempluCurentRevelatHtml =>
+    CardCurent == null ? "" :
+    (CardCurent.Exemple.ElementAtOrDefault(IndexExemplu) ?? "")
+      .Replace("[TERMEN]", $"<b>「{CardCurent.Termen}」</b>");
+
     // Returneaza partile exemplului pentru colorare: inainte|cuvant|dupa
-   
+
 
     public string DefinitieAfisata =>
         _aratDefinitieRo && CardCurent?.DefinitieRo != null
@@ -202,14 +216,15 @@ public partial class FluxViewModel : ObservableObject
         _aratDefinitieRo ? "🇬🇧 EN" : "🇷🇴 RO";
 
     public FluxViewModel(
-     ICardService cardService,
-     ISessionStateService session,
-     ISesiuneService sesiuneService)
+    ICardService cardService,
+    ISessionStateService session,
+    ISesiuneService sesiuneService,
+    IImageStorageService imageStorage)
     {
         _cardService = cardService;
         _session = session;
         _sesiuneService = sesiuneService;
-
+        _imageStorage = imageStorage;
         _session.LaDeconectare += ResetSesiune;  // ← NOU
     }
 
@@ -221,7 +236,7 @@ public partial class FluxViewModel : ObservableObject
         OnPropertyChanged(nameof(AreDuaImagini));
         OnPropertyChanged(nameof(ExempluCurentBlur));
         OnPropertyChanged(nameof(ExempluCurentRevelat));
-       
+        OnPropertyChanged(nameof(ExempluCurentRevelatHtml));
         OnPropertyChanged(nameof(DefinitieAfisata));
         OnPropertyChanged(nameof(BtnTradLabel));
     }
@@ -453,7 +468,7 @@ public partial class FluxViewModel : ObservableObject
         IndexExemplu = (IndexExemplu + 1) % CardCurent.Exemple.Count;
         OnPropertyChanged(nameof(ExempluCurentBlur));
         OnPropertyChanged(nameof(ExempluCurentRevelat));
-        
+        OnPropertyChanged(nameof(ExempluCurentRevelatHtml));
     }
 
     [RelayCommand]
@@ -471,7 +486,7 @@ public partial class FluxViewModel : ObservableObject
 
         PropozitieRevelata = true;
         OnPropertyChanged(nameof(ExempluCurentRevelat));
-       
+        OnPropertyChanged(nameof(ExempluCurentRevelatHtml));
     }
 
     [RelayCommand]

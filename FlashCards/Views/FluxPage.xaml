@@ -171,11 +171,12 @@
                                                Converter={StaticResource InvertBool}}" />
                             <!-- Revelat cu cuvantul bold+colorat -->
 
-                            <Label Text="{Binding ExempluCurentRevelat}"
-                                   TextColor="#AABBCC" FontSize="15"
-                                   FontAttributes="Italic" LineHeight="1.5"
-                                   LineBreakMode="WordWrap"
-                                   IsVisible="{Binding PropozitieRevelata}" />
+                            <Label TextType="Html"
+       Text="{Binding ExempluCurentRevelatHtml}"
+       TextColor="#AABBCC" FontSize="15"
+       FontAttributes="Italic" LineHeight="1.5"
+       LineBreakMode="WordWrap"
+       IsVisible="{Binding PropozitieRevelata}" />
                         </VerticalStackLayout>
                     </Frame>
 

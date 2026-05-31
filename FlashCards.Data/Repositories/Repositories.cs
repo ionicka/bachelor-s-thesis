@@ -170,7 +170,7 @@ public class CardRepository : ICardRepository
         string primulExemplu = exemple.FirstOrDefault() ?? r.Termen;
         string blur = primulExemplu.Replace("[TERMEN]", new string('_', r.Termen.Length));
         string rev = primulExemplu.Replace("[TERMEN]", r.Termen);
-        string casute = string.Concat(r.Termen.Select(c => c == ' ' ? "  " : "_"));
+        string casute = string.Concat(r.Termen.Select(c => c == ' ' ? "  " : "*"));
 
         // Imagini — split dupa |
         var imagini = (r.CaleImagini ?? "")
