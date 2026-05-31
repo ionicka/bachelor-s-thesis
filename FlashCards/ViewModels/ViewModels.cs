@@ -31,6 +31,10 @@ public partial class LoginViewModel : ObservableObject
         _auth = auth;
         _session = session;
         _sesiuneService = sesiuneService;
+#if DEBUG
+        Email = "admin@gmail.com";
+        Parola = "admin123";
+#endif
     }
 
     [RelayCommand]
@@ -172,6 +176,7 @@ public partial class FluxViewModel : ObservableObject
     [ObservableProperty] int _indexImagine = 0;
     [ObservableProperty] int _indexExemplu = 0;
     [ObservableProperty] bool _aratDefinitieRo = false;
+    private readonly List<CuvantInvatat> _cuvinteInvatate = new();
 
     public string? ImagineCurenta
     {
@@ -388,8 +393,10 @@ public partial class FluxViewModel : ObservableObject
             }
             catch { }
         }
-
+        _session.SetCuvinteInvatate(_cuvinteInvatate);
         SesiuneGoala = true;
+
+        
     }
 
     private void ActualizeazaProgress()
@@ -534,8 +541,14 @@ public partial class FluxViewModel : ObservableObject
             NrCorect++;
             if (_cardSesiuneCurent.EstePrimaVezut)
             {
-                // FIX: o singură instanță, nu duplicat
                 _coada.Enqueue(new CardSesiune(CardCurent, TipRaspuns.RemintireActiva));
+            }
+            if (calitate != CalitatRaspuns.Nu_Stiu && !_cardSesiuneCurent.EstePrimaVezut)
+            {
+                _cuvinteInvatate.Add(new CuvantInvatat(
+                    CardCurent.Termen,
+                    CardCurent.Definitie
+                ));
             }
         }
 
@@ -618,8 +631,17 @@ public partial class FluxViewModel : ObservableObject
     }
 
     [RelayCommand]
-    async Task MergeInapoiAsync() =>
+     
+    async Task MergeInapoiAsync()
+    {
+        bool sigur = await Application.Current!.MainPage!
+            .DisplayAlert("Ieși din sesiune?",
+                          "Progresul sesiunii curente va fi pierdut.",
+                          "Da, ieși", "Continuă");
+        if (!sigur) return;
+
         await Shell.Current.GoToAsync("//MainPage");
+    }
 
     [RelayCommand]
     async Task PracticaMailMultAsync()

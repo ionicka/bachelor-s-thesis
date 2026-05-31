@@ -1,3 +1,5 @@
+using FlashCards.Core.DTOs;
+
 namespace FlashCards.ViewModels;
 
 public class FelicitariViewModel
@@ -13,9 +15,12 @@ public class FelicitariViewModel
     public string EmojiStreak { get; }
     public double RataSucces { get; }
     public bool PrimaZi { get; }
+    public List<CuvantInvatat> CuvinteInvatate { get; }
+    public bool AreCuvinte => CuvinteInvatate.Count > 0;
 
     public FelicitariViewModel(int streak, int nrCorect, int nrGresit,
-                                bool primaSessioneAZilei)
+                                bool primaSessioneAZilei,
+                                List<CuvantInvatat>? cuvinteInvatate = null)
     {
         Streak = streak;
         NrCorect = nrCorect;
@@ -48,5 +53,6 @@ public class FelicitariViewModel
             1 => ("🎉", "Prima zi!", "Bun inceput! Revino maine!"),
             _ => ("🎉", "", "")
         };
+        CuvinteInvatate = cuvinteInvatate ?? new();
     }
 }

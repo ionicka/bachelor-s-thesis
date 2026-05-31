@@ -1,4 +1,5 @@
-﻿using FlashCards.ViewModels;
+﻿using FlashCards.Services;
+using FlashCards.ViewModels;
 
 namespace FlashCards.Views;
 
@@ -16,6 +17,14 @@ public partial class FelicitariPage : ContentPage, IQueryAttributable
 
     // Apelat DE FIECARE DATĂ când navighezi cu query params,
     // chiar dacă pagina e deja instantiată (ShellContent reutilizat)
+    private readonly ISessionStateService _session;
+
+    public FelicitariPage(ISessionStateService session)
+    {
+        InitializeComponent();
+        _session = session;
+    }
+
     public void ApplyQueryAttributes(IDictionary<string, object> query)
     {
         _streak = ToInt(query, "streak");
@@ -23,12 +32,9 @@ public partial class FelicitariPage : ContentPage, IQueryAttributable
         _nrGresit = ToInt(query, "gresit");
         _primaAZilei = ToBool(query, "prima");
 
-        System.Diagnostics.Debug.WriteLine(
-            $"[FELICITARI PAGE] ApplyQuery: streak={_streak}, corect={_nrCorect}, gresit={_nrGresit}, prima={_primaAZilei}");
-
-        // Setăm BindingContext IMEDIAT, cu valorile sosite
         BindingContext = new FelicitariViewModel(
-            _streak, _nrCorect, _nrGresit, _primaAZilei);
+            _streak, _nrCorect, _nrGresit, _primaAZilei,
+            _session.CuvinteInvatateUltimaSesiune);
     }
 
     protected override void OnAppearing()

@@ -18,7 +18,9 @@ public interface ISessionStateService
     int CuvinteNoiSesiune { get; }
     int RevizuiriSesiune { get; }
 
-    event Action? LaDeconectare; 
+    event Action? LaDeconectare;
+    List<CuvantInvatat> CuvinteInvatateUltimaSesiune { get; }
+    void SetCuvinteInvatate(List<CuvantInvatat> cuvinte);
 
     void SetUtilizator(UtilizatorDto utilizator);
     void Deconecteaza();
@@ -53,6 +55,14 @@ public class SessionStateService : ISessionStateService
     private const string KEY_NR_CARDURI = "config.nr_carduri";
 
     public event Action? LaDeconectare;
+    private List<CuvantInvatat> _cuvinteInvatate = new();
+
+    public List<CuvantInvatat> CuvinteInvatateUltimaSesiune => _cuvinteInvatate;
+
+    public void SetCuvinteInvatate(List<CuvantInvatat> cuvinte)
+    {
+        _cuvinteInvatate = cuvinte;
+    }
 
     public bool EsteAutentificat => _utilizator != null;
     public bool EsteAdmin => _utilizator?.Rol == RolUtilizator.Admin;

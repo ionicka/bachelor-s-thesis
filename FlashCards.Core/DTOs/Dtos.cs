@@ -111,3 +111,6 @@ public record DisponibilitateSesiuneDto(
     int NrCuvinteNoi,
     int Total
 );
+
+public record CuvantInvatat(string Termen,
+    string Definitie);

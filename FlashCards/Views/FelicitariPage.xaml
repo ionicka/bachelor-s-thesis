@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:FlashCards.ViewModels"
+             xmlns:dto="clr-namespace:FlashCards.Core.DTOs;assembly=FlashCards.Core"
              x:Class="FlashCards.Views.FelicitariPage"
              x:DataType="vm:FelicitariViewModel"
              Shell.NavBarIsVisible="False"
@@ -96,6 +97,40 @@
                                    TextColor="#FF6B35"
                                    HorizontalOptions="Center" />
                         </Frame>
+
+                    </VerticalStackLayout>
+                </Frame>
+
+                <!-- Cuvinte invatate in aceasta sesiune -->
+                <Frame IsVisible="{Binding AreCuvinte}"
+                       BackgroundColor="#16213E" BorderColor="#0F3460"
+                       CornerRadius="24" Padding="24">
+                    <VerticalStackLayout Spacing="12">
+
+                        <Label Text="📝 Cuvinte recapitulate"
+                               FontSize="16" FontAttributes="Bold"
+                               TextColor="#8899BB"
+                               HorizontalOptions="Center" />
+
+                        <VerticalStackLayout
+                            BindableLayout.ItemsSource="{Binding CuvinteInvatate}"
+                            Spacing="8">
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate x:DataType="dto:CuvantInvatat">
+                                    <Frame BackgroundColor="#0F1A2E" BorderColor="#1A3060"
+                                           CornerRadius="12" Padding="16,10">
+                                        <VerticalStackLayout Spacing="2">
+                                            <Label Text="{Binding Termen}"
+                                                   FontSize="16" FontAttributes="Bold"
+                                                   TextColor="White" />
+                                            <Label Text="{Binding Definitie}"
+                                                   FontSize="13" TextColor="#8899BB"
+                                                   LineBreakMode="TailTruncation" />
+                                        </VerticalStackLayout>
+                                    </Frame>
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                        </VerticalStackLayout>
 
                     </VerticalStackLayout>
                 </Frame>
