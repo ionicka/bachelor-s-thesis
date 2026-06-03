@@ -130,17 +130,23 @@ public class CardSesiune
     public TipRaspuns Tip { get; }
     public bool EstePrimaVezut { get; }
     public int NrGresite { get; private set; }
+    public int Progres { get; private set; } // 0, 30, 80, 100
 
     public CardSesiune(CardDto card, TipRaspuns tip,
-                       bool estePrimaVezut = false, int nrGresite = 0)
+                       bool estePrimaVezut = false,
+                       int nrGresite = 0,
+                       int progres = 0)
     {
         Card = card;
         Tip = tip;
         EstePrimaVezut = estePrimaVezut;
         NrGresite = nrGresite;
+        Progres = progres;
     }
 
     public void IncrementeazaGresite() => NrGresite++;
+    public void AdaugaProgres(int puncte) =>
+        Progres = Math.Clamp(Progres + puncte, 0, 100);
 }
 
 // ═══════════════════════════════════════════════════════
@@ -176,6 +182,7 @@ public partial class FluxViewModel : ObservableObject
     [ObservableProperty] int _indexImagine = 0;
     [ObservableProperty] int _indexExemplu = 0;
     [ObservableProperty] bool _aratDefinitieRo = false;
+    [ObservableProperty] bool _exempluAscuns = true;
     private readonly List<CuvantInvatat> _cuvinteInvatate = new();
 
     public string? ImagineCurenta
@@ -195,9 +202,10 @@ public partial class FluxViewModel : ObservableObject
         (CardCurent?.Imagini.Count ?? 0) >= 2;
 
     public string ExempluCurentBlur =>
-        CardCurent == null ? "" :
-        (CardCurent.Exemple.ElementAtOrDefault(IndexExemplu) ?? "")
-            .Replace("[TERMEN]", new string('_', CardCurent.Termen.Length));
+     CardCurent == null ? "" :
+     (CardCurent.Exemple.ElementAtOrDefault(IndexExemplu) ?? "")
+         .Replace("[TERMEN]", string.Concat(
+             CardCurent.Termen.Select(c => c == ' ' ? ' ' : '*')));
 
     public string ExempluCurentRevelat =>
         CardCurent == null ? "" :
@@ -244,6 +252,9 @@ public partial class FluxViewModel : ObservableObject
         OnPropertyChanged(nameof(ExempluCurentRevelatHtml));
         OnPropertyChanged(nameof(DefinitieAfisata));
         OnPropertyChanged(nameof(BtnTradLabel));
+        OnPropertyChanged(nameof(TipCuvantLabel));
+        OnPropertyChanged(nameof(IntrebareSesiune));
+
     }
 
     public async Task InitializeazaAsync()
@@ -342,6 +353,7 @@ public partial class FluxViewModel : ObservableObject
         ProgressText = "";
         NrCorect = 0;
         NrGresit = 0;
+        ExempluAscuns = true;
     }
 
     private async Task AfiseazaUrmatorCard()
@@ -354,6 +366,7 @@ public partial class FluxViewModel : ObservableObject
         IndexImagine = 0;      
         IndexExemplu = 0;       
         AratDefinitieRo = false;
+        ExempluAscuns = true;
 
         if (_coada.TryDequeue(out var urmator))
         {
@@ -523,40 +536,31 @@ public partial class FluxViewModel : ObservableObject
 
         if (calitate == CalitatRaspuns.Nu_Stiu)
         {
+            // +0% — rămâne la același progres, reapare ca recunoaștere
             NrGresit++;
             _cardSesiuneCurent.IncrementeazaGresite();
 
-            // FIX: adaugă DOAR o singură copie, nu două
-            // Cardul reapare doar ca recunoaștere — dacă greșește iar, atunci se va re-evalua
             if (_cardSesiuneCurent.NrGresite < 5)
             {
                 _coadaRetry.Enqueue(new CardSesiune(
                     CardCurent, TipRaspuns.Recunoastere,
                     estePrimaVezut: false,
-                    nrGresite: _cardSesiuneCurent.NrGresite));
+                    nrGresite: _cardSesiuneCurent.NrGresite,
+                    progres: _cardSesiuneCurent.Progres)); // păstrează progresul
             }
         }
         else
         {
+            // +30% pentru recunoaștere reușită
             NrCorect++;
-            if (_cardSesiuneCurent.EstePrimaVezut)
-            {
-                _coada.Enqueue(new CardSesiune(CardCurent, TipRaspuns.RemintireActiva));
-            }
-            if (calitate != CalitatRaspuns.Nu_Stiu && !_cardSesiuneCurent.EstePrimaVezut)
-            {
-                _cuvinteInvatate.Add(new CuvantInvatat(
-                    CardCurent.Termen,
-                    CardCurent.Definitie
-                ));
-            }
-        }
+            _cardSesiuneCurent.AdaugaProgres(30);
 
-        if (!_cardSesiuneCurent.EstePrimaVezut)
-        {
-            await TrimiteRaspunsAsync(calitate, TipRaspuns.Recunoastere, null);
-            if (calitate != CalitatRaspuns.Nu_Stiu)
-                FinalizatCard();
+            // Urmează tastarea — indiferent că e nou sau revizuire
+            _coada.Enqueue(new CardSesiune(
+                CardCurent, TipRaspuns.RemintireActiva,
+                estePrimaVezut: false,
+                nrGresite: _cardSesiuneCurent.NrGresite,
+                progres: _cardSesiuneCurent.Progres));
         }
 
         AsteaptaMailDeparte = true;
@@ -594,36 +598,54 @@ public partial class FluxViewModel : ObservableObject
 
         if (ok)
         {
+            // +50% → ajunge la 100% (30+50) → card terminat
             NrCorect++;
+            _cardSesiuneCurent.AdaugaProgres(50);
+
             var calitateSalvata = _cardSesiuneCurent.NrGresite switch
             {
                 0 => CalitatRaspuns.Tastat_Corect,
                 1 => CalitatRaspuns.Stiu_Sigur,
-                2 => CalitatRaspuns.Stiu_Ezitare,
-                _ => CalitatRaspuns.Nu_Stiu
+                _ => CalitatRaspuns.Stiu_Ezitare
             };
-            await TrimiteRaspunsAsync(calitateSalvata, TipRaspuns.RemintireActiva, TextTastat);
+
+            var rezultat = await TrimiteRaspunsAsync(
+                calitateSalvata, TipRaspuns.RemintireActiva, TextTastat);
             FinalizatCard();
-            // NU mai adaugam in coada - cardul e terminat
+
+            // Adăugat O SINGURĂ DATĂ — la finalul complet al cardului
+            if (rezultat != null && CardCurent != null)
+            {
+                _cuvinteInvatate.Add(new CuvantInvatat(
+                    CardCurent.Termen,
+                    CardCurent.Definitie,
+                    rezultat.DataUrmatoareiRevizuiri));
+            }
         }
         else
         {
+            // -30% pentru tastare greșită
             NrGresit++;
             _cardSesiuneCurent.IncrementeazaGresite();
-            await TrimiteRaspunsAsync(CalitatRaspuns.Nu_Stiu, TipRaspuns.RemintireActiva, TextTastat);
+            _cardSesiuneCurent.AdaugaProgres(-30);
 
-            // Reapare in retry — cu noul CardSesiune care mosteneste NrGresite
+            await TrimiteRaspunsAsync(
+                CalitatRaspuns.Nu_Stiu, TipRaspuns.RemintireActiva, TextTastat);
+
             int nrGresite = _cardSesiuneCurent.NrGresite;
+            int progresCurent = _cardSesiuneCurent.Progres;
+
             if (nrGresite <= 5)
             {
+                // Recunoaștere ÎNTÂI, apoi tastare — nu două tastări la rând
                 _coadaRetry.Enqueue(new CardSesiune(
                     CardCurent, TipRaspuns.Recunoastere,
-                    estePrimaVezut: false, nrGresite: nrGresite));
-                _coadaRetry.Enqueue(new CardSesiune(
-                    CardCurent, TipRaspuns.RemintireActiva,
-                    estePrimaVezut: false, nrGresite: nrGresite));
+                    estePrimaVezut: false,
+                    nrGresite: nrGresite,
+                    progres: progresCurent));
+                // Tastarea se adaugă automat după recunoaștere reușită
+                // (în RaspundeRecunoastereAsync de mai sus)
             }
-            // Daca a depasit 5 incercari, cardul e abandonat din sesiune
         }
 
         await Task.Delay(400);
@@ -649,15 +671,22 @@ public partial class FluxViewModel : ObservableObject
         // Navigheaza inapoi la config cu modul practica libera
         await Shell.Current.GoToAsync("//SesiuneConfigPage?practica=true");
     }
+   
 
-    private async Task TrimiteRaspunsAsync(
-        CalitatRaspuns calitate, TipRaspuns tip, string? text)
+    [RelayCommand]
+    void RevelazaExemplu()
     {
-        if (CardCurent == null || _session.UtilizatorCurent == null) return;
+        ExempluAscuns = false;
+    }
+
+    private async Task<RezultatRaspunsDto?> TrimiteRaspunsAsync(
+     CalitatRaspuns calitate, TipRaspuns tip, string? text)
+    {
+        if (CardCurent == null || _session.UtilizatorCurent == null) return null;
         try
         {
             int timp = (int)(DateTime.UtcNow - _momentAfisare).TotalSeconds;
-            await _cardService.ProceseazaRaspunsAsync(
+            return await _cardService.ProceseazaRaspunsAsync(
                 _session.UtilizatorCurent.Id,
                 new RaspunsCardDto
                 {
@@ -669,7 +698,7 @@ public partial class FluxViewModel : ObservableObject
                     SesiuneId = _session.SesiuneCurenta
                 });
         }
-        catch { }
+        catch { return null; }
     }
 
     private static int Levenshtein(string a, string b)
@@ -684,6 +713,34 @@ public partial class FluxViewModel : ObservableObject
                 dp[i, j] = Math.Min(Math.Min(dp[i - 1, j] + 1, dp[i, j - 1] + 1), dp[i - 1, j - 1] + cost);
             }
         return dp[a.Length, b.Length];
+    }
+    public string TipCuvantLabel => CardCurent == null ? "" :
+    CardCurent.TipCuvant switch
+    {
+        TipCuvant.Substantiv => "📦 Substantiv",
+        TipCuvant.Verb => "⚡ Verb",
+        TipCuvant.Adjectiv => "🎨 Adjectiv",
+        TipCuvant.VerbFrazal => "🔗 Verb Frazal",
+        TipCuvant.Expresie => "💬 Expresie",
+        _ => ""
+    };
+    public string IntrebareSesiune
+    {
+        get
+        {
+            if (CardCurent == null) return "";
+            string tip = CardCurent.TipCuvant switch
+            {
+                TipCuvant.Verb => "verb",
+                TipCuvant.Adjectiv => "adjectiv",
+                TipCuvant.VerbFrazal => "verb frazal",
+                TipCuvant.Expresie => "expresie",
+                _ => "substantiv"
+            };
+            return CardCurent.EsteNou
+                ? $"Cunoști acest {tip}?"
+                : $"Îți amintești acest {tip}?";
+        }
     }
 }
 

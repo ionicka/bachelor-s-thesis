@@ -19,7 +19,8 @@ public record CardDto(
     double RataSucces,
     bool EsteNou,
     bool EsteDeRevizuit,
-    TipRaspuns TipRaspunsRecomandat
+    TipRaspuns TipRaspunsRecomandat,
+    TipCuvant TipCuvant
 );
 
 public class RaspunsCardDto
@@ -112,5 +113,23 @@ public record DisponibilitateSesiuneDto(
     int Total
 );
 
-public record CuvantInvatat(string Termen,
-    string Definitie);
+public record CuvantInvatat(
+    string Termen,
+    string Definitie,
+    DateOnly DataUrmatoareiRevizuiri)
+{
+    public string ZilePanaLaRevizuire
+    {
+        get
+        {
+            int zile = DataUrmatoareiRevizuiri.DayNumber
+                       - DateOnly.FromDateTime(DateTime.Now).DayNumber;
+            return zile switch
+            {
+                0 => "azi",
+                1 => "mâine",
+                _ => $"în {zile} zile"
+            };
+        }
+    }
+}

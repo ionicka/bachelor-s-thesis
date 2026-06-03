@@ -10,52 +10,44 @@ public class SrsService : ISrsService
     private static readonly int[] IntervaleBaza = { 0, 1, 2, 4, 7, 14, 30, 90 };
 
     public RezultatSrs CalculeazaUrmatoareaRevizuire(
-        ProgresCuvant progres, CalitatRaspuns calitate)
+    ProgresCuvant progres, CalitatRaspuns calitate)
     {
-        byte nivelNou = progres.NivelCunoastere;
-        double factor;
+        // Intervalele în ordinea nivelurilor: 1, 5, 10, 20, 40, 80, 160...
+        // Nivel 1 = prima dată văzut (azi din nou sau mâine)
+        // Nivel 2 = mâine (1 zi)
+        // Nivel 3 = 5 zile
+        // Nivel 4 = 10 zile
+        // Nivel 5 = 20 zile
+        // Nivel 6 = 40 zile
+        // Nivel 7 = 80 zile (consolidat)
 
-        switch (calitate)
+        bool esteCorect = calitate != CalitatRaspuns.Nu_Stiu;
+
+        byte nivelNou;
+        int intervalNou;
+
+        if (!esteCorect)
         {
-            case CalitatRaspuns.Nu_Stiu:
-                nivelNou = (byte)Math.Max(1, progres.NivelCunoastere - 2);
-                factor = 0.5;
-                break;
-            case CalitatRaspuns.Stiu_Ezitare:
-                factor = 1.2;
-                break;
-            case CalitatRaspuns.Stiu_Sigur:
-                nivelNou = (byte)Math.Min(7, progres.NivelCunoastere + 1);
-                factor = 2.5;
-                break;
-            case CalitatRaspuns.Tastat_Corect:
-                nivelNou = (byte)Math.Min(7, progres.NivelCunoastere + 2);
-                factor = 3.0;
-                break;
-            default:
-                factor = 1.0;
-                break;
+            // Orice greșeală → reset la nivel 1, revizuire mâine
+            nivelNou = 1;
+            intervalNou = 1;
         }
-
-        // Intervale fixe per nivel — clare si predictibile:
-        // Nivel 1: azi din nou (0 zile)
-        // Nivel 2: maine (1 zi)
-        // Nivel 3: 3 zile
-        // Nivel 4: 7 zile (o saptamana)
-        // Nivel 5: 14 zile (2 saptamani)
-        // Nivel 6: 30 zile (o luna)
-        // Nivel 7: 90 zile (consolidat)
-       int intervalNou = nivelNou switch
+        else
         {
-            1 => 0,
-            2 => 1,
-            3 => 3,
-            4 => 7,
-            5 => 14,
-            6 => 30,
-            7 => 90,
-            _ => 1
-        };
+            // Corect → avansează un nivel
+            nivelNou = (byte)Math.Min(7, progres.NivelCunoastere + 1);
+            intervalNou = nivelNou switch
+            {
+                1 => 1,    // prima dată → mâine
+                2 => 1,    // confirmat → mâine
+                3 => 5,    // 5 zile
+                4 => 10,   // 10 zile
+                5 => 20,   // 20 zile
+                6 => 40,   // 40 zile
+                7 => 80,   // 80 zile — consolidat
+                _ => 1
+            };
+        }
 
         return new RezultatSrs(
             nivelNou,

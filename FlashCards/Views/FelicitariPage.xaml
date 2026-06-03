@@ -118,15 +118,32 @@
                             <BindableLayout.ItemTemplate>
                                 <DataTemplate x:DataType="dto:CuvantInvatat">
                                     <Frame BackgroundColor="#0F1A2E" BorderColor="#1A3060"
-                                           CornerRadius="12" Padding="16,10">
-                                        <VerticalStackLayout Spacing="2">
-                                            <Label Text="{Binding Termen}"
-                                                   FontSize="16" FontAttributes="Bold"
-                                                   TextColor="White" />
-                                            <Label Text="{Binding Definitie}"
-                                                   FontSize="13" TextColor="#8899BB"
-                                                   LineBreakMode="TailTruncation" />
-                                        </VerticalStackLayout>
+           CornerRadius="12" Padding="16,10">
+                                        <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto">
+                                            <Label Grid.Row="0" Grid.Column="0"
+                   Text="{Binding Termen}"
+                   FontSize="16" FontAttributes="Bold"
+                   TextColor="White" />
+                                            <Label Grid.Row="1" Grid.Column="0"
+                   Text="{Binding Definitie}"
+                   FontSize="13" TextColor="#8899BB"
+                   LineBreakMode="TailTruncation" />
+                                            <Frame Grid.Row="0" Grid.Column="1"
+                   Grid.RowSpan="2"
+                   BackgroundColor="#1A3060" BorderColor="#2E4A80"
+                   CornerRadius="10" Padding="10,6"
+                   VerticalOptions="Center">
+                                                <VerticalStackLayout Spacing="0">
+                                                    <Label Text="revizuire"
+                           FontSize="10" TextColor="#8899BB"
+                           HorizontalOptions="Center"/>
+                                                    <Label Text="{Binding ZilePanaLaRevizuire}"
+       FontSize="13" FontAttributes="Bold"
+       TextColor="#4A90E2"
+       HorizontalOptions="Center"/>
+                                                </VerticalStackLayout>
+                                            </Frame>
+                                        </Grid>
                                     </Frame>
                                 </DataTemplate>
                             </BindableLayout.ItemTemplate>

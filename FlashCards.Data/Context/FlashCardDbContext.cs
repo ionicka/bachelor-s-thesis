@@ -1,14 +1,14 @@
 using FlashCards.Core.Entities;
 using Microsoft.EntityFrameworkCore;
 
-public class LexaDbContext : DbContext
+public class FlashCardDbContext : DbContext
 {
-    static LexaDbContext()
+    static FlashCardDbContext()
     {
         AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
     }
 
-    public LexaDbContext(DbContextOptions<LexaDbContext> options) : base(options) { }
+    public FlashCardDbContext(DbContextOptions<FlashCardDbContext> options) : base(options) { }
 
     public DbSet<Utilizator> Utilizatori { get; set; }
     public DbSet<Cuvant> Cuvinte { get; set; }

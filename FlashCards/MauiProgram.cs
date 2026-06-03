@@ -31,7 +31,7 @@ public static class MauiProgram
         builder.Services.AddSingleton(config);
 
         // Factory: fiecare repo primește contextul lui propriu, nu se intersectează
-        builder.Services.AddDbContextFactory<LexaDbContext>(opt =>
+        builder.Services.AddDbContextFactory<FlashCardDbContext>(opt =>
             opt.UseNpgsql(connStr));
 
         builder.Services.AddTransient<ICardRepository>(_ =>
@@ -87,7 +87,7 @@ public static class MauiProgram
 
         using (var scope = app.Services.CreateScope())
         {
-            var ctx = scope.ServiceProvider.GetRequiredService<LexaDbContext>();
+            var ctx = scope.ServiceProvider.GetRequiredService<FlashCardDbContext>();
             var logger = scope.ServiceProvider.GetRequiredService<ILogger<App>>();
 
             var sw = System.Diagnostics.Stopwatch.StartNew();

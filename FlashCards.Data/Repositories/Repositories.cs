@@ -34,6 +34,7 @@ public class CardRepository : ICardRepository
                 c.""CaleImagini"",
                 c.""Pronuntie"",
                 c.""Nivel"",
+c.""Tip"",
                 p.""NivelCunoastere"",
                 p.""NrRaspunsuriCorecte"",
                 p.""NrRaspunsuriGresite"",
@@ -72,6 +73,7 @@ public class CardRepository : ICardRepository
                 c.""CaleImagini"",
                 c.""Pronuntie"",
                 c.""Nivel"",
+c.""Tip"",
                 0 AS NivelCunoastere,
                 0 AS NrRaspunsuriCorecte,
                 0 AS NrRaspunsuriGresite,
@@ -135,6 +137,8 @@ public class CardRepository : ICardRepository
                 c.""CaleImagini"",
                 c.""Pronuntie"",
                 c.""Nivel"",
+c.""Tip"",
+
                 COALESCE(p.""NivelCunoastere"", 0)     AS NivelCunoastere,
                 COALESCE(p.""NrRaspunsuriCorecte"", 0) AS NrRaspunsuriCorecte,
                 COALESCE(p.""NrRaspunsuriGresite"", 0) AS NrRaspunsuriGresite,
@@ -178,17 +182,21 @@ public class CardRepository : ICardRepository
             .ToList();
         string? primaImagine = imagini.FirstOrDefault();
 
-        var tip = r.NivelCunoastere >= 3
-            ? TipRaspuns.RemintireActiva
-            : TipRaspuns.Recunoastere;
-
+        var tip = r.NivelCunoastere >= 2
+    ? TipRaspuns.RemintireActiva
+    : TipRaspuns.Recunoastere;
         return new CardDto(
             r.CuvantId, r.Termen,
             r.Definitie, r.DefinitieRo,
             blur, rev, casute,
             exemple, imagini, primaImagine, r.Pronuntie,
-            (NivelCuvant)r.Nivel, (byte)r.NivelCunoastere,
-            rata, r.EsteNou == 1, r.EsteDeRevizuit == 1, tip);
+            (NivelCuvant)r.Nivel,
+            (byte)r.NivelCunoastere,
+            rata,
+            r.EsteNou == 1,
+            r.EsteDeRevizuit == 1,
+            tip,
+            (TipCuvant)r.Tip);   
     }
 
     private class CardRaw
@@ -206,6 +214,7 @@ public class CardRepository : ICardRepository
         public int NrRaspunsuriGresite { get; set; }
         public int EsteDeRevizuit { get; set; }
         public int EsteNou { get; set; }
+        public int Tip { get; set; }
     }
     public async Task<List<CardDto>> GetRevizuiriAziFiltrateAsync(
     int utilizatorId,
@@ -237,6 +246,8 @@ public class CardRepository : ICardRepository
             c.""CaleImagini"",
             c.""Pronuntie"",
             c.""Nivel"",
+c.""Tip"",
+
             p.""NivelCunoastere"",
             p.""NrRaspunsuriCorecte"",
             p.""NrRaspunsuriGresite"",
@@ -287,6 +298,8 @@ public class CardRepository : ICardRepository
             c.""CaleImagini"",
             c.""Pronuntie"",
             c.""Nivel"",
+c.""Tip"",
+
             0 AS NivelCunoastere,
             0 AS NrRaspunsuriCorecte,
             0 AS NrRaspunsuriGresite,
@@ -367,8 +380,8 @@ public class CardRepository : ICardRepository
 
 public class ProgresRepository : IProgresRepository
 {
-    private readonly IDbContextFactory<LexaDbContext> _factory;
-    public ProgresRepository(IDbContextFactory<LexaDbContext> factory) => _factory = factory;
+    private readonly IDbContextFactory<FlashCardDbContext> _factory;
+    public ProgresRepository(IDbContextFactory<FlashCardDbContext> factory) => _factory = factory;
 
     public async Task<ProgresCuvant?> GetAsync(int utilizatorId, int cuvantId)
     {
@@ -443,8 +456,8 @@ public class ProgresRepository : IProgresRepository
 
 public class UtilizatorRepository : IUtilizatorRepository
 {
-    private readonly LexaDbContext _ctx;
-    public UtilizatorRepository(LexaDbContext ctx) => _ctx = ctx;
+    private readonly FlashCardDbContext _ctx;
+    public UtilizatorRepository(FlashCardDbContext ctx) => _ctx = ctx;
 
     public async Task<Utilizator?> GetByEmailAsync(string email) =>
         await _ctx.Utilizatori.FirstOrDefaultAsync(u => u.Email == email.ToLower());
@@ -486,8 +499,8 @@ public class UtilizatorRepository : IUtilizatorRepository
 
 public class SesiuneRepository : ISesiuneRepository
 {
-    private readonly LexaDbContext _ctx;
-    public SesiuneRepository(LexaDbContext ctx) => _ctx = ctx;
+    private readonly FlashCardDbContext _ctx;
+    public SesiuneRepository(FlashCardDbContext ctx) => _ctx = ctx;
 
     public async Task<SesiuneStudiu> IncepeAsync(int utilizatorId)
     {
@@ -532,8 +545,8 @@ public class SesiuneRepository : ISesiuneRepository
 
 public class RaspunsRepository : IRaspunsRepository
 {
-    private readonly LexaDbContext _ctx;
-    public RaspunsRepository(LexaDbContext ctx) => _ctx = ctx;
+    private readonly FlashCardDbContext _ctx;
+    public RaspunsRepository(FlashCardDbContext ctx) => _ctx = ctx;
 
     public async Task SalveazaAsync(RaspunsDetaliat r)
     {
@@ -550,8 +563,8 @@ public class RaspunsRepository : IRaspunsRepository
 
 public class AdminRepository : IAdminRepository
 {
-    private readonly LexaDbContext _ctx;
-    public AdminRepository(LexaDbContext ctx) => _ctx = ctx;
+    private readonly FlashCardDbContext _ctx;
+    public AdminRepository(FlashCardDbContext ctx) => _ctx = ctx;
 
     public async Task<List<CuvantListaDto>> GetCuvinteAsync(FiltruCuvinteDto? filtru = null)
     {
