@@ -141,7 +141,7 @@
                         <VerticalStackLayout Spacing="10">
 
                             <!-- Buton "Arata-mi exemplu" — dispare dupa click -->
-                            <Button Text="📖 s\Sugestie"
+                            <Button Text="📖 Sugestie"
                 Command="{Binding RevelazaExempluCommand}"
                 IsVisible="{Binding ExempluAscuns}"
                 BackgroundColor="#1A3060"

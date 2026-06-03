@@ -201,11 +201,11 @@ public partial class FluxViewModel : ObservableObject
     public bool AreDuaImagini =>
         (CardCurent?.Imagini.Count ?? 0) >= 2;
 
-    public string ExempluCurentBlur =>
-     CardCurent == null ? "" :
-     (CardCurent.Exemple.ElementAtOrDefault(IndexExemplu) ?? "")
-         .Replace("[TERMEN]", string.Concat(
-             CardCurent.Termen.Select(c => c == ' ' ? ' ' : '*')));
+   public string ExempluCurentBlur =>
+    CardCurent == null ? "" :
+    (CardCurent.Exemple.ElementAtOrDefault(IndexExemplu) ?? "")
+        .Replace("[TERMEN]", string.Join("",
+            CardCurent.Termen.Select(c => c == ' ' ? " " : "★")));
 
     public string ExempluCurentRevelat =>
         CardCurent == null ? "" :
