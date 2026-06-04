@@ -22,7 +22,11 @@ public record CardDto(
     TipRaspuns TipRaspunsRecomandat,
     TipCuvant TipCuvant
 );
-
+public record CuvantIncomplet(
+    string Termen,
+    string Definitie,
+    int Progres  // 0-99%
+);
 public class RaspunsCardDto
 {
     public int CuvantId { get; set; }

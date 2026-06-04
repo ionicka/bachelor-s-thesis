@@ -149,6 +149,55 @@
                             </BindableLayout.ItemTemplate>
                         </VerticalStackLayout>
 
+                        <!-- Cuvinte incomplete -->
+                        <Frame IsVisible="{Binding AreIncomplete}"
+       BackgroundColor="#16213E" BorderColor="#E94560"
+       CornerRadius="24" Padding="24">
+                            <VerticalStackLayout Spacing="12">
+                                <Label Text="⏳ Necesită mai multă practică"
+               FontSize="16" FontAttributes="Bold"
+               TextColor="#E94560"
+               HorizontalOptions="Center" />
+                                <VerticalStackLayout
+            BindableLayout.ItemsSource="{Binding CuvinteIncomplete}"
+            Spacing="8">
+                                    <BindableLayout.ItemTemplate>
+                                        <DataTemplate x:DataType="dto:CuvantIncomplet">
+                                            <Frame BackgroundColor="#0F1A2E" BorderColor="#E94560"
+                           CornerRadius="12" Padding="16,10">
+                                                <Grid ColumnDefinitions="*,Auto"
+                              RowDefinitions="Auto,Auto,Auto">
+                                                    <Label Grid.Row="0" Grid.Column="0"
+                                   Text="{Binding Termen}"
+                                   FontSize="16" FontAttributes="Bold"
+                                   TextColor="White" />
+                                                    <Label Grid.Row="1" Grid.Column="0"
+                                   Text="{Binding Definitie}"
+                                   FontSize="13" TextColor="#8899BB"
+                                   LineBreakMode="TailTruncation" />
+                                                    <Frame Grid.Row="0" Grid.Column="1"
+                                   Grid.RowSpan="2"
+                                   BackgroundColor="#2A0A0A"
+                                   BorderColor="#E94560"
+                                   CornerRadius="10" Padding="10,6"
+                                   VerticalOptions="Center">
+                                                        <VerticalStackLayout Spacing="0">
+                                                            <Label Text="progres"
+                                           FontSize="10" TextColor="#8899BB"
+                                           HorizontalOptions="Center"/>
+                                                            <Label Text="{Binding Progres, StringFormat='{0}%'}"
+                                           FontSize="13" FontAttributes="Bold"
+                                           TextColor="#E94560"
+                                           HorizontalOptions="Center"/>
+                                                        </VerticalStackLayout>
+                                                    </Frame>
+                                                </Grid>
+                                            </Frame>
+                                        </DataTemplate>
+                                    </BindableLayout.ItemTemplate>
+                                </VerticalStackLayout>
+                            </VerticalStackLayout>
+                        </Frame>
                     </VerticalStackLayout>
                 </Frame>
 

@@ -33,8 +33,9 @@ public partial class FelicitariPage : ContentPage, IQueryAttributable
         _primaAZilei = ToBool(query, "prima");
 
         BindingContext = new FelicitariViewModel(
-            _streak, _nrCorect, _nrGresit, _primaAZilei,
-            _session.CuvinteInvatateUltimaSesiune);
+    _streak, _nrCorect, _nrGresit, _primaAZilei,
+    _session.CuvinteInvatateUltimaSesiune,
+    _session.CuvinteIncompletUltimaSesiune);
     }
 
     protected override void OnAppearing()

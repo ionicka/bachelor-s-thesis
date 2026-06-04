@@ -18,9 +18,11 @@ public class FelicitariViewModel
     public List<CuvantInvatat> CuvinteInvatate { get; }
     public bool AreCuvinte => CuvinteInvatate.Count > 0;
 
+
     public FelicitariViewModel(int streak, int nrCorect, int nrGresit,
-                                bool primaSessioneAZilei,
-                                List<CuvantInvatat>? cuvinteInvatate = null)
+                              bool primaSessioneAZilei,
+                              List<CuvantInvatat>? cuvinteInvatate = null,
+                              List<CuvantIncomplet>? cuvinteIncomplete = null)
     {
         Streak = streak;
         NrCorect = nrCorect;
@@ -28,8 +30,8 @@ public class FelicitariViewModel
         PrimaZi = primaSessioneAZilei;
 
         int total = nrCorect + nrGresit;
-        RataSucces = total == 0 ? 100
-            : Math.Round((double)nrCorect / total * 100);
+        RataSucces = total == 0 ? 0
+     : Math.Round((double)nrCorect / total * 100);
 
         // Mesaj sesiune — mereu
         (EmojiSesiune, TitluSesiune) = RataSucces switch

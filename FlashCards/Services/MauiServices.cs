@@ -29,6 +29,8 @@ public interface ISessionStateService
     void SetRevizuiriSesiune(int nr);
     ConfigSesiuneDto ConfigSesiune { get; }
     void SetConfigSesiune(ConfigSesiuneDto config);
+    List<CuvantIncomplet> CuvinteIncompletUltimaSesiune { get; }
+    void SetCuvinteIncomplete(List<CuvantIncomplet> cuvinte);
 }
 
 public class NavigationService : INavigationService
@@ -174,4 +176,7 @@ public class SessionStateService : ISessionStateService
         // chiar și după deconectare (sunt utile la următoarea logare)
         LaDeconectare?.Invoke();
     }
+    private List<CuvantIncomplet> _cuvinteIncomplete = new();
+    public List<CuvantIncomplet> CuvinteIncompletUltimaSesiune => _cuvinteIncomplete;
+    public void SetCuvinteIncomplete(List<CuvantIncomplet> cuvinte) => _cuvinteIncomplete = cuvinte;
 }

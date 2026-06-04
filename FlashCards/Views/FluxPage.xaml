@@ -326,5 +326,45 @@
 
         </Grid>
 
+        <!-- POPUP IESIRE — tematic, bottom sheet -->
+        <Grid Grid.RowSpan="3"
+      IsVisible="{Binding AratPopupIesire}"
+      BackgroundColor="#80000000">
+            <Frame BackgroundColor="#16213E"
+           BorderColor="#E94560"
+           CornerRadius="24"
+           Padding="28"
+           VerticalOptions="End"
+           Margin="16,0,16,32">
+                <VerticalStackLayout Spacing="16">
+                    <Label Text="⚠️ Ieși din sesiune?"
+                   FontSize="20" FontAttributes="Bold"
+                   TextColor="White"
+                   HorizontalOptions="Center"/>
+                    <Label Text="Progresul sesiunii curente va fi salvat parțial."
+                   FontSize="14" TextColor="#8899BB"
+                   HorizontalOptions="Center"
+                   HorizontalTextAlignment="Center"/>
+                    <Grid ColumnDefinitions="*,12,*" Margin="0,8,0,0">
+                        <Button Grid.Column="0"
+                        Text="Continuă"
+                        Command="{Binding AnuleazaIesireCommand}"
+                        BackgroundColor="#1A3060"
+                        TextColor="#8899BB"
+                        CornerRadius="14"
+                        HeightRequest="52"/>
+                        <Button Grid.Column="2"
+                        Text="Da, ieși"
+                        Command="{Binding ConfirmaIesireCommand}"
+                        BackgroundColor="#E94560"
+                        TextColor="White"
+                        FontAttributes="Bold"
+                        CornerRadius="14"
+                        HeightRequest="52"/>
+                    </Grid>
+                </VerticalStackLayout>
+            </Frame>
+        </Grid>
+
     </Grid>
 </ContentPage>

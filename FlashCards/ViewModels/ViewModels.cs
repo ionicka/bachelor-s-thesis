@@ -166,6 +166,9 @@ public partial class FluxViewModel : ObservableObject
     private CardSesiune? _cardSesiuneCurent;
     private int _totalCarduri = 0;
     private int _cardVazut = 0;
+    private readonly List<CuvantIncomplet> _cuvinteIncomplete = new();
+
+    [ObservableProperty] bool _aratPopupIesire = false;
 
     [ObservableProperty] CardDto? _cardCurent;
     [ObservableProperty] bool _propozitieRevelata = false;
@@ -183,6 +186,7 @@ public partial class FluxViewModel : ObservableObject
     [ObservableProperty] int _indexExemplu = 0;
     [ObservableProperty] bool _aratDefinitieRo = false;
     [ObservableProperty] bool _exempluAscuns = true;
+
     private readonly List<CuvantInvatat> _cuvinteInvatate = new();
 
     public string? ImagineCurenta
@@ -548,6 +552,14 @@ public partial class FluxViewModel : ObservableObject
                     nrGresite: _cardSesiuneCurent.NrGresite,
                     progres: _cardSesiuneCurent.Progres)); // păstrează progresul
             }
+            // În RaspundeRecunoastereAsync, când NrGresite >= 5:
+            if (_cardSesiuneCurent.NrGresite >= 5)
+            {
+                _cuvinteIncomplete.Add(new CuvantIncomplet(
+                    CardCurent.Termen,
+                    CardCurent.Definitie,
+                    _cardSesiuneCurent.Progres));
+            }
         }
         else
         {
@@ -646,6 +658,14 @@ public partial class FluxViewModel : ObservableObject
                 // Tastarea se adaugă automat după recunoaștere reușită
                 // (în RaspundeRecunoastereAsync de mai sus)
             }
+            // În RaspundeRecunoastereAsync, când NrGresite >= 5:
+            if (_cardSesiuneCurent.NrGresite >= 5)
+            {
+                _cuvinteIncomplete.Add(new CuvantIncomplet(
+                    CardCurent.Termen,
+                    CardCurent.Definitie,
+                    _cardSesiuneCurent.Progres));
+            }
         }
 
         await Task.Delay(400);
@@ -653,16 +673,36 @@ public partial class FluxViewModel : ObservableObject
     }
 
     [RelayCommand]
-     
-    async Task MergeInapoiAsync()
+    void MergeInapoi()
     {
-        bool sigur = await Application.Current!.MainPage!
-            .DisplayAlert("Ieși din sesiune?",
-                          "Progresul sesiunii curente va fi pierdut.",
-                          "Da, ieși", "Continuă");
-        if (!sigur) return;
+        AratPopupIesire = true;
+    }
 
-        await Shell.Current.GoToAsync("//MainPage");
+    [RelayCommand]
+    async Task ConfirmaIesireAsync()
+    {
+        AratPopupIesire = false;
+        if (_session.SesiuneCurenta.HasValue)
+        {
+            try
+            {
+                await _sesiuneService.InchideSesiuneAsync(
+                    _session.SesiuneCurenta.Value,
+                    NrCorect + NrGresit,
+                    NrCorect,
+                    NrGresit);
+            }
+            catch { }
+        }
+        _session.SetCuvinteInvatate(_cuvinteInvatate);
+        _session.SetCuvinteIncomplete(_cuvinteIncomplete);
+        SesiuneGoala = true;
+    }
+
+    [RelayCommand]
+    void AnuleazaIesirea()
+    {
+        AratPopupIesire = false;
     }
 
     [RelayCommand]
