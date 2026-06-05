@@ -16,30 +16,37 @@
     <Grid RowDefinitions="Auto,*,Auto">
 
         <!-- HEADER -->
-        <Grid Grid.Row="0" ColumnDefinitions="Auto,*,Auto" Padding="16,16,20,8">
+        <Grid Grid.Row="0" ColumnDefinitions="Auto,*,Auto,Auto" Padding="16,12,20,4">
             <Button Grid.Column="0"
-            Text="←"
-            Command="{Binding MergeInapoiCommand}"
-            BackgroundColor="Transparent"
-            TextColor="White"
-            FontSize="22"
-            WidthRequest="44"
-            HeightRequest="44"
-            Padding="0" />
+                    Text="←"
+                    Command="{Binding MergeInapoiCommand}"
+                    BackgroundColor="Transparent"
+                    TextColor="White"
+                    FontSize="22"
+                    WidthRequest="44" HeightRequest="44"
+                    Padding="0" />
             <Label Grid.Column="1"
-          Text="{Binding TipCuvantLabel}"
-           FontSize="15" FontAttributes="Bold"
-           TextColor="#8899BB"
-           HorizontalOptions="Center" VerticalOptions="Center" />
-            <Label Grid.Column="2"
-           Text="{Binding ProgressText}"
-           TextColor="#8899BB" FontSize="13" VerticalOptions="Center" />
+                   Text="{Binding TipCuvantLabel}"
+                   FontSize="15" FontAttributes="Bold"
+                   TextColor="#8899BB"
+                   HorizontalOptions="Center" VerticalOptions="Center" />
+            <Button Grid.Column="2"
+                    Text="🚫"
+                    Command="{Binding IgnoraCuvantCommand}"
+                    BackgroundColor="Transparent"
+                    FontSize="20"
+                    WidthRequest="44" HeightRequest="44"
+                    Padding="0"
+                    IsVisible="{Binding SesiuneGoala,
+                                Converter={StaticResource InvertBool}}" />
+            <Label Grid.Column="3"
+                   Text="{Binding ProgressText}"
+                   TextColor="#8899BB" FontSize="13" VerticalOptions="Center" />
         </Grid>
 
         <!-- CONTINUT -->
         <Grid Grid.Row="1">
 
-            <!-- Loader -->
             <VerticalStackLayout IsVisible="{Binding SeIncarca}"
                                  VerticalOptions="Center" HorizontalOptions="Center"
                                  Spacing="16">
@@ -49,20 +56,17 @@
                        HorizontalOptions="Center" />
             </VerticalStackLayout>
 
-            <!-- Sesiune goala - pagina FelicitariPage se deschide din code-behind -->
             <ActivityIndicator IsVisible="{Binding SesiuneGoala}"
                                IsRunning="{Binding SesiuneGoala}"
                                Color="#7B2FBE"
                                VerticalOptions="Center"
                                HorizontalOptions="Center" />
 
-            <!-- Cardul principal -->
             <ScrollView IsVisible="{Binding SesiuneGoala,
                                     Converter={StaticResource InvertBool}}"
                         Padding="16,4">
                 <VerticalStackLayout Spacing="12">
 
-                    <!-- IMAGINI - dispare complet daca CaleImagini e null -->
                     <Grid IsVisible="{Binding AreImagini}">
                         <Image Source="{Binding ImagineCurenta}"
                                Aspect="AspectFit"
@@ -80,122 +84,111 @@
                                 Margin="0,0,10,10" />
                     </Grid>
 
-                    <!-- TERMEN - doar dupa revelatie -->
                     <Frame BackgroundColor="#0F1A2E" CornerRadius="16"
-       Padding="20,16" BorderColor="Transparent"
-       IsVisible="{Binding PropozitieRevelata}">
+                           Padding="20,16" BorderColor="Transparent"
+                           IsVisible="{Binding PropozitieRevelata}">
                         <VerticalStackLayout Spacing="6">
                             <Grid ColumnDefinitions="*,Auto">
                                 <Label Grid.Column="0"
-                   Text="{Binding CardCurent.Termen}"
-                   FontSize="38" FontAttributes="Bold"
-                   TextColor="White" LineBreakMode="WordWrap"
-                   VerticalOptions="Center" />
+                                       Text="{Binding CardCurent.Termen}"
+                                       FontSize="38" FontAttributes="Bold"
+                                       TextColor="White" LineBreakMode="WordWrap"
+                                       VerticalOptions="Center" />
                                 <Button Grid.Column="1"
-                    Text="🔊"
-                    Command="{Binding PronuntaCuvantCommand}"
-                    BackgroundColor="Transparent"
-                    FontSize="22"
-                    WidthRequest="48" HeightRequest="48"
-                    Padding="0" VerticalOptions="Center" />
+                                        Text="🔊"
+                                        Command="{Binding PronuntaCuvantCommand}"
+                                        BackgroundColor="Transparent"
+                                        FontSize="22"
+                                        WidthRequest="48" HeightRequest="48"
+                                        Padding="0" VerticalOptions="Center" />
                             </Grid>
                             <Label Text="{Binding CardCurent.Pronuntie}"
-               FontSize="15" TextColor="#8899BB" />
+                                   FontSize="15" TextColor="#8899BB" />
                         </VerticalStackLayout>
                     </Frame>
-                    <!-- INTREBARE + DEFINITIE -->
+
                     <Frame BackgroundColor="#16213E" CornerRadius="16"
-       Padding="20" BorderColor="#0F3460">
+                           Padding="20" BorderColor="#0F3460">
                         <VerticalStackLayout Spacing="10">
-
-                            <!-- Intrebarea dinamica -->
                             <Label Text="{Binding IntrebareSesiune}"
-               TextColor="#E94560" FontSize="14"
-               FontAttributes="Bold"
-               LineBreakMode="WordWrap" />
-
+                                   TextColor="#E94560" FontSize="14"
+                                   FontAttributes="Bold"
+                                   LineBreakMode="WordWrap" />
                             <Grid ColumnDefinitions="*,Auto">
                                 <Label Grid.Column="0"
-                   Text="DEFINITIE" TextColor="#8899BB"
-                   FontSize="11" FontAttributes="Bold"
-                   CharacterSpacing="1.5"
-                   VerticalOptions="Center" />
+                                       Text="DEFINITIE" TextColor="#8899BB"
+                                       FontSize="11" FontAttributes="Bold"
+                                       CharacterSpacing="1.5"
+                                       VerticalOptions="Center" />
                                 <Button Grid.Column="1"
-                    Text="{Binding BtnTradLabel}"
-                    Command="{Binding ToggleTraducereCommand}"
-                    BackgroundColor="#1A3060"
-                    TextColor="#8899BB"
-                    FontSize="11" FontAttributes="Bold"
-                    CornerRadius="8"
-                    HeightRequest="28" Padding="8,0" />
+                                        Text="{Binding BtnTradLabel}"
+                                        Command="{Binding ToggleTraducereCommand}"
+                                        BackgroundColor="#1A3060"
+                                        TextColor="#8899BB"
+                                        FontSize="11" FontAttributes="Bold"
+                                        CornerRadius="8"
+                                        HeightRequest="28" Padding="8,0" />
                             </Grid>
                             <Label Text="{Binding DefinitieAfisata}"
-               TextColor="White" FontSize="15"
-               LineHeight="1.5" LineBreakMode="WordWrap" />
+                                   TextColor="White" FontSize="15"
+                                   LineHeight="1.5" LineBreakMode="WordWrap" />
                         </VerticalStackLayout>
                     </Frame>
 
-                    <!-- EXEMPLE -->
                     <Frame BackgroundColor="#16213E" CornerRadius="16"
-       Padding="20" BorderColor="#0F3460">
+                           Padding="20" BorderColor="#0F3460">
                         <VerticalStackLayout Spacing="10">
 
-                            <!-- Buton "Arata-mi exemplu" — dispare dupa click -->
                             <Button Text="📖 Sugestie"
-                Command="{Binding RevelazaExempluCommand}"
-                IsVisible="{Binding ExempluAscuns}"
-                BackgroundColor="#1A3060"
-                TextColor="#8899BB"
-                CornerRadius="12"
-                HeightRequest="44"
-                FontSize="14" />
+                                    Command="{Binding RevelazaExempluCommand}"
+                                    IsVisible="{Binding ExempluAscuns}"
+                                    BackgroundColor="#1A3060"
+                                    TextColor="#8899BB"
+                                    CornerRadius="12"
+                                    HeightRequest="44"
+                                    FontSize="14" />
 
-                            <!-- Exemplul revelat — apare dupa click -->
                             <VerticalStackLayout IsVisible="{Binding ExempluAscuns,
-                                         Converter={StaticResource InvertBool}}"
-                             Spacing="10">
+                                                 Converter={StaticResource InvertBool}}"
+                                                 Spacing="10">
                                 <Grid ColumnDefinitions="*,Auto">
                                     <Label Grid.Column="0"
-                       Text="EXEMPLU IN CONTEXT"
-                       TextColor="#E94560" FontSize="11"
-                       FontAttributes="Bold" CharacterSpacing="1.5"
-                       VerticalOptions="Center" />
+                                           Text="EXEMPLU IN CONTEXT"
+                                           TextColor="#E94560" FontSize="11"
+                                           FontAttributes="Bold" CharacterSpacing="1.5"
+                                           VerticalOptions="Center" />
                                     <StackLayout Grid.Column="1" Orientation="Horizontal" Spacing="4">
                                         <Button Text="🔊"
-                            Command="{Binding PronuntaExempluCommand}"
-                            BackgroundColor="Transparent"
-                            FontSize="16"
-                            WidthRequest="36" HeightRequest="28"
-                            Padding="0" />
+                                                Command="{Binding PronuntaExempluCommand}"
+                                                BackgroundColor="Transparent"
+                                                FontSize="16"
+                                                WidthRequest="36" HeightRequest="28"
+                                                Padding="0" />
                                         <Button Text="→"
-                            Command="{Binding SchimbaExempluCommand}"
-                            BackgroundColor="#1A3060"
-                            TextColor="#8899BB" FontSize="14"
-                            CornerRadius="8"
-                            HeightRequest="28" Padding="8,0" />
+                                                Command="{Binding SchimbaExempluCommand}"
+                                                BackgroundColor="#1A3060"
+                                                TextColor="#8899BB" FontSize="14"
+                                                CornerRadius="8"
+                                                HeightRequest="28" Padding="8,0" />
                                     </StackLayout>
                                 </Grid>
-                                <!-- Inainte de revelatie: cuvantul e **** -->
                                 <Label Text="{Binding ExempluCurentBlur}"
-       TextColor="#AABBCC" FontSize="15"
-       FontAttributes="Italic" LineHeight="1.5"
-       LineBreakMode="WordWrap"
-       IsVisible="{Binding PropozitieRevelata,
-                   Converter={StaticResource InvertBool}}" />
-
-                                <!-- Dupa revelatie: cuvantul bold vizibil -->
+                                       TextColor="#AABBCC" FontSize="15"
+                                       FontAttributes="Italic" LineHeight="1.5"
+                                       LineBreakMode="WordWrap"
+                                       IsVisible="{Binding PropozitieRevelata,
+                                                   Converter={StaticResource InvertBool}}" />
                                 <Label TextType="Html"
-       Text="{Binding ExempluCurentRevelatHtml}"
-       TextColor="#AABBCC" FontSize="15"
-       FontAttributes="Italic" LineHeight="1.5"
-       LineBreakMode="WordWrap"
-       IsVisible="{Binding PropozitieRevelata}" />
+                                       Text="{Binding ExempluCurentRevelatHtml}"
+                                       TextColor="#AABBCC" FontSize="15"
+                                       FontAttributes="Italic" LineHeight="1.5"
+                                       LineBreakMode="WordWrap"
+                                       IsVisible="{Binding PropozitieRevelata}" />
                             </VerticalStackLayout>
 
                         </VerticalStackLayout>
                     </Frame>
 
-                    <!-- Tastare -->
                     <Frame BackgroundColor="#16213E" CornerRadius="16"
                            Padding="20" BorderColor="#E94560"
                            IsVisible="{Binding ModTastare}">
@@ -227,16 +220,12 @@
 
         </Grid>
 
-     
-
-
         <!-- BUTOANE JOS -->
         <Grid Grid.Row="2"
               IsVisible="{Binding SesiuneGoala, Converter={StaticResource InvertBool}}"
               Padding="16,8,16,24" BackgroundColor="#0D0D1A"
               RowDefinitions="Auto,Auto" RowSpacing="8">
 
-            <!-- Feedback -->
             <Frame Grid.Row="0"
                    BackgroundColor="{Binding ColorFeedback}"
                    BorderColor="Transparent"
@@ -251,7 +240,6 @@
 
             <Grid Grid.Row="1">
 
-                <!-- MAI DEPARTE — deasupra tuturor, apare dupa raspuns -->
                 <Button Text="Mai departe →"
                         Command="{Binding MailDeparteCommand}"
                         IsVisible="{Binding AsteaptaMailDeparte}"
@@ -262,12 +250,10 @@
                         FontSize="16"
                         FontAttributes="Bold" />
 
-                <!-- Toate butoanele normale — dispar dupa raspuns -->
                 <Grid IsVisible="{Binding AsteaptaMailDeparte,
                                   Converter={StaticResource InvertBool}}"
                       RowDefinitions="Auto,Auto" RowSpacing="8">
 
-                    <!-- TASTARE -->
                     <Button Grid.Row="0"
                             Text="Verifica raspunsul"
                             Command="{Binding RaspundeTastareCommand}"
@@ -277,22 +263,19 @@
                             Style="{StaticResource BtnPrincipal}"
                             HeightRequest="56" />
 
-                    <!-- RECUNOASTERE -->
                     <Grid Grid.Row="0"
                           IsVisible="{Binding ModTastare,
                                       Converter={StaticResource InvertBool}}"
                           RowDefinitions="Auto,Auto" RowSpacing="8">
 
-                        <!-- Inainte de revelatie -->
                         <Button Grid.Row="0"
-                               Text="Prezintă răspunsul"
+                                Text="Prezintă răspunsul"
                                 Command="{Binding RevelazaPropozitiaCommand}"
                                 IsVisible="{Binding PropozitieRevelata,
                                             Converter={StaticResource InvertBool}}"
                                 Style="{StaticResource BtnDark}"
                                 HeightRequest="56" />
 
-                        <!-- Dupa revelatie -->
                         <Grid Grid.Row="1"
                               IsVisible="{Binding PropozitieRevelata}"
                               RowDefinitions="Auto,Auto" RowSpacing="8">
@@ -326,41 +309,81 @@
 
         </Grid>
 
-        <!-- POPUP IESIRE — tematic, bottom sheet -->
+        <!-- POPUP IESIRE -->
         <Grid Grid.RowSpan="3"
-      IsVisible="{Binding AratPopupIesire}"
-      BackgroundColor="#80000000">
+              IsVisible="{Binding AratPopupIesire}"
+              BackgroundColor="#80000000">
             <Frame BackgroundColor="#16213E"
-           BorderColor="#E94560"
-           CornerRadius="24"
-           Padding="28"
-           VerticalOptions="End"
-           Margin="16,0,16,32">
+                   BorderColor="#E94560"
+                   CornerRadius="24"
+                   Padding="28"
+                   VerticalOptions="End"
+                   Margin="16,0,16,32">
                 <VerticalStackLayout Spacing="16">
                     <Label Text="⚠️ Ieși din sesiune?"
-                   FontSize="20" FontAttributes="Bold"
-                   TextColor="White"
-                   HorizontalOptions="Center"/>
+                           FontSize="20" FontAttributes="Bold"
+                           TextColor="White"
+                           HorizontalOptions="Center"/>
                     <Label Text="Progresul sesiunii curente va fi salvat parțial."
-                   FontSize="14" TextColor="#8899BB"
-                   HorizontalOptions="Center"
-                   HorizontalTextAlignment="Center"/>
+                           FontSize="14" TextColor="#8899BB"
+                           HorizontalOptions="Center"
+                           HorizontalTextAlignment="Center"/>
                     <Grid ColumnDefinitions="*,12,*" Margin="0,8,0,0">
                         <Button Grid.Column="0"
-                        Text="Continuă"
-                        Command="{Binding AnuleazaIesireCommand}"
-                        BackgroundColor="#1A3060"
-                        TextColor="#8899BB"
-                        CornerRadius="14"
-                        HeightRequest="52"/>
+                                Text="Continuă"
+                                Command="{Binding AnuleazaIesireCommand}"
+                                BackgroundColor="#1A3060"
+                                TextColor="#8899BB"
+                                CornerRadius="14"
+                                HeightRequest="52"/>
                         <Button Grid.Column="2"
-                        Text="Da, ieși"
-                        Command="{Binding ConfirmaIesireCommand}"
-                        BackgroundColor="#E94560"
-                        TextColor="White"
-                        FontAttributes="Bold"
-                        CornerRadius="14"
-                        HeightRequest="52"/>
+                                Text="Da, ieși"
+                                Command="{Binding ConfirmaIesireCommand}"
+                                BackgroundColor="#E94560"
+                                TextColor="White"
+                                FontAttributes="Bold"
+                                CornerRadius="14"
+                                HeightRequest="52"/>
+                    </Grid>
+                </VerticalStackLayout>
+            </Frame>
+        </Grid>
+
+        <!-- POPUP IGNORARE -->
+        <Grid Grid.RowSpan="3"
+              IsVisible="{Binding AratPopupIgnorare}"
+              BackgroundColor="#80000000">
+            <Frame BackgroundColor="#16213E"
+                   BorderColor="#FF8C00"
+                   CornerRadius="24"
+                   Padding="28"
+                   VerticalOptions="End"
+                   Margin="16,0,16,32">
+                <VerticalStackLayout Spacing="16">
+                    <Label Text="🚫 Ignoră acest cuvânt?"
+                           FontSize="20" FontAttributes="Bold"
+                           TextColor="White"
+                           HorizontalOptions="Center"/>
+                    <Label Text="Cuvântul nu va mai apărea în sesiunile viitoare."
+                           FontSize="14" TextColor="#8899BB"
+                           HorizontalOptions="Center"
+                           HorizontalTextAlignment="Center"/>
+                    <Grid ColumnDefinitions="*,12,*" Margin="0,8,0,0">
+                        <Button Grid.Column="0"
+                                Text="Anulează"
+                                Command="{Binding AnuleazaIgnorareaCommand}"
+                                BackgroundColor="#1A3060"
+                                TextColor="#8899BB"
+                                CornerRadius="14"
+                                HeightRequest="52"/>
+                        <Button Grid.Column="2"
+                                Text="Da, ignoră"
+                                Command="{Binding ConfirmaIgnorareaCommand}"
+                                BackgroundColor="#FF8C00"
+                                TextColor="White"
+                                FontAttributes="Bold"
+                                CornerRadius="14"
+                                HeightRequest="52"/>
                     </Grid>
                 </VerticalStackLayout>
             </Frame>

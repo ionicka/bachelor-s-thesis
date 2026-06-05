@@ -45,6 +45,7 @@ c.""Tip"",
             WHERE p.""UtilizatorId"" = @UId
               AND p.""DataUrmatoareiRevizuiri"" <= @Azi::date
               AND p.""NivelCunoastere"" < 7
+              AND (p.""EsteIgnorat"" = false OR p.""EsteIgnorat"" IS NULL)
             ORDER BY p.""NivelCunoastere"" ASC, p.""DataUrmatoareiRevizuiri"" ASC";
 
         var rows = await conn.QueryAsync<CardRaw>(sql, new
@@ -82,7 +83,7 @@ c.""Tip"",
             FROM cuvinte c
             WHERE c.""Id"" NOT IN (
                 SELECT ""CuvantId"" FROM progres_cuvinte
-                WHERE ""UtilizatorId"" = @UId)
+                WHERE ""UtilizatorId"" = @UId AND ""EsteIgnorat"" = true)
             ORDER BY c.""Nivel"" ASC, RANDOM()
             LIMIT @Max";
 
@@ -447,6 +448,29 @@ public class ProgresRepository : IProgresRepository
             .Where(c => !ctx.ProgresCuvinte
                 .Any(p => p.UtilizatorId == utilizatorId && p.CuvantId == c.Id))
             .CountAsync();
+    }
+    public async Task IgnoraCuvantAsync(int utilizatorId, int cuvantId)
+    {
+        using var ctx = await _factory.CreateDbContextAsync();
+        var progres = await ctx.ProgresCuvinte
+            .FirstOrDefaultAsync(p => p.UtilizatorId == utilizatorId
+                                   && p.CuvantId == cuvantId);
+        if (progres != null)
+        {
+            progres.EsteIgnorat = true;
+            await ctx.SaveChangesAsync();
+            return;
+        }
+        // Daca nu exista progres inca, il cream cu EsteIgnorat = true
+        ctx.ProgresCuvinte.Add(new ProgresCuvant
+        {
+            UtilizatorId = utilizatorId,
+            CuvantId = cuvantId,
+            EsteIgnorat = true,
+            DataPrimeiIntalniri = DateTime.UtcNow,
+            DataUrmatoareiRevizuiri = DateOnly.FromDateTime(DateTime.Now)
+        });
+        await ctx.SaveChangesAsync();
     }
 }
 

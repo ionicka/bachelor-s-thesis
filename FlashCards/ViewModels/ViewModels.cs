@@ -188,7 +188,34 @@ public partial class FluxViewModel : ObservableObject
     [ObservableProperty] bool _exempluAscuns = true;
 
     private readonly List<CuvantInvatat> _cuvinteInvatate = new();
+    [ObservableProperty] bool _aratPopupIgnorare = false;
 
+    [RelayCommand]
+    void IgnoraCuvant()
+    {
+        AratPopupIgnorare = true;
+    }
+
+    [RelayCommand]
+    async Task ConfirmaIgnorareaAsync()
+    {
+        if (CardCurent == null || _session.UtilizatorCurent == null) return;
+        AratPopupIgnorare = false;
+        try
+        {
+            await _cardService.IgnoraCuvantAsync(
+                _session.UtilizatorCurent.Id,
+                CardCurent.CuvantId);
+        }
+        catch { }
+        await AfiseazaUrmatorCard();
+    }
+
+    [RelayCommand]
+    void AnuleazaIgnorarea()
+    {
+        AratPopupIgnorare = false;
+    }
     public string? ImagineCurenta
     {
         get
@@ -358,6 +385,7 @@ public partial class FluxViewModel : ObservableObject
         NrCorect = 0;
         NrGresit = 0;
         ExempluAscuns = true;
+        AratPopupIgnorare = false;
     }
 
     private async Task AfiseazaUrmatorCard()
