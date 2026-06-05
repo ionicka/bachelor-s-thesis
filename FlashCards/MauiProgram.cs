@@ -1,20 +1,15 @@
-using CommunityToolkit.Maui;
+    using CommunityToolkit.Maui;
 using FlashCards.Core.Interfaces;
-using FlashCards.Core.Services;
-using FlashCards.Data.Repositories;
 using FlashCards.Services;
+using FlashCards.Services.Http;
 using FlashCards.ViewModels;
 using FlashCards.Views;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace FlashCards;
 
 public static class MauiProgram
 {
-
-
-
     public static MauiApp CreateMauiApp()
     {
         var builder = MauiApp.CreateBuilder();
@@ -22,32 +17,22 @@ public static class MauiProgram
         builder
             .UseMauiApp<App>()
             .UseMauiCommunityToolkit()
-            .ConfigureFonts(fonts => { /* ... */ });
+            .ConfigureFonts(fonts => { });
 
-        // ── Config + Connection String ──────────────────────────
-        var config = ConfigLoader.Incarca();  // sincron, nu mai GetResult()
-        string connStr = config.Database.ToConnectionString();
+        // ── Adresa API ─────────────────────────────────────────────
+        // Pentru test pe PC: localhost
+        // Pentru Android pe acelasi WiFi: IP-ul PC-ului ex. http://192.168.1.100:5202/
+        string apiUrl = "http://192.168.56.1/";
 
-        builder.Services.AddSingleton(config);
+        // ── Servicii HTTP ─────────────────────────────────────────
+        builder.Services.AddHttpClient<IAuthService, AuthServiceHttp>(client =>
+            client.BaseAddress = new Uri(apiUrl));
 
-        // Factory: fiecare repo primește contextul lui propriu, nu se intersectează
-        builder.Services.AddDbContextFactory<FlashCardDbContext>(opt =>
-            opt.UseNpgsql(connStr));
+        builder.Services.AddHttpClient<ICardService, CardServiceHttp>(client =>
+            client.BaseAddress = new Uri(apiUrl));
 
-        builder.Services.AddTransient<ICardRepository>(_ =>
-            new CardRepository(connStr));
-        builder.Services.AddTransient<IProgresRepository, ProgresRepository>();
-        builder.Services.AddTransient<IUtilizatorRepository, UtilizatorRepository>();
-        builder.Services.AddTransient<ISesiuneRepository, SesiuneRepository>();
-        builder.Services.AddTransient<IRaspunsRepository, RaspunsRepository>();
-        builder.Services.AddTransient<IAdminRepository, AdminRepository>();
-
-        // ── Services Core — Transient ─────────────────────────────
-        builder.Services.AddTransient<ISrsService, SrsService>();
-        builder.Services.AddTransient<ICardService, CardService>();
-        builder.Services.AddTransient<IAuthService, AuthService>();
-        builder.Services.AddTransient<ISesiuneService, SesiuneService>();
-        builder.Services.AddTransient<IAdminService, AdminService>();
+        builder.Services.AddHttpClient<ISesiuneService, SesiuneServiceHttp>(client =>
+            client.BaseAddress = new Uri(apiUrl));
 
         // ── Services MAUI ─────────────────────────────────────────
         builder.Services.AddSingleton<INavigationService, NavigationService>();
@@ -83,28 +68,6 @@ public static class MauiProgram
         builder.Logging.AddDebug();
 #endif
 
-        var app = builder.Build();
-
-        using (var scope = app.Services.CreateScope())
-        {
-            var ctx = scope.ServiceProvider.GetRequiredService<FlashCardDbContext>();
-            var logger = scope.ServiceProvider.GetRequiredService<ILogger<App>>();
-
-            var sw = System.Diagnostics.Stopwatch.StartNew();
-            ctx.Database.EnsureCreated();
-
-
-            //admins job
-          /*  if (!ctx.Cuvinte.Any())
-            {
-                SeedData.Populeaza(ctx);
-                logger.LogInformation("SeedData populat cu cuvinte initiale");
-            }*/
-
-            sw.Stop();
-            logger.LogInformation("Initializare BD completa in {Ms}ms", sw.ElapsedMilliseconds);
-        }
-
-        return app;
+        return builder.Build();
     }
 }

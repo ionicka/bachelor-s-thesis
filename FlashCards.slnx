@@ -4,4 +4,5 @@
   <Project Path="FlashCards/FlashCards.csproj">
     <Deploy Solution="Debug|*" />
   </Project>
+  <Project Path="WebApplication1/FlashCards.Api.csproj" Id="6a880e38-b3c8-42a9-b8af-c7487a87772d" />
 </Solution>

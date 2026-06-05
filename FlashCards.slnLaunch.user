@@ -1,0 +1,15 @@
+[
+  {
+    "Name": "New Profile",
+    "Projects": [
+      {
+        "Path": "FlashCards\\FlashCards.csproj",
+        "Action": "Start"
+      },
+      {
+        "Path": "WebApplication1\\FlashCards.Api.csproj",
+        "Action": "Start"
+      }
+    ]
+  }
+]
