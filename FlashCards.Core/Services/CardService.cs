@@ -223,4 +223,8 @@ public class CardService : ICardService
     {
         await _progresRepo.IgnoraCuvantAsync(utilizatorId, cuvantId);
     }
+  
+
+    public async Task ScoateIgnorareAsync(int utilizatorId, int cuvantId)
+        => await _progresRepo.ScoateIgnorareAsync(utilizatorId, cuvantId);
 }

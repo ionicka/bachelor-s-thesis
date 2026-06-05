@@ -1,3 +1,5 @@
+OpenSans-Regular.ttf
+OpenSans-Semibold.ttf
 ambiguous.scale-100.jpg
 anticipate1.scale-100.jpg
 appicon.ico
@@ -121,5 +123,10 @@ transparent2.scale-100.webp
 versatile1.scale-100.jpg
 versatile2.scale-100.webp
 vulnerable1.scale-100.webp
+splashSplashScreen.scale-100.png
+splashSplashScreen.scale-125.png
+splashSplashScreen.scale-150.png
+splashSplashScreen.scale-200.png
+splashSplashScreen.scale-400.png
 AboutAssets.txt
 appsettings.json

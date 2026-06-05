@@ -266,6 +266,9 @@ public partial class SesiuneConfigViewModel : ObservableObject
     [RelayCommand]
     async Task InapoiAsync() => await Shell.Current.GoToAsync("//MainPage");
 
+    [RelayCommand]
+    async Task MergeListaCarduriAsync() =>
+    await Shell.Current.GoToAsync("//VocabularPage");
     private static string CuloareNivel(NivelCuvant n) => n switch
     {
         NivelCuvant.Elementar => "#4CAF50",   // verde — ușor
@@ -368,4 +371,5 @@ public partial class ChipFiltruDomeniuVm : ObservableObject
 
     [RelayCommand]
     void Toggle() => EsteSelectat = !EsteSelectat;
+  
 }

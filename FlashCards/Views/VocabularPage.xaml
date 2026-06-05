@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:FlashCards.ViewModels"
+             xmlns:dto="clr-namespace:FlashCards.Core.DTOs;assembly=FlashCards.Core"
+             xmlns:conv="clr-namespace:FlashCards.Converters"
+             x:Class="FlashCards.Views.VocabularPage"
+             x:DataType="vm:VocabularViewModel"
+             Shell.NavBarIsVisible="False"
+             BackgroundColor="#0D0D1A">
+
+    <ContentPage.Resources>
+        <conv:InvertBoolConverter x:Key="InvertBool" />
+    </ContentPage.Resources>
+
+    <Grid RowDefinitions="Auto,Auto,*">
+
+        <!-- HEADER -->
+        <Grid Grid.Row="0" ColumnDefinitions="Auto,*" Padding="16,48,16,8">
+            <Button Grid.Column="0"
+                    Text="←"
+                    Command="{Binding InapoiCommand}"
+                    BackgroundColor="Transparent"
+                    TextColor="White" FontSize="22"
+                    WidthRequest="44" HeightRequest="44" Padding="0" />
+            <Label Grid.Column="1"
+                   Text="📖 Vocabularul meu"
+                   FontSize="20" FontAttributes="Bold"
+                   TextColor="White" VerticalOptions="Center" />
+        </Grid>
+
+        <!-- FILTRE -->
+        <VerticalStackLayout Grid.Row="1" Padding="16,0,16,8" Spacing="10">
+
+            <!-- Cautare -->
+            <Frame BackgroundColor="#16213E" BorderColor="#0F3460"
+                   CornerRadius="14" Padding="12,8">
+                <Entry Text="{Binding TextCautare}"
+                       Placeholder="Caută cuvânt..."
+                       PlaceholderColor="#556688"
+                       TextColor="White"
+                       BackgroundColor="Transparent"
+                       FontSize="15" />
+            </Frame>
+
+            <!-- Picker Nivel -->
+            <Frame BackgroundColor="#16213E" BorderColor="#0F3460"
+                   CornerRadius="14" Padding="8,4">
+                <Picker SelectedIndex="{Binding IndexNivel}"
+                        TextColor="White"
+                        BackgroundColor="Transparent"
+                        FontSize="13"
+                        Title="Nivel">
+                    <Picker.Items>
+                        <x:String>📊 Toate nivelurile</x:String>
+                        <x:String>🟢 Elementar</x:String>
+                        <x:String>🟠 Intermediar</x:String>
+                        <x:String>🔴 Avansat</x:String>
+                    </Picker.Items>
+                </Picker>
+            </Frame>
+
+            <!-- Picker Categorie -->
+            <Frame BackgroundColor="#16213E" BorderColor="#0F3460"
+                   CornerRadius="14" Padding="8,4">
+                <Picker SelectedIndex="{Binding IndexCategorie}"
+                        TextColor="White"
+                        BackgroundColor="Transparent"
+                        FontSize="13"
+                        Title="Categorie">
+                    <Picker.Items>
+                        <x:String>🎯 Toate categoriile</x:String>
+                        <x:String>💬 General</x:String>
+                        <x:String>💼 Business</x:String>
+                        <x:String>💻 Tehnologie</x:String>
+                        <x:String>🏥 Sănătate</x:String>
+                        <x:String>📚 Educație</x:String>
+                        <x:String>🎨 Cultură</x:String>
+                        <x:String>⚽ Sport</x:String>
+                        <x:String>🏛️ Politică</x:String>
+                        <x:String>✈️ Călătorii</x:String>
+                        <x:String>🚫 Ignorate</x:String>
+                    </Picker.Items>
+                </Picker>
+            </Frame>
+
+        </VerticalStackLayout>
+
+        <!-- LISTA -->
+        <Grid Grid.Row="2">
+
+            <ActivityIndicator IsVisible="{Binding SeIncarca}"
+                               IsRunning="{Binding SeIncarca}"
+                               Color="#7B2FBE"
+                               VerticalOptions="Center"
+                               HorizontalOptions="Center" />
+
+            <CollectionView ItemsSource="{Binding CuvinteFiltrate}"
+                            IsVisible="{Binding SeIncarca, Converter={StaticResource InvertBool}}"
+                            Margin="16,0">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="dto:CardDto">
+                        <Frame BackgroundColor="#16213E"
+                               BorderColor="#0F3460"
+                               CornerRadius="14" Padding="16,12"
+                               Margin="0,0,0,8">
+                            <Grid ColumnDefinitions="*,Auto">
+                                <VerticalStackLayout Grid.Column="0" Spacing="4">
+                                    <Label Text="{Binding Termen}"
+                                           FontSize="16" FontAttributes="Bold"
+                                           TextColor="White" />
+                                    <Label Text="{Binding Definitie}"
+                                           FontSize="12" TextColor="#8899BB"
+                                           LineBreakMode="TailTruncation" />
+                                    <HorizontalStackLayout Spacing="6">
+                                        <Frame BackgroundColor="#0F3460"
+                                               BorderColor="Transparent"
+                                               CornerRadius="8" Padding="6,2">
+                                            <Label Text="{Binding Nivel}"
+                                                   FontSize="10" TextColor="#8899BB" />
+                                        </Frame>
+                                        <Frame BackgroundColor="#0F3460"
+                                               BorderColor="Transparent"
+                                               CornerRadius="8" Padding="6,2">
+                                            <Label Text="{Binding NivelCunoastere, StringFormat='Nivel {0}'}"
+                                                   FontSize="10" TextColor="#4A90E2" />
+                                        </Frame>
+                                    </HorizontalStackLayout>
+                                </VerticalStackLayout>
+
+                                <!-- Buton reactivare — doar pentru ignorate -->
+                                <Button Grid.Column="1"
+                                        Text="✓ Reactiv."
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type vm:VocabularViewModel}}, Path=ScoateIgnorareCommand}"
+                                        CommandParameter="{Binding .}"
+                                        IsVisible="{Binding EsteIgnorat}"
+                                        BackgroundColor="#1A3060"
+                                        TextColor="#4CAF50"
+                                        FontSize="11"
+                                        CornerRadius="10"
+                                        HeightRequest="36"
+                                        Padding="8,0"
+                                        VerticalOptions="Center" />
+                            </Grid>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+        </Grid>
+
+    </Grid>
+</ContentPage>

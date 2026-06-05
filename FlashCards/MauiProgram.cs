@@ -78,6 +78,8 @@ public static class MauiProgram
         builder.Services.AddTransient<EditeazaCuvantPage>();
 
         builder.Services.AddMemoryCache();
+        builder.Services.AddTransient<VocabularViewModel>();
+        builder.Services.AddTransient<VocabularPage>();
 
 #if DEBUG
         builder.Logging.AddDebug();

@@ -507,3 +507,4 @@ C:\git\bachelor-s-thesis\FlashCards\obj\Debug\net9.0-ios\iossimulator-x64\refint
 C:\git\bachelor-s-thesis\FlashCards\obj\Debug\net9.0-ios\iossimulator-x64\FlashCards.pdb
 C:\git\bachelor-s-thesis\FlashCards\obj\Debug\net9.0-ios\iossimulator-x64\FlashCards.genruntimeconfig.cache
 C:\git\bachelor-s-thesis\FlashCards\obj\Debug\net9.0-ios\iossimulator-x64\ref\FlashCards.dll
+C:\git\bachelor-s-thesis\FlashCards\obj\Debug\net9.0-ios\iossimulator-x64\build-signature\signature

@@ -35,6 +35,7 @@ public class CardRepository : ICardRepository
                 c.""Pronuntie"",
                 c.""Nivel"",
 c.""Tip"",
+c.""Domeniu"",
                 p.""NivelCunoastere"",
                 p.""NrRaspunsuriCorecte"",
                 p.""NrRaspunsuriGresite"",
@@ -75,6 +76,7 @@ c.""Tip"",
                 c.""Pronuntie"",
                 c.""Nivel"",
 c.""Tip"",
+c.""Domeniu"",
                 0 AS NivelCunoastere,
                 0 AS NrRaspunsuriCorecte,
                 0 AS NrRaspunsuriGresite,
@@ -111,11 +113,14 @@ c.""Tip"",
                 c.""CaleImagini"",
                 c.""Pronuntie"",
                 c.""Nivel"",
+c.""Tip"",
+c.""Domeniu"",
                 COALESCE(p.""NivelCunoastere"", 0)     AS NivelCunoastere,
                 COALESCE(p.""NrRaspunsuriCorecte"", 0) AS NrRaspunsuriCorecte,
                 COALESCE(p.""NrRaspunsuriGresite"", 0) AS NrRaspunsuriGresite,
                 0 AS EsteDeRevizuit,
-                CASE WHEN p.""Id"" IS NULL THEN 1 ELSE 0 END AS EsteNou
+CASE WHEN p.""Id"" IS NULL THEN 1 ELSE 0 END AS EsteNou,
+COALESCE(p.""EsteIgnorat"", false) AS EsteIgnorat
             FROM cuvinte c
             LEFT JOIN progres_cuvinte p
                 ON p.""CuvantId"" = c.""Id"" AND p.""UtilizatorId"" = @UId
@@ -139,6 +144,8 @@ c.""Tip"",
                 c.""Pronuntie"",
                 c.""Nivel"",
 c.""Tip"",
+c.""Domeniu"",
+
 
                 COALESCE(p.""NivelCunoastere"", 0)     AS NivelCunoastere,
                 COALESCE(p.""NrRaspunsuriCorecte"", 0) AS NrRaspunsuriCorecte,
@@ -197,7 +204,9 @@ c.""Tip"",
             r.EsteNou == 1,
             r.EsteDeRevizuit == 1,
             tip,
-            (TipCuvant)r.Tip);   
+            (TipCuvant)r.Tip, 
+            r.EsteIgnorat,
+             (DomeniuCuvant)r.Domeniu);
     }
 
     private class CardRaw
@@ -216,6 +225,8 @@ c.""Tip"",
         public int EsteDeRevizuit { get; set; }
         public int EsteNou { get; set; }
         public int Tip { get; set; }
+        public bool EsteIgnorat { get; set; }
+        public int Domeniu { get; set; }
     }
     public async Task<List<CardDto>> GetRevizuiriAziFiltrateAsync(
     int utilizatorId,
@@ -248,6 +259,7 @@ c.""Tip"",
             c.""Pronuntie"",
             c.""Nivel"",
 c.""Tip"",
+c.""Domeniu"",
 
             p.""NivelCunoastere"",
             p.""NrRaspunsuriCorecte"",
@@ -300,6 +312,7 @@ c.""Tip"",
             c.""Pronuntie"",
             c.""Nivel"",
 c.""Tip"",
+c.""Domeniu"",
 
             0 AS NivelCunoastere,
             0 AS NrRaspunsuriCorecte,
@@ -470,6 +483,16 @@ public class ProgresRepository : IProgresRepository
             DataPrimeiIntalniri = DateTime.UtcNow,
             DataUrmatoareiRevizuiri = DateOnly.FromDateTime(DateTime.Now)
         });
+        await ctx.SaveChangesAsync();
+    }
+    public async Task ScoateIgnorareAsync(int utilizatorId, int cuvantId)
+    {
+        using var ctx = await _factory.CreateDbContextAsync();
+        var progres = await ctx.ProgresCuvinte
+            .FirstOrDefaultAsync(p => p.UtilizatorId == utilizatorId
+                                   && p.CuvantId == cuvantId);
+        if (progres == null) return;
+        progres.EsteIgnorat = false;
         await ctx.SaveChangesAsync();
     }
 }

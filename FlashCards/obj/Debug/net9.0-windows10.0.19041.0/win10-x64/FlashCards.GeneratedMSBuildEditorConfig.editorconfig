@@ -105,3 +105,9 @@ build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = FlashCards.Views.StatisticiPage.xaml
 build_metadata.AdditionalFiles.TargetPath = Views\StatisticiPage.xaml
 build_metadata.AdditionalFiles.RelativePath = Views\StatisticiPage.xaml
+
+[C:/git/bachelor-s-thesis/FlashCards/Views/VocabularPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = FlashCards.Views.VocabularPage.xaml
+build_metadata.AdditionalFiles.TargetPath = Views\VocabularPage.xaml
+build_metadata.AdditionalFiles.RelativePath = Views\VocabularPage.xaml
