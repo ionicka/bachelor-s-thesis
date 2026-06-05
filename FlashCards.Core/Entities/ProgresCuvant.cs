@@ -8,7 +8,7 @@ public class ProgresCuvant
 {
     [Key]
     public int Id { get; set; }
-
+    public bool EsteIgnorat { get; set; } = false;
     public int UtilizatorId { get; set; }
     [ForeignKey(nameof(UtilizatorId))]
     public Utilizator? Utilizator { get; set; }

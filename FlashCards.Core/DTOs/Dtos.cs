@@ -20,7 +20,10 @@ public record CardDto(
     bool EsteNou,
     bool EsteDeRevizuit,
     TipRaspuns TipRaspunsRecomandat,
-    TipCuvant TipCuvant
+    TipCuvant TipCuvant,
+    bool EsteIgnorat,
+     DomeniuCuvant Domeniu
+
 );
 public record CuvantIncomplet(
     string Termen,

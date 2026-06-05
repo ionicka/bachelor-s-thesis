@@ -1337,9 +1337,26 @@ C:\git\bachelor-s-thesis\FlashCards\obj\Debug\net9.0-windows10.0.19041.0\win10-x
 C:\git\bachelor-s-thesis\FlashCards\obj\Debug\net9.0-windows10.0.19041.0\win10-x64\qualifiers.txt
 C:\git\bachelor-s-thesis\FlashCards\obj\Debug\net9.0-windows10.0.19041.0\win10-x64\qualifiers.txt.intermediate
 C:\git\bachelor-s-thesis\FlashCards\obj\Debug\net9.0-windows10.0.19041.0\win10-x64\MultipleQualifiersPerDimensionFound.txt
+<<<<<<< HEAD
 C:\git\bachelor-s-thesis\FlashCards\bin\Debug\net9.0-windows10.0.19041.0\win10-x64\Microsoft.Extensions.Configuration.Binder.dll
 C:\git\bachelor-s-thesis\FlashCards\bin\Debug\net9.0-windows10.0.19041.0\win10-x64\Microsoft.Extensions.Diagnostics.dll
 C:\git\bachelor-s-thesis\FlashCards\bin\Debug\net9.0-windows10.0.19041.0\win10-x64\Microsoft.Extensions.Diagnostics.Abstractions.dll
 C:\git\bachelor-s-thesis\FlashCards\bin\Debug\net9.0-windows10.0.19041.0\win10-x64\Microsoft.Extensions.Http.dll
 C:\git\bachelor-s-thesis\FlashCards\bin\Debug\net9.0-windows10.0.19041.0\win10-x64\Microsoft.Extensions.Options.ConfigurationExtensions.dll
 C:\git\bachelor-s-thesis\FlashCards\bin\Debug\net9.0-windows10.0.19041.0\win10-x64\System.Diagnostics.DiagnosticSource.dll
+=======
+C:\git\bachelor-s-thesis\FlashCards\bin\Debug\net9.0-windows10.0.19041.0\win10-x64\splashSplashScreen.scale-100.png
+C:\git\bachelor-s-thesis\FlashCards\bin\Debug\net9.0-windows10.0.19041.0\win10-x64\splashSplashScreen.scale-125.png
+C:\git\bachelor-s-thesis\FlashCards\bin\Debug\net9.0-windows10.0.19041.0\win10-x64\splashSplashScreen.scale-150.png
+C:\git\bachelor-s-thesis\FlashCards\bin\Debug\net9.0-windows10.0.19041.0\win10-x64\splashSplashScreen.scale-200.png
+C:\git\bachelor-s-thesis\FlashCards\bin\Debug\net9.0-windows10.0.19041.0\win10-x64\splashSplashScreen.scale-400.png
+C:\git\bachelor-s-thesis\FlashCards\bin\Debug\net9.0-windows10.0.19041.0\win10-x64\OpenSans-Regular.ttf
+C:\git\bachelor-s-thesis\FlashCards\bin\Debug\net9.0-windows10.0.19041.0\win10-x64\OpenSans-Semibold.ttf
+C:\git\bachelor-s-thesis\FlashCards\obj\Debug\net9.0-windows10.0.19041.0\win10-x64\resizetizer\sp\splashSplashScreen.scale-100.png
+C:\git\bachelor-s-thesis\FlashCards\obj\Debug\net9.0-windows10.0.19041.0\win10-x64\resizetizer\sp\splashSplashScreen.scale-125.png
+C:\git\bachelor-s-thesis\FlashCards\obj\Debug\net9.0-windows10.0.19041.0\win10-x64\resizetizer\sp\splashSplashScreen.scale-150.png
+C:\git\bachelor-s-thesis\FlashCards\obj\Debug\net9.0-windows10.0.19041.0\win10-x64\resizetizer\sp\splashSplashScreen.scale-200.png
+C:\git\bachelor-s-thesis\FlashCards\obj\Debug\net9.0-windows10.0.19041.0\win10-x64\resizetizer\sp\splashSplashScreen.scale-400.png
+C:\git\bachelor-s-thesis\FlashCards\obj\Debug\net9.0-windows10.0.19041.0\win10-x64\resizetizer\f\OpenSans-Regular.ttf
+C:\git\bachelor-s-thesis\FlashCards\obj\Debug\net9.0-windows10.0.19041.0\win10-x64\resizetizer\f\OpenSans-Semibold.ttf
+>>>>>>> main

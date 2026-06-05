@@ -35,6 +35,7 @@ public class CardRepository : ICardRepository
                 c.""Pronuntie"",
                 c.""Nivel"",
 c.""Tip"",
+c.""Domeniu"",
                 p.""NivelCunoastere"",
                 p.""NrRaspunsuriCorecte"",
                 p.""NrRaspunsuriGresite"",
@@ -45,6 +46,7 @@ c.""Tip"",
             WHERE p.""UtilizatorId"" = @UId
               AND p.""DataUrmatoareiRevizuiri"" <= @Azi::date
               AND p.""NivelCunoastere"" < 7
+              AND (p.""EsteIgnorat"" = false OR p.""EsteIgnorat"" IS NULL)
             ORDER BY p.""NivelCunoastere"" ASC, p.""DataUrmatoareiRevizuiri"" ASC";
 
         var rows = await conn.QueryAsync<CardRaw>(sql, new
@@ -74,6 +76,7 @@ c.""Tip"",
                 c.""Pronuntie"",
                 c.""Nivel"",
 c.""Tip"",
+c.""Domeniu"",
                 0 AS NivelCunoastere,
                 0 AS NrRaspunsuriCorecte,
                 0 AS NrRaspunsuriGresite,
@@ -82,7 +85,7 @@ c.""Tip"",
             FROM cuvinte c
             WHERE c.""Id"" NOT IN (
                 SELECT ""CuvantId"" FROM progres_cuvinte
-                WHERE ""UtilizatorId"" = @UId)
+                WHERE ""UtilizatorId"" = @UId AND ""EsteIgnorat"" = true)
             ORDER BY c.""Nivel"" ASC, RANDOM()
             LIMIT @Max";
 
@@ -110,11 +113,14 @@ c.""Tip"",
                 c.""CaleImagini"",
                 c.""Pronuntie"",
                 c.""Nivel"",
+c.""Tip"",
+c.""Domeniu"",
                 COALESCE(p.""NivelCunoastere"", 0)     AS NivelCunoastere,
                 COALESCE(p.""NrRaspunsuriCorecte"", 0) AS NrRaspunsuriCorecte,
                 COALESCE(p.""NrRaspunsuriGresite"", 0) AS NrRaspunsuriGresite,
                 0 AS EsteDeRevizuit,
-                CASE WHEN p.""Id"" IS NULL THEN 1 ELSE 0 END AS EsteNou
+CASE WHEN p.""Id"" IS NULL THEN 1 ELSE 0 END AS EsteNou,
+COALESCE(p.""EsteIgnorat"", false) AS EsteIgnorat
             FROM cuvinte c
             LEFT JOIN progres_cuvinte p
                 ON p.""CuvantId"" = c.""Id"" AND p.""UtilizatorId"" = @UId
@@ -138,6 +144,8 @@ c.""Tip"",
                 c.""Pronuntie"",
                 c.""Nivel"",
 c.""Tip"",
+c.""Domeniu"",
+
 
                 COALESCE(p.""NivelCunoastere"", 0)     AS NivelCunoastere,
                 COALESCE(p.""NrRaspunsuriCorecte"", 0) AS NrRaspunsuriCorecte,
@@ -196,7 +204,9 @@ c.""Tip"",
             r.EsteNou == 1,
             r.EsteDeRevizuit == 1,
             tip,
-            (TipCuvant)r.Tip);   
+            (TipCuvant)r.Tip, 
+            r.EsteIgnorat,
+             (DomeniuCuvant)r.Domeniu);
     }
 
     private class CardRaw
@@ -215,6 +225,8 @@ c.""Tip"",
         public int EsteDeRevizuit { get; set; }
         public int EsteNou { get; set; }
         public int Tip { get; set; }
+        public bool EsteIgnorat { get; set; }
+        public int Domeniu { get; set; }
     }
     public async Task<List<CardDto>> GetRevizuiriAziFiltrateAsync(
     int utilizatorId,
@@ -247,6 +259,7 @@ c.""Tip"",
             c.""Pronuntie"",
             c.""Nivel"",
 c.""Tip"",
+c.""Domeniu"",
 
             p.""NivelCunoastere"",
             p.""NrRaspunsuriCorecte"",
@@ -299,6 +312,7 @@ c.""Tip"",
             c.""Pronuntie"",
             c.""Nivel"",
 c.""Tip"",
+c.""Domeniu"",
 
             0 AS NivelCunoastere,
             0 AS NrRaspunsuriCorecte,
@@ -447,6 +461,39 @@ public class ProgresRepository : IProgresRepository
             .Where(c => !ctx.ProgresCuvinte
                 .Any(p => p.UtilizatorId == utilizatorId && p.CuvantId == c.Id))
             .CountAsync();
+    }
+    public async Task IgnoraCuvantAsync(int utilizatorId, int cuvantId)
+    {
+        using var ctx = await _factory.CreateDbContextAsync();
+        var progres = await ctx.ProgresCuvinte
+            .FirstOrDefaultAsync(p => p.UtilizatorId == utilizatorId
+                                   && p.CuvantId == cuvantId);
+        if (progres != null)
+        {
+            progres.EsteIgnorat = true;
+            await ctx.SaveChangesAsync();
+            return;
+        }
+        // Daca nu exista progres inca, il cream cu EsteIgnorat = true
+        ctx.ProgresCuvinte.Add(new ProgresCuvant
+        {
+            UtilizatorId = utilizatorId,
+            CuvantId = cuvantId,
+            EsteIgnorat = true,
+            DataPrimeiIntalniri = DateTime.UtcNow,
+            DataUrmatoareiRevizuiri = DateOnly.FromDateTime(DateTime.Now)
+        });
+        await ctx.SaveChangesAsync();
+    }
+    public async Task ScoateIgnorareAsync(int utilizatorId, int cuvantId)
+    {
+        using var ctx = await _factory.CreateDbContextAsync();
+        var progres = await ctx.ProgresCuvinte
+            .FirstOrDefaultAsync(p => p.UtilizatorId == utilizatorId
+                                   && p.CuvantId == cuvantId);
+        if (progres == null) return;
+        progres.EsteIgnorat = false;
+        await ctx.SaveChangesAsync();
     }
 }
 

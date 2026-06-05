@@ -219,4 +219,12 @@ public class CardService : ICardService
     {
         return await _cardRepo.GetDisponibilitateAsync(utilizatorId, niveluri, domenii);
     }
+    public async Task IgnoraCuvantAsync(int utilizatorId, int cuvantId)
+    {
+        await _progresRepo.IgnoraCuvantAsync(utilizatorId, cuvantId);
+    }
+  
+
+    public async Task ScoateIgnorareAsync(int utilizatorId, int cuvantId)
+        => await _progresRepo.ScoateIgnorareAsync(utilizatorId, cuvantId);
 }

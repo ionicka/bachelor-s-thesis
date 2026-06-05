@@ -37,6 +37,8 @@ public interface IProgresRepository
     Task<List<ProgresCuvant>> GetToateProgreselAsync(int utilizatorId);
     Task<int> GetNrRevizuiriAziAsync(int utilizatorId);
     Task<int> GetNrCuvinteNoiAsync(int utilizatorId);
+    Task IgnoraCuvantAsync(int utilizatorId, int cuvantId);
+    Task ScoateIgnorareAsync(int utilizatorId, int cuvantId);
 }
 
 public interface IUtilizatorRepository
@@ -92,6 +94,8 @@ public interface ICardService
         int utilizatorId,
         List<NivelCuvant> niveluri,
         List<DomeniuCuvant> domenii);
+    Task IgnoraCuvantAsync(int utilizatorId, int cuvantId);
+    Task ScoateIgnorareAsync(int utilizatorId, int cuvantId);
 }
 
 public interface IAuthService

@@ -38,5 +38,9 @@
               Shell.TabBarIsVisible="False"
               Shell.NavBarIsVisible="False"
               ContentTemplate="{DataTemplate views:EditeazaCuvantPage}" />
+    <ShellContent Route="VocabularPage"
+              Shell.TabBarIsVisible="False"
+              Shell.NavBarIsVisible="False"
+              ContentTemplate="{DataTemplate views:VocabularPage}" />
 
 </Shell>
