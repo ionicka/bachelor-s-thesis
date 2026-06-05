@@ -48,4 +48,17 @@ public class CardsController : ControllerBase
         var result = await _cards.GetDisponibilitateAsync(userId, niveluri, domenii);
         return Ok(result);
     }
+    [HttpPost("ignora/{userId}/{cuvantId}")]
+    public async Task<ActionResult> IgnoraCuvant(int userId, int cuvantId)
+    {
+        await _cards.IgnoraCuvantAsync(userId, cuvantId);
+        return Ok();
+    }
+
+    [HttpPost("scoate-ignorare/{userId}/{cuvantId}")]
+    public async Task<ActionResult> ScoateIgnorare(int userId, int cuvantId)
+    {
+        await _cards.ScoateIgnorareAsync(userId, cuvantId);
+        return Ok();
+    }
 }

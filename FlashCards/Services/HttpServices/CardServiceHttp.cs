@@ -70,4 +70,23 @@ public class CardServiceHttp : ICardService
         return await _http.GetFromJsonAsync<DisponibilitateSesiuneDto>(url)
             ?? new DisponibilitateSesiuneDto(0, 0, 0);
     }
+    public async Task IgnoraCuvantAsync(int utilizatorId, int cuvantId)
+    {
+        try
+        {
+            await _http.PostAsync(
+                $"api/cards/ignora/{utilizatorId}/{cuvantId}", null);
+        }
+        catch { }
+    }
+
+    public async Task ScoateIgnorareAsync(int utilizatorId, int cuvantId)
+    {
+        try
+        {
+            await _http.PostAsync(
+                $"api/cards/scoate-ignorare/{utilizatorId}/{cuvantId}", null);
+        }
+        catch { }
+    }
 }
