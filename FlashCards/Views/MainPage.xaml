@@ -89,7 +89,7 @@
                 </Grid>
             </Frame>
             <Frame Grid.Column="5"
-                   IsVisible="{Binding EsteAdmin}"
+                  IsVisible="{Binding PoateVedeaAdmin}"
                    BackgroundColor="#2A1060"
                    BorderColor="#9B5FDE"
                    CornerRadius="20" Padding="10,6"
@@ -133,29 +133,29 @@
 
                     <!-- Vocabular — activ -->
                     <Grid Grid.Column="0">
-                        <Grid.GestureRecognizers>
-                            <TapGestureRecognizer Command="{Binding MergeVocabularCommand}" />
-                        </Grid.GestureRecognizers>
                         <Frame BackgroundColor="#1A1040"
-                               BorderColor="#7B2FBE"
-                               CornerRadius="20" Padding="0"
-                               HasShadow="False">
-                        <VerticalStackLayout Padding="16" Spacing="10">
-                            <Label Text="📖" FontSize="32" />
-                            <Label Text="Vocabular"
-                                   TextColor="White" FontSize="16"
-                                   FontAttributes="Bold" />
-                            <Label Text="{Binding CarduriAzi, StringFormat='{0} de invatat'}"
-                                   TextColor="#9B6FDE" FontSize="12" />
-                            <Frame BackgroundColor="#7B2FBE"
-                                   CornerRadius="12" Padding="8,4"
-                                   BorderColor="Transparent"
-                                   HorizontalOptions="Start">
-                                <Label Text="START" TextColor="White"
-                                       FontSize="11" FontAttributes="Bold" />
-                            </Frame>
-                        </VerticalStackLayout>
+           BorderColor="#7B2FBE"
+           CornerRadius="20" Padding="0"
+           HasShadow="False">
+                            <VerticalStackLayout Padding="16" Spacing="10">
+                                <Label Text="📖" FontSize="32" />
+                                <Label Text="Vocabular"
+                   TextColor="White" FontSize="16"
+                   FontAttributes="Bold" />
+                                <Label Text="{Binding CarduriAzi, StringFormat='{0} de invatat'}"
+                   TextColor="#9B6FDE" FontSize="12" />
+                                <Frame BackgroundColor="#7B2FBE"
+                   CornerRadius="12" Padding="8,4"
+                   BorderColor="Transparent"
+                   HorizontalOptions="Start">
+                                    <Label Text="START" TextColor="White"
+                       FontSize="11" FontAttributes="Bold" />
+                                </Frame>
+                            </VerticalStackLayout>
                         </Frame>
+                        <Button Command="{Binding MergeVocabularCommand}"
+            BackgroundColor="Transparent"
+            BorderWidth="0" />
                     </Grid>
 
                     <!-- Speak — coming soon -->

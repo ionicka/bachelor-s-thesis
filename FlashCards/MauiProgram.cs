@@ -19,11 +19,11 @@ public static class MauiProgram
             .UseMauiCommunityToolkit()
             .ConfigureFonts(fonts => { });
 
-        // ── Adresa API ─────────────────────────────────────────────
-        // Pentru test pe PC: localhost
-        // Pentru Android pe acelasi WiFi: IP-ul PC-ului ex. http://192.168.1.100:5202/
-        string apiUrl = "http://192.168.56.1/";
-
+#if ANDROID
+        string apiUrl = "http://192.168.2.102:5202/";
+#else
+string apiUrl = "http://localhost:5202/";
+#endif
         // ── Servicii HTTP ─────────────────────────────────────────
         builder.Services.AddHttpClient<IAuthService, AuthServiceHttp>(client =>
             client.BaseAddress = new Uri(apiUrl));

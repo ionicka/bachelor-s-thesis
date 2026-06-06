@@ -31,9 +31,9 @@ public partial class LoginViewModel : ObservableObject
         _auth = auth;
         _session = session;
         _sesiuneService = sesiuneService;
-#if DEBUG
-        Email = "admin@gmail.com";
-        Parola = "admin123";
+#if DEBUG && WINDOWS
+Email = "admin@gmail.com";
+Parola = "admin123";
 #endif
     }
 

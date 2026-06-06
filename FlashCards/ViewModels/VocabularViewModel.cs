@@ -11,7 +11,6 @@ namespace FlashCards.ViewModels;
 public partial class VocabularViewModel : ObservableObject
 {
     private readonly ICardService _cardService;
-    private readonly IProgresRepository _progresRepo;
     private readonly ISessionStateService _session;
 
     private List<CardDto> _toateCuvintele = new();
@@ -24,12 +23,10 @@ public partial class VocabularViewModel : ObservableObject
     [ObservableProperty] int _indexCategorie = 0;
     partial void OnIndexCategorieChanged(int value) => Filtreaza();
     public VocabularViewModel(
-        ICardService cardService,
-        IProgresRepository progresRepo,
-        ISessionStateService session)
+      ICardService cardService,
+      ISessionStateService session)
     {
         _cardService = cardService;
-        _progresRepo = progresRepo;
         _session = session;
     }
 
@@ -81,7 +78,7 @@ public partial class VocabularViewModel : ObservableObject
         if (_session.UtilizatorCurent == null) return;
         try
         {
-            await _progresRepo.ScoateIgnorareAsync(
+            await _cardService.ScoateIgnorareAsync(
                 _session.UtilizatorCurent.Id, card.CuvantId);
             await IncarcaAsync();
         }

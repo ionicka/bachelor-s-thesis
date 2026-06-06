@@ -23,6 +23,7 @@ public class ImageStorageService : IImageStorageService
             Directory.CreateDirectory(_folderImagini);
             _logger.LogInformation("Folder imagini creat: {Path}", _folderImagini);
         }
+     
     }
 
     // ─── Construire filtru fișiere reutilizabil ───
@@ -136,7 +137,20 @@ public class ImageStorageService : IImageStorageService
     public string GetCaleAbsoluta(string numeFisier)
     {
         if (string.IsNullOrWhiteSpace(numeFisier)) return string.Empty;
-        return Path.Combine(_folderImagini, numeFisier);
+
+        // Verifică dacă există local
+        var caleLocala = Path.Combine(_folderImagini, numeFisier);
+        if (File.Exists(caleLocala))
+            return caleLocala;
+
+        // Fallback — din Resources
+#if ANDROID
+        return $"http://10.0.2.2:5202/imagini/{numeFisier}";
+#else
+    return Path.Combine(
+        AppDomain.CurrentDomain.BaseDirectory,
+        "Resources", "ImagesCuvinte", numeFisier);
+#endif
     }
 
     public void Sterge(string numeFisier)

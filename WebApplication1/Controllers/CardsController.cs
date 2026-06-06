@@ -61,4 +61,10 @@ public class CardsController : ControllerBase
         await _cards.ScoateIgnorareAsync(userId, cuvantId);
         return Ok();
     }
+    [HttpGet("toate/{userId}")]
+    public async Task<ActionResult<List<CardDto>>> GetToateCuvintele(int userId)
+    {
+        var result = await _cards.GetToateCuvinteleAsync(userId);
+        return Ok(result);
+    }
 }

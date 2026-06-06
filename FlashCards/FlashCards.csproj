@@ -104,5 +104,7 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>
-
+<ItemGroup>
+    <MauiAsset Include="Resources/ImagesCuvinte/*" />
+</ItemGroup>
 </Project>

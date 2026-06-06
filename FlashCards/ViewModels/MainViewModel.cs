@@ -30,14 +30,19 @@ public partial class MainViewModel : ObservableObject
         _cardService = cardService;
         _session = session;
     }
-
+    public bool PoateVedeaAdmin =>
+#if WINDOWS
+    _esteAdmin;
+#else
+    false;
+#endif
     public async Task IncarcaAsync()
     {
         if (_session.UtilizatorCurent == null) return;
 
-      
 
 
+        OnPropertyChanged(nameof(PoateVedeaAdmin));
 
         NumeUtilizator = _session.UtilizatorCurent.NumeUtilizator;
         InitialaUtilizator = NumeUtilizator.Length > 0

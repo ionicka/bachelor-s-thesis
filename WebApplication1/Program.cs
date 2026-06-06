@@ -2,6 +2,7 @@
 using FlashCards.Core.Services;
 using FlashCards.Data.Repositories;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.FileProviders;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -29,9 +30,23 @@ builder.Services.AddScoped<IAuthService, AuthService>();
 
 builder.Services.AddControllers();
 
+builder.WebHost.UseUrls("http://0.0.0.0:5202");
+
 var app = builder.Build();
 
-app.UseHttpsRedirection();
+// ─── Imagini statice ───
+var folderImagini = Path.Combine(
+    Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+    "User Name", "com.companyname.FlashCards", "Data", "imagini_cuvinte");
+
+if (!Directory.Exists(folderImagini))
+    Directory.CreateDirectory(folderImagini);
+
+app.UseStaticFiles(new StaticFileOptions
+{
+    FileProvider = new PhysicalFileProvider(folderImagini),
+    RequestPath = "/imagini"
+});
+
 app.MapControllers();
-app.Urls.Add("http://192.168.56.1");
 app.Run();
