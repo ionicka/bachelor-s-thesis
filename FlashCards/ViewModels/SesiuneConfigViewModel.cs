@@ -8,7 +8,6 @@ using FlashCards.Services;
 using System.Collections.ObjectModel;
 
 namespace FlashCards.ViewModels;
-
 public partial class SesiuneConfigViewModel : ObservableObject
 {
     private readonly ICardService _cardService;
@@ -194,8 +193,10 @@ public partial class SesiuneConfigViewModel : ObservableObject
             var niveluri = NivelChips.Where(c => c.EsteSelectat).Select(c => c.Valoare).ToList();
             var domenii = DomeniuChips.Where(c => c.EsteSelectat).Select(c => c.Valoare).ToList();
 
-            var disp = await _cardService.GetDisponibilitateAsync(
-                _session.UtilizatorCurent.Id, niveluri, domenii);
+            var taskStats = _cardService.GetDisponibilitateAsync(
+     _session.UtilizatorCurent.Id, niveluri, domenii);
+
+            var disp = await taskStats;
 
             NrRevizuiri = disp.NrRevizuiri;
             NrCuvinteNoi = disp.NrCuvinteNoi;
@@ -288,7 +289,8 @@ public partial class SesiuneConfigViewModel : ObservableObject
         DomeniuCuvant.Sport => "#4CAF50",
         DomeniuCuvant.Politica => "#8E44AD",
         DomeniuCuvant.Calatorii => "#16A085",
-      
+       
+
         _ => "#556688"
     };
 }

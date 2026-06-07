@@ -31,9 +31,9 @@ public partial class LoginViewModel : ObservableObject
         _auth = auth;
         _session = session;
         _sesiuneService = sesiuneService;
-#if DEBUG && WINDOWS
-Email = "admin@gmail.com";
-Parola = "admin123";
+#if DEBUG 
+Email = "ion@gmail.com";
+Parola = "ion123";
 #endif
     }
 
@@ -195,7 +195,11 @@ public partial class FluxViewModel : ObservableObject
     {
         AratPopupIgnorare = true;
     }
-
+    [RelayCommand]
+     void AnuleazaIesire()
+    {
+        AratPopupIesire = false;
+    }
     [RelayCommand]
     async Task ConfirmaIgnorareaAsync()
     {
@@ -395,7 +399,9 @@ public partial class FluxViewModel : ObservableObject
         MesajFeedback = string.Empty;
         ColorFeedback = "Transparent";
         AsteaptaMailDeparte = false;
-        IndexImagine = 0;      
+        IndexImagine = CardCurent?.Imagini.Count > 1
+    ? Random.Shared.Next(0, CardCurent.Imagini.Count)
+    : 0;
         IndexExemplu = 0;       
         AratDefinitieRo = false;
         ExempluAscuns = true;
@@ -595,12 +601,18 @@ public partial class FluxViewModel : ObservableObject
             NrCorect++;
             _cardSesiuneCurent.AdaugaProgres(30);
 
-            // Urmează tastarea — indiferent că e nou sau revizuire
-            _coada.Enqueue(new CardSesiune(
+            // Tastarea apare după 2-5 carduri, nu la final
+            int pozitie = Math.Min(
+                Random.Shared.Next(2, 6),
+                _coada.Count);
+
+            var listaTemp = _coada.ToList();
+            listaTemp.Insert(pozitie, new CardSesiune(
                 CardCurent, TipRaspuns.RemintireActiva,
                 estePrimaVezut: false,
                 nrGresite: _cardSesiuneCurent.NrGresite,
                 progres: _cardSesiuneCurent.Progres));
+            _coada = new Queue<CardSesiune>(listaTemp);
         }
 
         AsteaptaMailDeparte = true;
@@ -727,11 +739,7 @@ public partial class FluxViewModel : ObservableObject
         SesiuneGoala = true;
     }
 
-    [RelayCommand]
-    void AnuleazaIesirea()
-    {
-        AratPopupIesire = false;
-    }
+  
 
     [RelayCommand]
     async Task PracticaMailMultAsync()
@@ -899,4 +907,5 @@ public partial class SetariViewModel : ObservableObject
         _session.Deconecteaza();
         await Shell.Current.GoToAsync("//LoginPage");
     }
+
 }

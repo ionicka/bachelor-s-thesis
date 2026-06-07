@@ -40,14 +40,11 @@ public partial class MainViewModel : ObservableObject
     {
         if (_session.UtilizatorCurent == null) return;
 
-
-
-        OnPropertyChanged(nameof(PoateVedeaAdmin));
-
         NumeUtilizator = _session.UtilizatorCurent.NumeUtilizator;
         InitialaUtilizator = NumeUtilizator.Length > 0
             ? NumeUtilizator[0].ToString().ToUpper() : "?";
         EsteAdmin = _session.EsteAdmin;
+        OnPropertyChanged(nameof(PoateVedeaAdmin));
 
         int ora = DateTime.Now.Hour;
         Salut = ora switch
@@ -60,18 +57,22 @@ public partial class MainViewModel : ObservableObject
 
         try
         {
-            var stats = await _cardService.GetStatisticiAsync(
-                _session.UtilizatorCurent.Id);
+            StatisticiDto stats;
+            if (_session.StatisticiValide && _session.StatisticiCache != null)
+                stats = _session.StatisticiCache;
+            else
+            {
+                stats = await _cardService.GetStatisticiAsync(
+                    _session.UtilizatorCurent.Id);
+                _session.SetStatistici(stats);
+            }
 
             CarduriAzi = stats.CuvinteDeRevizuitAzi;
             Streak = stats.ZileCurenteStreak;
-            Monede = stats.CuvinteInvatate * 10;
             NrNotificari = stats.CuvinteDeRevizuitAzi > 0 ? 1 : 0;
             AreNotificari = NrNotificari > 0;
             ProgressZi = stats.TotalCuvinte == 0 ? 0
                 : Math.Min(1.0, (double)stats.CuvinteInvatate / stats.TotalCuvinte);
-
-            // Construieste calendarul saptamanal
             ZileSaptamana = ConstruiesteCalendar(stats.IstoricSaptamana);
         }
         catch { }
@@ -124,6 +125,17 @@ public partial class MainViewModel : ObservableObject
     [RelayCommand]
     async Task DeschideAdminPanel() =>
     await Shell.Current.GoToAsync("//AdminPanelPage");
+
+
+    [RelayCommand]
+    async Task DeconecteazaAsync()
+    {
+        bool ok = await Application.Current!.MainPage!
+            .DisplayAlert("Deconectare", "Esti sigur?", "Da", "Nu");
+        if (!ok) return;
+        _session.Deconecteaza();
+        await Shell.Current.GoToAsync("//LoginPage");
+    }
 }
 
 public class ZiCalendar

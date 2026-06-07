@@ -53,24 +53,10 @@
                 </HorizontalStackLayout>
             </Frame>
 
-            <!-- Monede reward -->
-            <Frame Grid.Column="3"
-                   BackgroundColor="#1A1A2E"
-                   BorderColor="#FFD700"
-                   CornerRadius="20" Padding="10,6"
-                   VerticalOptions="Center"
-                   Margin="8,0">
-                <HorizontalStackLayout Spacing="4">
-                    <Label Text="🪙" FontSize="16" VerticalOptions="Center" />
-                    <Label Text="{Binding Monede}"
-                           TextColor="#FFD700" FontSize="15"
-                           FontAttributes="Bold"
-                           VerticalOptions="Center" />
-                </HorizontalStackLayout>
-            </Frame>
+           
 
             <!-- Notificari -->
-            <Frame Grid.Column="4"
+            <Frame Grid.Column="3"
                    BackgroundColor="#1A1A2E"
                    BorderColor="#2E3A5C"
                    CornerRadius="20" Padding="10,6"
@@ -88,7 +74,7 @@
                     </Frame>
                 </Grid>
             </Frame>
-            <Frame Grid.Column="5"
+            <Frame Grid.Column="4"
                   IsVisible="{Binding PoateVedeaAdmin}"
                    BackgroundColor="#2A1060"
                    BorderColor="#9B5FDE"
@@ -99,6 +85,17 @@
                     <TapGestureRecognizer Command="{Binding DeschideAdminPanelCommand}" />
                 </Frame.GestureRecognizers>
                 <Label Text="🛠" FontSize="18" VerticalOptions="Center" />
+            </Frame>
+            <Frame Grid.Column="5"
+       BackgroundColor="#1A1A2E"
+       BorderColor="#E94560"
+       CornerRadius="20" Padding="10,6"
+       VerticalOptions="Center"
+       Margin="8,0,0,0">
+                <Frame.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding DeconecteazaCommand}" />
+                </Frame.GestureRecognizers>
+                <Label Text="🚪" FontSize="18" VerticalOptions="Center" />
             </Frame>
 
         </Grid>
@@ -319,3 +316,4 @@
     </Grid>
 
 </ContentPage>
+

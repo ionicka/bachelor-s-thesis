@@ -33,6 +33,10 @@ string apiUrl = "http://localhost:5202/";
 
         builder.Services.AddHttpClient<ISesiuneService, SesiuneServiceHttp>(client =>
             client.BaseAddress = new Uri(apiUrl));
+        builder.Services.AddHttpClient<IAdminService, AdminServiceHttp>(client =>
+        {
+            client.BaseAddress = new Uri(apiUrl);
+        });
 
         // ── Services MAUI ─────────────────────────────────────────
         builder.Services.AddSingleton<INavigationService, NavigationService>();
@@ -61,7 +65,7 @@ string apiUrl = "http://localhost:5202/";
         builder.Services.AddTransient<FelicitariPage>();
         builder.Services.AddTransient<AdminPanelPage>();
         builder.Services.AddTransient<EditeazaCuvantPage>();
-
+      
         builder.Services.AddMemoryCache();
         builder.Services.AddTransient<VocabularViewModel>();
         builder.Services.AddTransient<VocabularPage>();

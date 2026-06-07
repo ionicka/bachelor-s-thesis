@@ -137,7 +137,16 @@ public class ImageStorageService : IImageStorageService
     public string GetCaleAbsoluta(string numeFisier)
     {
         if (string.IsNullOrWhiteSpace(numeFisier)) return string.Empty;
-
+#if ANDROID
+    var url = $"http://192.168.2.102:5202/imagini/{numeFisier}";
+    System.Diagnostics.Debug.WriteLine($"IMAGINE URL ANDROID: {url}");
+    return url;
+#else
+        var cale = Path.Combine(_folderImagini, numeFisier);
+        System.Diagnostics.Debug.WriteLine($"IMAGINE CALE WINDOWS: {cale}");
+        System.Diagnostics.Debug.WriteLine($"FISIER EXISTA: {File.Exists(cale)}");
+        return cale;
+#endif
         // Verifică dacă există local
         var caleLocala = Path.Combine(_folderImagini, numeFisier);
         if (File.Exists(caleLocala))
@@ -145,11 +154,9 @@ public class ImageStorageService : IImageStorageService
 
         // Fallback — din Resources
 #if ANDROID
-        return $"http://10.0.2.2:5202/imagini/{numeFisier}";
+        return $"http://192.168.2.102:5202/imagini/{numeFisier}";
 #else
-    return Path.Combine(
-        AppDomain.CurrentDomain.BaseDirectory,
-        "Resources", "ImagesCuvinte", numeFisier);
+return Path.Combine(_folderImagini, numeFisier);
 #endif
     }
 

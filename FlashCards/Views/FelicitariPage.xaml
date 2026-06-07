@@ -33,37 +33,57 @@
                                HorizontalTextAlignment="Center" />
 
                         <!-- Statistici -->
-                        <Grid ColumnDefinitions="*,*,*" ColumnSpacing="8"
-                              Margin="0,8,0,0">
+                        <Grid ColumnDefinitions="*,*,*"
+      Margin="0,8,0,0">
+
                             <VerticalStackLayout Grid.Column="0" Spacing="4"
-                                                 HorizontalOptions="Center">
+                         HorizontalOptions="Center"
+                         VerticalOptions="Center">
                                 <Label Text="{Binding NrCorect}"
-                                       FontSize="36" FontAttributes="Bold"
-                                       TextColor="#4CAF50"
-                                       HorizontalOptions="Center" />
-                                <Label Text="Corecte" TextColor="#8899BB"
-                                       FontSize="12" HorizontalOptions="Center" />
+               FontSize="22"
+               FontAttributes="Bold"
+               TextColor="#4CAF50"
+               HorizontalTextAlignment="Center"
+               HorizontalOptions="FillAndExpand" />
+                                <Label Text="Corecte"
+               FontSize="12"
+               TextColor="#8899BB"
+               HorizontalTextAlignment="Center"
+               HorizontalOptions="FillAndExpand" />
                             </VerticalStackLayout>
 
                             <VerticalStackLayout Grid.Column="1" Spacing="4"
-                                                 HorizontalOptions="Center">
-                                <Label Text="{Binding RataSucces, StringFormat='{0}%'}"
-                                       FontSize="36" FontAttributes="Bold"
-                                       TextColor="#FFD700"
-                                       HorizontalOptions="Center" />
-                                <Label Text="Rata" TextColor="#8899BB"
-                                       FontSize="12" HorizontalOptions="Center" />
+                         HorizontalOptions="Center"
+                         VerticalOptions="Center">
+                                <Label Text="{Binding RataSucces, StringFormat='{}{0}%'}"
+               FontSize="22"
+               FontAttributes="Bold"
+               TextColor="#FFD700"
+               HorizontalTextAlignment="Center"
+               HorizontalOptions="FillAndExpand" />
+                                <Label Text="Rata"
+               FontSize="12"
+               TextColor="#8899BB"
+               HorizontalTextAlignment="Center"
+               HorizontalOptions="FillAndExpand" />
                             </VerticalStackLayout>
 
                             <VerticalStackLayout Grid.Column="2" Spacing="4"
-                                                 HorizontalOptions="Center">
+                         HorizontalOptions="Center"
+                         VerticalOptions="Center">
                                 <Label Text="{Binding NrGresit}"
-                                       FontSize="36" FontAttributes="Bold"
-                                       TextColor="#FF6B6B"
-                                       HorizontalOptions="Center" />
-                                <Label Text="Gresite" TextColor="#8899BB"
-                                       FontSize="12" HorizontalOptions="Center" />
+               FontSize="22"
+               FontAttributes="Bold"
+               TextColor="#FF6B6B"
+               HorizontalTextAlignment="Center"
+               HorizontalOptions="FillAndExpand" />
+                                <Label Text="Greșite"
+               FontSize="12"
+               TextColor="#8899BB"
+               HorizontalTextAlignment="Center"
+               HorizontalOptions="FillAndExpand" />
                             </VerticalStackLayout>
+
                         </Grid>
 
                     </VerticalStackLayout>

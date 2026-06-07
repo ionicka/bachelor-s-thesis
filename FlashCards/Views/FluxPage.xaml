@@ -159,11 +159,12 @@
                                            VerticalOptions="Center" />
                                     <StackLayout Grid.Column="1" Orientation="Horizontal" Spacing="4">
                                         <Button Text="🔊"
-                                                Command="{Binding PronuntaExempluCommand}"
-                                                BackgroundColor="Transparent"
-                                                FontSize="16"
-                                                WidthRequest="36" HeightRequest="28"
-                                                Padding="0" />
+        Command="{Binding PronuntaExempluCommand}"
+        BackgroundColor="Transparent"
+        FontSize="16"
+        WidthRequest="36" HeightRequest="28"
+        Padding="0"
+        IsEnabled="{Binding PropozitieRevelata}" />
                                         <Button Text="→"
                                                 Command="{Binding SchimbaExempluCommand}"
                                                 BackgroundColor="#1A3060"
@@ -331,7 +332,7 @@
                     <Grid ColumnDefinitions="*,12,*" Margin="0,8,0,0">
                         <Button Grid.Column="0"
                                 Text="Continuă"
-                                Command="{Binding AnuleazaIesireCommand}"
+                               Command="{Binding AnuleazaIesireCommand}"
                                 BackgroundColor="#1A3060"
                                 TextColor="#8899BB"
                                 CornerRadius="14"

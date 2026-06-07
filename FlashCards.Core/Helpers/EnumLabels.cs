@@ -10,7 +10,7 @@ public static class EnumLabels
         TipCuvant.Verb => "Verb",
         TipCuvant.Adjectiv => "Adjectiv",
         TipCuvant.VerbFrazal => "Verb frazal",
-        TipCuvant.Expresie => "Expresie",
+        TipCuvant.Expresie => "Expresie", 
         _ => tip.ToString()
     };
 
@@ -25,6 +25,7 @@ public static class EnumLabels
         DomeniuCuvant.Sport => "Sport",
         DomeniuCuvant.Politica => "Politică",
         DomeniuCuvant.Calatorii => "Călătorii",
+      
         _ => domeniu.ToString()
     };
 
@@ -48,6 +49,7 @@ public static class EnumLabels
         DomeniuCuvant.Sport => "⚽",
         DomeniuCuvant.Politica => "🏛️",
         DomeniuCuvant.Calatorii => "✈️",
+     
         _ => "📖"
     };
 
@@ -68,7 +70,8 @@ public static class EnumLabels
         TipCuvant.Verb,
         TipCuvant.Adjectiv,
         TipCuvant.VerbFrazal,
-        TipCuvant.Expresie
+        TipCuvant.Expresie,
+        TipCuvant.VerbNeregulat
     };
 
     public static readonly List<DomeniuCuvant> ToateDomenii = new()
@@ -81,7 +84,7 @@ public static class EnumLabels
     DomeniuCuvant.Cultura,
     DomeniuCuvant.Sport,
     DomeniuCuvant.Politica,
-    DomeniuCuvant.Calatorii
+    DomeniuCuvant.Calatorii,
 };
 
     public static readonly List<NivelCuvant> ToateNivelele = new()

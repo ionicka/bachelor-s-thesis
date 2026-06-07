@@ -32,7 +32,8 @@ public enum TipCuvant
     Verb = 2,
     Adjectiv = 3,
     VerbFrazal = 4,
-    Expresie = 5
+    Expresie = 5,
+         VerbNeregulat = 5
 }
 
 public enum DomeniuCuvant
@@ -45,7 +46,8 @@ public enum DomeniuCuvant
     Cultura = 5,
     Sport = 6,
     Politica = 7,
-    Calatorii = 8
+    Calatorii = 8 
+          
 }
 
 public enum ModInvatare

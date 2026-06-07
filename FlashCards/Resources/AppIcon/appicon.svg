@@ -1,4 +1,25 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<svg width="456" height="456" viewBox="0 0 456 456" version="1.1" xmlns="http://www.w3.org/2000/svg">
-    <rect x="0" y="0" width="456" height="456" fill="#512BD4" />
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <!-- Background -->
+  <rect width="100" height="100" rx="20" fill="#1A0A40"/>
+  
+  <!-- Back card -->
+  <g transform="rotate(-8, 50, 55)">
+    <rect x="18" y="30" width="64" height="44" rx="6" fill="#4A2090" stroke="#7B2FBE" stroke-width="1"/>
+  </g>
+  
+  <!-- Middle card -->
+  <g transform="rotate(4, 50, 55)">
+    <rect x="18" y="30" width="64" height="44" rx="6" fill="#2A1060" stroke="#9B5FDE" stroke-width="1"/>
+  </g>
+  
+  <!-- Front card -->
+  <rect x="17" y="28" width="66" height="46" rx="6" fill="#16213E" stroke="#7B2FBE" stroke-width="1.5"/>
+  
+  <!-- Lines on card -->
+  <line x1="26" y1="40" x2="74" y2="40" stroke="#4A90E2" stroke-width="2.5" stroke-linecap="round"/>
+  <line x1="26" y1="48" x2="68" y2="48" stroke="#556688" stroke-width="1.5" stroke-linecap="round"/>
+  <line x1="26" y1="55" x2="62" y2="55" stroke="#556688" stroke-width="1.5" stroke-linecap="round"/>
+  
+  <!-- Lightning bolt -->
+  <polygon points="54,60 46,72 52,72 44,84 62,68 55,68 62,60" fill="#FFD700"/>
 </svg>

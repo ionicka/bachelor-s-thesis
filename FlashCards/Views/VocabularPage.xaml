@@ -80,6 +80,7 @@
                         <x:String>🏛️ Politică</x:String>
                         <x:String>✈️ Călătorii</x:String>
                         <x:String>🚫 Ignorate</x:String>
+						 
                     </Picker.Items>
                 </Picker>
             </Frame>

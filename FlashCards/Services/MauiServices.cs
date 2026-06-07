@@ -31,6 +31,9 @@ public interface ISessionStateService
     void SetConfigSesiune(ConfigSesiuneDto config);
     List<CuvantIncomplet> CuvinteIncompletUltimaSesiune { get; }
     void SetCuvinteIncomplete(List<CuvantIncomplet> cuvinte);
+    bool StatisticiValide { get; }
+    StatisticiDto? StatisticiCache { get; }
+    void SetStatistici(StatisticiDto stats);
 }
 
 public class NavigationService : INavigationService
@@ -64,6 +67,20 @@ public class SessionStateService : ISessionStateService
     public void SetCuvinteInvatate(List<CuvantInvatat> cuvinte)
     {
         _cuvinteInvatate = cuvinte;
+    }
+    private StatisticiDto? _statisticiCache;
+    private DateTime _ultimaIncarcare = DateTime.MinValue;
+
+    public bool StatisticiValide =>
+        _statisticiCache != null &&
+        (DateTime.Now - _ultimaIncarcare).TotalSeconds < 30;
+
+    public StatisticiDto? StatisticiCache => _statisticiCache;
+
+    public void SetStatistici(StatisticiDto stats)
+    {
+        _statisticiCache = stats;
+        _ultimaIncarcare = DateTime.Now;
     }
 
     public bool EsteAutentificat => _utilizator != null;

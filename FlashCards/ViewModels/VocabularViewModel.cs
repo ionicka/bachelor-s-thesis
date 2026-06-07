@@ -61,8 +61,9 @@ public partial class VocabularViewModel : ObservableObject
             rezultat = rezultat.Where(c => c.Nivel == (NivelCuvant)IndexNivel);
 
         // Filtru categorie — 10 = ignorate, altfel domeniu
-        if (IndexCategorie == 10)
+        if (IndexCategorie == 11)
             rezultat = rezultat.Where(c => c.EsteIgnorat);
+         
         else if (IndexCategorie > 0)
             rezultat = rezultat.Where(c =>
                 !c.EsteIgnorat && c.Domeniu == (DomeniuCuvant)(IndexCategorie - 1));
