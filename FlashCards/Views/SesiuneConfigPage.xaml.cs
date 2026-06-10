@@ -1,4 +1,5 @@
-﻿using FlashCards.ViewModels;
+﻿ 
+using FlashCards.ViewModels;
 
 namespace FlashCards.Views;
 
@@ -16,6 +17,6 @@ public partial class SesiuneConfigPage : ContentPage
     protected override async void OnAppearing()
     {
         base.OnAppearing();
-        await _vm.IncarcaAsync();
+        await (BindingContext as SesiuneConfigViewModel)?.OnAppearingAsync();
     }
 }

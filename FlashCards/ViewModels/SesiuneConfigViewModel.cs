@@ -183,6 +183,10 @@ public partial class SesiuneConfigViewModel : ObservableObject
         await RecalculeazaDisponibilitateAsync();
     }
 
+    public async Task OnAppearingAsync()
+    {
+        await IncarcaAsync();
+    }
     private async Task RecalculeazaDisponibilitateAsync()
     {
         if (_session.UtilizatorCurent == null) return;

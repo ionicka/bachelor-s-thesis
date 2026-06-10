@@ -24,19 +24,24 @@ public partial class LoginViewModel : ObservableObject
     [ObservableProperty] bool _seIncarca = false;
 
     public LoginViewModel(
-        IAuthService auth,
-        ISessionStateService session,
-        ISesiuneService sesiuneService)
+         IAuthService auth,
+    ISessionStateService session,
+    ISesiuneService sesiuneService,
+    MainViewModel mainVm,
+    SesiuneConfigViewModel sesiuneConfigVm)
     {
         _auth = auth;
         _session = session;
         _sesiuneService = sesiuneService;
-#if DEBUG 
-Email = "ion@gmail.com";
+        _mainVm = mainVm;
+        _sesiuneConfigVm = sesiuneConfigVm;
+#if DEBUG
+        Email = "ion@gmail.com";
 Parola = "ion123";
 #endif
     }
-
+    private readonly MainViewModel _mainVm;
+    private readonly SesiuneConfigViewModel _sesiuneConfigVm;
     [RelayCommand]
     async Task LogheazaAsync()
     {
@@ -51,6 +56,12 @@ Parola = "ion123";
             if (r.Succes && r.Utilizator != null)
             {
                 _session.SetUtilizator(r.Utilizator);
+
+                // Pre-încarcă în paralel înainte de navigare
+                await Task.WhenAll(
+       _mainVm.IncarcaAsync(),
+       _sesiuneConfigVm.IncarcaAsync()
+   );
                 await Shell.Current.GoToAsync("//MainPage");
             }
             else
@@ -654,7 +665,7 @@ public partial class FluxViewModel : ObservableObject
 
         string tastat = TextTastat.Trim().ToLowerInvariant();
         string corect = CardCurent.Termen.Trim().ToLowerInvariant();
-        bool ok = tastat == corect || Levenshtein(tastat, corect) <= 1;
+        bool ok = tastat == corect || (corect.Length >= 7 && Levenshtein(tastat, corect) <= 1);
 
         PropozitieRevelata = true;
         MesajFeedback = ok ? "✓ Corect!" : $"✗ Era: {CardCurent.Termen}";

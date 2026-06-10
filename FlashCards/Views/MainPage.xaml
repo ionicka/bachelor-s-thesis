@@ -11,92 +11,100 @@
 
         <!-- ═══ TOP NAVBAR ═══════════════════════════════════════ -->
         <Grid Grid.Row="0"
-              ColumnDefinitions="Auto,*,Auto,Auto,Auto,Auto"
-              Padding="16,50,16,12"
-              BackgroundColor="#0D0D1A">
+      ColumnDefinitions="*,Auto"
+      Padding="16,50,16,12"
+      BackgroundColor="#0D0D1A">
 
             <!-- Avatar + Salut -->
             <HorizontalStackLayout Grid.Column="0" Spacing="10"
-                                   VerticalOptions="Center">
-                <!-- Avatar cerc -->
+                           VerticalOptions="Center">
                 <Frame WidthRequest="42" HeightRequest="42"
-                       CornerRadius="21" Padding="0"
-                       BorderColor="#E94560"
-                       BackgroundColor="#16213E"
-                       IsClippedToBounds="True">
+               CornerRadius="21" Padding="0"
+               BorderColor="#E94560"
+               BackgroundColor="#16213E"
+               IsClippedToBounds="True">
                     <Label Text="{Binding InitialaUtilizator}"
-                           TextColor="White" FontSize="18"
-                           FontAttributes="Bold"
-                           HorizontalOptions="Center"
-                           VerticalOptions="Center" />
+                   TextColor="White" FontSize="18"
+                   FontAttributes="Bold"
+                   HorizontalOptions="Center"
+                   VerticalOptions="Center" />
                 </Frame>
                 <VerticalStackLayout VerticalOptions="Center" Spacing="1">
                     <Label Text="{Binding Salut}" TextColor="#8899BB" FontSize="12" />
                     <Label Text="{Binding NumeUtilizator}"
-                           TextColor="White" FontSize="15"
-                           FontAttributes="Bold" />
+                   TextColor="White" FontSize="15"
+                   FontAttributes="Bold" />
                 </VerticalStackLayout>
             </HorizontalStackLayout>
 
-            <!-- Streak (zile la rand) -->
-            <Frame Grid.Column="2"
-                   BackgroundColor="#1A1A2E"
-                   BorderColor="#FF8C00"
-                   CornerRadius="20" Padding="10,6"
-                   VerticalOptions="Center">
-                <HorizontalStackLayout Spacing="4">
-                    <Label Text="🔥" FontSize="16" VerticalOptions="Center" />
-                    <Label Text="{Binding Streak, StringFormat='{0}'}"
-                           TextColor="#FF8C00" FontSize="15"
-                           FontAttributes="Bold"
-                           VerticalOptions="Center" />
-                </HorizontalStackLayout>
-            </Frame>
+            <!-- Iconite dreapta -->
+            <HorizontalStackLayout Grid.Column="1" Spacing="8"
+                           VerticalOptions="Center">
 
-           
+                <!-- Streak -->
+                <Frame BackgroundColor="#1A1A2E"
+               BorderColor="#FF8C00"
+               CornerRadius="20" Padding="0"
+               WidthRequest="72" HeightRequest="36">
+                    <HorizontalStackLayout Spacing="4"
+                                   HorizontalOptions="Center"
+                                   VerticalOptions="Center">
+                        <Label Text="🔥" FontSize="16" VerticalOptions="Center" />
+                        <Label Text="{Binding Streak}"
+                       TextColor="#FF8C00" FontSize="15"
+                       FontAttributes="Bold"
+                       VerticalOptions="Center" />
+                    </HorizontalStackLayout>
+                </Frame>
 
-            <!-- Notificari -->
-            <Frame Grid.Column="3"
-                   BackgroundColor="#1A1A2E"
-                   BorderColor="#2E3A5C"
-                   CornerRadius="20" Padding="10,6"
-                   VerticalOptions="Center">
-                <Grid>
-                    <Label Text="🔔" FontSize="18" VerticalOptions="Center" />
-                    <!-- Badge notificari -->
-                    <Frame BackgroundColor="#E94560"
-                           CornerRadius="8" Padding="3,1"
-                           HorizontalOptions="End" VerticalOptions="Start"
-                           IsVisible="{Binding AreNotificari}">
-                        <Label Text="{Binding NrNotificari}"
-                               TextColor="White" FontSize="9"
-                               FontAttributes="Bold" />
-                    </Frame>
-                </Grid>
-            </Frame>
-            <Frame Grid.Column="4"
-                  IsVisible="{Binding PoateVedeaAdmin}"
-                   BackgroundColor="#2A1060"
-                   BorderColor="#9B5FDE"
-                   CornerRadius="20" Padding="10,6"
-                   VerticalOptions="Center"
-                   Margin="8,0,0,0">
-                <Frame.GestureRecognizers>
-                    <TapGestureRecognizer Command="{Binding DeschideAdminPanelCommand}" />
-                </Frame.GestureRecognizers>
-                <Label Text="🛠" FontSize="18" VerticalOptions="Center" />
-            </Frame>
-            <Frame Grid.Column="5"
-       BackgroundColor="#1A1A2E"
-       BorderColor="#E94560"
-       CornerRadius="20" Padding="10,6"
-       VerticalOptions="Center"
-       Margin="8,0,0,0">
-                <Frame.GestureRecognizers>
-                    <TapGestureRecognizer Command="{Binding DeconecteazaCommand}" />
-                </Frame.GestureRecognizers>
-                <Label Text="🚪" FontSize="18" VerticalOptions="Center" />
-            </Frame>
+                <!-- Notificari -->
+                <Frame BackgroundColor="#1A1A2E"
+               BorderColor="#2E3A5C"
+               CornerRadius="20" Padding="0"
+               WidthRequest="48" HeightRequest="36">
+                    <Grid HorizontalOptions="Center" VerticalOptions="Center">
+                        <Label Text="🔔" FontSize="18"
+                       HorizontalOptions="Center"
+                       VerticalOptions="Center" />
+                        <Frame BackgroundColor="#E94560"
+                       CornerRadius="8" Padding="3,1"
+                       HorizontalOptions="End" VerticalOptions="Start"
+                       IsVisible="{Binding AreNotificari}">
+                            <Label Text="{Binding NrNotificari}"
+                           TextColor="White" FontSize="9"
+                           FontAttributes="Bold" />
+                        </Frame>
+                    </Grid>
+                </Frame>
+
+                <!-- Admin -->
+                <Frame IsVisible="{Binding PoateVedeaAdmin}"
+               BackgroundColor="#2A1060"
+               BorderColor="#9B5FDE"
+               CornerRadius="20" Padding="0"
+               WidthRequest="48" HeightRequest="36">
+                    <Frame.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding DeschideAdminPanelCommand}" />
+                    </Frame.GestureRecognizers>
+                    <Label Text="🛠" FontSize="18"
+                   HorizontalOptions="Center"
+                   VerticalOptions="Center" />
+                </Frame>
+
+                <!-- Deconectare -->
+                <Frame BackgroundColor="#1A1A2E"
+               BorderColor="#E94560"
+               CornerRadius="20" Padding="0"
+               WidthRequest="48" HeightRequest="36">
+                    <Frame.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding DeconecteazaCommand}" />
+                    </Frame.GestureRecognizers>
+                    <Label Text="🚪" FontSize="18"
+                   HorizontalOptions="Center"
+                   VerticalOptions="Center" />
+                </Frame>
+
+            </HorizontalStackLayout>
 
         </Grid>
 

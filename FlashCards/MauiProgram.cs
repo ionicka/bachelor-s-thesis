@@ -44,31 +44,29 @@ string apiUrl = "http://localhost:5202/";
         builder.Services.AddSingleton<IImageStorageService, ImageStorageService>();
 
         // ── ViewModels ────────────────────────────────────────────
+        // ── ViewModels ────────────────────────────────────────────
         builder.Services.AddTransient<LoginViewModel>();
         builder.Services.AddTransient<InregistrareViewModel>();
-        builder.Services.AddTransient<MainViewModel>();
-        builder.Services.AddTransient<SesiuneConfigViewModel>();
+        builder.Services.AddSingleton<MainViewModel>();
+        builder.Services.AddSingleton<SesiuneConfigViewModel>();
         builder.Services.AddSingleton<FluxViewModel>();
-        builder.Services.AddTransient<StatisticiViewModel>();
-        builder.Services.AddTransient<SetariViewModel>();
+        builder.Services.AddSingleton<StatisticiViewModel>();
+        builder.Services.AddSingleton<SetariViewModel>();
         builder.Services.AddTransient<AdminPanelViewModel>();
         builder.Services.AddTransient<EditeazaCuvantViewModel>();
-
         // ── Pages ─────────────────────────────────────────────────
         builder.Services.AddTransient<LoginPage>();
         builder.Services.AddTransient<InregistrarePage>();
-        builder.Services.AddTransient<MainPage>();
-        builder.Services.AddTransient<SesiuneConfigPage>();
-        builder.Services.AddTransient<FluxPage>();
-        builder.Services.AddTransient<StatisticiPage>();
-        builder.Services.AddTransient<SetariPage>();
+        builder.Services.AddSingleton<MainPage>();
+        builder.Services.AddSingleton<SesiuneConfigPage>();
+        builder.Services.AddSingleton<FluxPage>();
+        builder.Services.AddSingleton<StatisticiPage>();
+        builder.Services.AddSingleton<SetariPage>();
         builder.Services.AddTransient<FelicitariPage>();
-        builder.Services.AddTransient<AdminPanelPage>();
+        builder.Services.AddTransient<AdminPanelViewModel>();
         builder.Services.AddTransient<EditeazaCuvantPage>();
-      
-        builder.Services.AddMemoryCache();
-        builder.Services.AddTransient<VocabularViewModel>();
-        builder.Services.AddTransient<VocabularPage>();
+        builder.Services.AddSingleton<VocabularViewModel>();
+        builder.Services.AddSingleton<VocabularPage>();
 
 #if DEBUG
         builder.Logging.AddDebug();

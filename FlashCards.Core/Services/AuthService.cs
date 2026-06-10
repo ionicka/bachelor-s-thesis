@@ -66,7 +66,7 @@ public class AuthService : IAuthService
         if (await _repo.ExistaNumeAsync(dto.NumeUtilizator.Trim()))
             return (false, "Numele de utilizator este deja folosit.");
 
-        string hash = BCrypt.Net.BCrypt.HashPassword(dto.Parola, workFactor: 12);
+        string hash = BCrypt.Net.BCrypt.HashPassword(dto.Parola, workFactor: 10);
         await _repo.CreeazaAsync(new Utilizator
         {
             NumeUtilizator = dto.NumeUtilizator.Trim(),

@@ -80,7 +80,8 @@ public class SrsService : ISrsService
         var t = textTastat.Trim().ToLowerInvariant();
         var c = terminCorect.Trim().ToLowerInvariant();
         if (t == c) return true;
-        if (Math.Abs(t.Length - c.Length) <= 1)
+        // Levenshtein 1 doar pentru cuvinte de 7+ caractere
+        if (c.Length >= 7 && Math.Abs(t.Length - c.Length) <= 1)
             return Levenshtein(t, c) <= 1;
         return false;
     }
