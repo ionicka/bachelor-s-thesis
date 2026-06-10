@@ -66,28 +66,28 @@ c.""Domeniu"",
 
         await using var conn = new NpgsqlConnection(_connStr);
         string sql = @"
-            SELECT
-                c.""Id""               AS CuvantId,
-                c.""Termen"",
-                c.""Definitie"",
-                    c.""DefinitieRo"",
-                c.""ExemplePropozitii"",
-                c.""CaleImagini"",
-                c.""Pronuntie"",
-                c.""Nivel"",
-c.""Tip"",
-c.""Domeniu"",
-                0 AS NivelCunoastere,
-                0 AS NrRaspunsuriCorecte,
-                0 AS NrRaspunsuriGresite,
-                0 AS EsteDeRevizuit,
-                1 AS EsteNou
-            FROM cuvinte c
-            WHERE c.""Id"" NOT IN (
-                SELECT ""CuvantId"" FROM progres_cuvinte
-                WHERE ""UtilizatorId"" = @UId AND ""EsteIgnorat"" = true)
-            ORDER BY c.""Nivel"" ASC, RANDOM()
-            LIMIT @Max";
+    SELECT
+        c.""Id""               AS CuvantId,
+        c.""Termen"",
+        c.""Definitie"",
+        c.""DefinitieRo"",
+        c.""ExemplePropozitii"",
+        c.""CaleImagini"",
+        c.""Pronuntie"",
+        c.""Nivel"",
+        c.""Tip"",
+        c.""Domeniu"",
+        0 AS NivelCunoastere,
+        0 AS NrRaspunsuriCorecte,
+        0 AS NrRaspunsuriGresite,
+        0 AS EsteDeRevizuit,
+        1 AS EsteNou
+    FROM cuvinte c
+    WHERE c.""Id"" NOT IN (
+        SELECT ""CuvantId"" FROM progres_cuvinte
+        WHERE ""UtilizatorId"" = @UId)
+    ORDER BY c.""Nivel"" ASC, RANDOM()
+    LIMIT @Max";
 
         var rows = await conn.QueryAsync<CardRaw>(sql, new
         {
@@ -292,9 +292,10 @@ c.""Domeniu"",
         await using var conn = new NpgsqlConnection(_connStr);
 
         var clauze = new List<string>
-    {
-        @"c.""Id"" NOT IN (SELECT ""CuvantId"" FROM progres_cuvinte WHERE ""UtilizatorId"" = @UId)"
-    };
+{
+    @"c.""Id"" NOT IN (SELECT ""CuvantId"" FROM progres_cuvinte WHERE ""UtilizatorId"" = @UId)"
+    
+};
 
         if (niveluri != null && niveluri.Count > 0)
             clauze.Add("c.\"Nivel\" = ANY(@Niveluri)");
@@ -417,7 +418,7 @@ public class ProgresRepository : IProgresRepository
             CuvantId = cuvantId,
             NivelCunoastere = 1,
             DataPrimeiIntalniri = DateTime.UtcNow,
-            DataUrmatoareiRevizuiri = DateOnly.FromDateTime(DateTime.Now)
+            DataUrmatoareiRevizuiri = DateOnly.FromDateTime(DateTime.UtcNow.AddDays(1)) // ← mâine
         };
         ctx.ProgresCuvinte.Add(nou);
         await ctx.SaveChangesAsync();

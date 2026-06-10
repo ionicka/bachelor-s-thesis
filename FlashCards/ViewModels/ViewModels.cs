@@ -250,9 +250,20 @@ public partial class FluxViewModel : ObservableObject
     public string ExempluCurentRevelatHtml =>
     CardCurent == null ? "" :
     (CardCurent.Exemple.ElementAtOrDefault(IndexExemplu) ?? "")
-      .Replace("[TERMEN]", $"<b>「{CardCurent.Termen}」</b>");
+        .Replace("[TERMEN]", $"<b><font color='#E94560'>{CardCurent.Termen}</font></b>");
 
-    // Returneaza partile exemplului pentru colorare: inainte|cuvant|dupa
+    public string TermenMascat
+    {
+        get
+        {
+            if (CardCurent == null) return "";
+            return string.Join(" ", CardCurent.Termen
+                .Split(' ')
+                .Select(cuvant => cuvant.Length <= 1
+                    ? cuvant
+                    : cuvant[0] + new string('●', cuvant.Length - 1)));
+        }
+    }
 
 
     public string DefinitieAfisata =>
@@ -289,6 +300,7 @@ public partial class FluxViewModel : ObservableObject
         OnPropertyChanged(nameof(BtnTradLabel));
         OnPropertyChanged(nameof(TipCuvantLabel));
         OnPropertyChanged(nameof(IntrebareSesiune));
+        OnPropertyChanged(nameof(TermenMascat));
 
     }
 

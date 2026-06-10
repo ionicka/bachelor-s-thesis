@@ -83,7 +83,25 @@
                                 VerticalOptions="End"
                                 Margin="0,0,10,10" />
                     </Grid>
-
+                    <!-- TERMEN MASCAT / REVELAT -->
+                    <Frame BackgroundColor="#0A1628" CornerRadius="12"
+       Padding="16,10" BorderColor="Transparent">
+                        <Grid>
+                            <Label Text="{Binding TermenMascat}"
+               FontSize="22" FontAttributes="Bold"
+               TextColor="#5577AA"
+               HorizontalOptions="Center"
+               CharacterSpacing="2"
+               IsVisible="{Binding PropozitieRevelata,
+                           Converter={StaticResource InvertBool}}" />
+                            <Label Text="{Binding CardCurent.Termen}"
+               FontSize="22" FontAttributes="Bold"
+               TextColor="White"
+               HorizontalOptions="Center"
+               CharacterSpacing="1"
+               IsVisible="{Binding PropozitieRevelata}" />
+                        </Grid>
+                    </Frame>
                     <Frame BackgroundColor="#0F1A2E" CornerRadius="16"
                            Padding="20,16" BorderColor="Transparent"
                            IsVisible="{Binding PropozitieRevelata}">
