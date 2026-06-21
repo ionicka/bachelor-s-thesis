@@ -1,4 +1,4 @@
-    using CommunityToolkit.Maui;
+﻿    using CommunityToolkit.Maui;
 using FlashCards.Core.Interfaces;
 using FlashCards.Services;
 using FlashCards.Services.Http;
@@ -19,32 +19,27 @@ public static class MauiProgram
             .UseMauiCommunityToolkit()
             .ConfigureFonts(fonts => { });
 
-#if ANDROID
-        string apiUrl = "http://192.168.2.102:5202/";
-#else
-string apiUrl = "http://localhost:5202/";
-#endif
-        // ── Servicii HTTP ─────────────────────────────────────────
+
+        // ── Servicii HTTP ──
         builder.Services.AddHttpClient<IAuthService, AuthServiceHttp>(client =>
-            client.BaseAddress = new Uri(apiUrl));
+            client.BaseAddress = new Uri(ApiConfig.ApiBaseUrl));
 
         builder.Services.AddHttpClient<ICardService, CardServiceHttp>(client =>
-            client.BaseAddress = new Uri(apiUrl));
+            client.BaseAddress = new Uri(ApiConfig.ApiBaseUrl));
 
         builder.Services.AddHttpClient<ISesiuneService, SesiuneServiceHttp>(client =>
-            client.BaseAddress = new Uri(apiUrl));
-        builder.Services.AddHttpClient<IAdminService, AdminServiceHttp>(client =>
-        {
-            client.BaseAddress = new Uri(apiUrl);
-        });
+            client.BaseAddress = new Uri(ApiConfig.ApiBaseUrl));
 
-        // ── Services MAUI ─────────────────────────────────────────
+        builder.Services.AddHttpClient<IAdminService, AdminServiceHttp>(client =>
+            client.BaseAddress = new Uri(ApiConfig.ApiBaseUrl));
+
+        // â”€â”€ Services MAUI â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
         builder.Services.AddSingleton<INavigationService, NavigationService>();
         builder.Services.AddSingleton<ISessionStateService, SessionStateService>();
         builder.Services.AddSingleton<IImageStorageService, ImageStorageService>();
 
-        // ── ViewModels ────────────────────────────────────────────
-        // ── ViewModels ────────────────────────────────────────────
+        // â”€â”€ ViewModels â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+        // â”€â”€ ViewModels â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
         builder.Services.AddTransient<LoginViewModel>();
         builder.Services.AddTransient<InregistrareViewModel>();
         builder.Services.AddSingleton<MainViewModel>();
@@ -54,7 +49,7 @@ string apiUrl = "http://localhost:5202/";
         builder.Services.AddSingleton<SetariViewModel>();
         builder.Services.AddTransient<AdminPanelViewModel>();
         builder.Services.AddTransient<EditeazaCuvantViewModel>();
-        // ── Pages ─────────────────────────────────────────────────
+        // â”€â”€ Pages â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
         builder.Services.AddTransient<LoginPage>();
         builder.Services.AddTransient<InregistrarePage>();
         builder.Services.AddSingleton<MainPage>();
