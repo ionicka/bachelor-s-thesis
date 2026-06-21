@@ -133,7 +133,7 @@ public record CuvantInvatat(
                        - DateOnly.FromDateTime(DateTime.Now).DayNumber;
             return zile switch
             {
-                0 => "azi",
+                <= 0 => "mâine",
                 1 => "mâine",
                 _ => $"în {zile} zile"
             };

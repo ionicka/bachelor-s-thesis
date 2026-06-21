@@ -80,12 +80,13 @@ public class SrsService : ISrsService
         var t = textTastat.Trim().ToLowerInvariant();
         var c = terminCorect.Trim().ToLowerInvariant();
         if (t == c) return true;
-        // Levenshtein 1 doar pentru cuvinte de 7+ caractere
-        if (c.Length >= 7 && Math.Abs(t.Length - c.Length) <= 1)
+
+        // Levenshtein 1 doar pentru cuvinte de 10+ caractere
+        if (c.Length >= 10 && Math.Abs(t.Length - c.Length) <= 1)
             return Levenshtein(t, c) <= 1;
+
         return false;
     }
-
     private static int Levenshtein(string a, string b)
     {
         int[,] dp = new int[a.Length + 1, b.Length + 1];

@@ -20,7 +20,7 @@ public static class MauiProgram
             .ConfigureFonts(fonts => { });
 
 #if ANDROID
-        string apiUrl = "http://192.168.2.102:5202/";
+        string apiUrl = "http://192.168.1.7:5202/";
 #else
 string apiUrl = "http://localhost:5202/";
 #endif

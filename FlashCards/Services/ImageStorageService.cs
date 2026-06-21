@@ -138,7 +138,7 @@ public class ImageStorageService : IImageStorageService
     {
         if (string.IsNullOrWhiteSpace(numeFisier)) return string.Empty;
 #if ANDROID
-    var url = $"http://192.168.2.102:5202/imagini/{numeFisier}";
+    var url = $"http://192.168.1.7:5202/imagini/{numeFisier}";
     System.Diagnostics.Debug.WriteLine($"IMAGINE URL ANDROID: {url}");
     return url;
 #else
@@ -154,7 +154,7 @@ public class ImageStorageService : IImageStorageService
 
         // Fallback — din Resources
 #if ANDROID
-        return $"http://192.168.2.102:5202/imagini/{numeFisier}";
+        return $"http://192.168.1.7:5202/imagini/{numeFisier}";
 #else
 return Path.Combine(_folderImagini, numeFisier);
 #endif
