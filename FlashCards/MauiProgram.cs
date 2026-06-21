@@ -33,13 +33,10 @@ public static class MauiProgram
         builder.Services.AddHttpClient<IAdminService, AdminServiceHttp>(client =>
             client.BaseAddress = new Uri(ApiConfig.ApiBaseUrl));
 
-        // â”€â”€ Services MAUI â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
         builder.Services.AddSingleton<INavigationService, NavigationService>();
         builder.Services.AddSingleton<ISessionStateService, SessionStateService>();
         builder.Services.AddSingleton<IImageStorageService, ImageStorageService>();
 
-        // â”€â”€ ViewModels â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-        // â”€â”€ ViewModels â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
         builder.Services.AddTransient<LoginViewModel>();
         builder.Services.AddTransient<InregistrareViewModel>();
         builder.Services.AddSingleton<MainViewModel>();
@@ -49,7 +46,6 @@ public static class MauiProgram
         builder.Services.AddSingleton<SetariViewModel>();
         builder.Services.AddTransient<AdminPanelViewModel>();
         builder.Services.AddTransient<EditeazaCuvantViewModel>();
-        // â”€â”€ Pages â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
         builder.Services.AddTransient<LoginPage>();
         builder.Services.AddTransient<InregistrarePage>();
         builder.Services.AddSingleton<MainPage>();

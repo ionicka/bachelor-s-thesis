@@ -35,10 +35,7 @@ public partial class LoginViewModel : ObservableObject
         _sesiuneService = sesiuneService;
         _mainVm = mainVm;
         _sesiuneConfigVm = sesiuneConfigVm;
-#if DEBUG
-        Email = "ion@gmail.com";
-Parola = "ion123";
-#endif
+
     }
     private readonly MainViewModel _mainVm;
     private readonly SesiuneConfigViewModel _sesiuneConfigVm;
