@@ -4,7 +4,7 @@
              xmlns:vm="clr-namespace:FlashCards.ViewModels"
              x:Class="FlashCards.Views.SetariPage"
              x:DataType="vm:SetariViewModel"
-             Title="Setari" BackgroundColor="#0D0D1A">
+             Title="Setari" BackgroundColor="#F2F5FA">
 
     <ScrollView>
         <VerticalStackLayout Padding="20" Spacing="20">
@@ -12,25 +12,25 @@
             <Label Text="Contul meu" FontSize="24" FontAttributes="Bold"
                    TextColor="White" />
 
-            <Frame BackgroundColor="#16213E" BorderColor="#0F3460"
+            <Frame BackgroundColor="#FFFFFF" BorderColor="#D9E2F3"
                    CornerRadius="16" Padding="20">
                 <VerticalStackLayout Spacing="8">
                     <Label Text="{Binding NumeUtilizator}"
-                           FontSize="20" FontAttributes="Bold" TextColor="White" />
-                    <Label Text="{Binding Email}" TextColor="#8899BB" />
+                           FontSize="20" FontAttributes="Bold" TextColor="#1C2541" />
+                    <Label Text="{Binding Email}" TextColor="#6B7A99" />
                 </VerticalStackLayout>
             </Frame>
 
-            <Frame BackgroundColor="#16213E" BorderColor="#0F3460"
+            <Frame BackgroundColor="#FFFFFF" BorderColor="#D9E2F3"
                    CornerRadius="16" Padding="20">
                 <VerticalStackLayout Spacing="16">
                     <Label Text="Setari studiu" FontSize="16"
-                           FontAttributes="Bold" TextColor="White" />
+                           FontAttributes="Bold" TextColor="#1C2541" />
 
                     <VerticalStackLayout Spacing="6">
                         <Label Text="{Binding CarduriNoiPerZi,
                                       StringFormat='Cuvinte noi per sesiune: {0}'}"
-                               TextColor="#8899BB" />
+                               TextColor="#6B7A99" />
                         <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="10">
                             <Button Grid.Column="0" Text="−"
                                     BackgroundColor="#2E1060" TextColor="White"
@@ -45,7 +45,7 @@
                                    HorizontalOptions="Center"
                                    VerticalOptions="Center" />
                             <Button Grid.Column="2" Text="+"
-                                    BackgroundColor="#E94560" TextColor="White"
+                                    BackgroundColor="#F2685C" TextColor="White"
                                     FontSize="20" FontAttributes="Bold"
                                     WidthRequest="44" HeightRequest="44"
                                     CornerRadius="22" Padding="0"
@@ -56,23 +56,23 @@
                     <VerticalStackLayout Spacing="6">
                         <Label Text="{Binding MaxCarduriPerSesiune,
                                       StringFormat='Max per sesiune: {0}'}"
-                               TextColor="#8899BB" />
+                               TextColor="#6B7A99" />
                         <Slider Value="{Binding MaxCarduriPerSesiune}"
                                 Minimum="5" Maximum="100"
-                                ThumbColor="#E94560" MinimumTrackColor="#E94560" />
+                                ThumbColor="#F2685C" MinimumTrackColor="#F2685C" />
                     </VerticalStackLayout>
 
                     <Button Text="Salveaza"
                             Command="{Binding SalveazaSetarileCommand}"
-                            BackgroundColor="#E94560" TextColor="White"
+                            BackgroundColor="#F2685C" TextColor="White"
                             CornerRadius="12" HeightRequest="48" />
                 </VerticalStackLayout>
             </Frame>
 
             <Button Text="Deconectare"
                     Command="{Binding DeconecteazaCommand}"
-                    BackgroundColor="Transparent" TextColor="#E94560"
-                    BorderColor="#E94560" BorderWidth="1"
+                    BackgroundColor="Transparent" TextColor="#F2685C"
+                    BorderColor="#F2685C" BorderWidth="1"
                     CornerRadius="12" HeightRequest="50" />
 
         </VerticalStackLayout>

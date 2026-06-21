@@ -58,13 +58,13 @@ public partial class SesiuneConfigViewModel : ObservableObject
     public bool ModTastareSelectat => ModIndex == 2;
 
     // Culori pentru cele 3 carduri mod
-    public string ModToateBg => ModToateSelectat ? "#7B2FBE" : "#16213E";
-    public string ModFlashcardsBg => ModFlashcardsSelectat ? "#4A90E2" : "#16213E";
-    public string ModTastareBg => ModTastareSelectat ? "#E94560" : "#16213E";
+    public string ModToateBg => ModToateSelectat ? "#8B7FE8" : "#FFFFFF";
+    public string ModFlashcardsBg => ModFlashcardsSelectat ? "#5FA8D3" : "#FFFFFF";
+    public string ModTastareBg => ModTastareSelectat ? "#F2685C" : "#FFFFFF";
 
-    public string ModToateText => ModToateSelectat ? "#FFFFFF" : "#8899BB";
-    public string ModFlashcardsText => ModFlashcardsSelectat ? "#FFFFFF" : "#8899BB";
-    public string ModTastareText => ModTastareSelectat ? "#FFFFFF" : "#8899BB";
+    public string ModToateText => ModToateSelectat ? "#FFFFFF" : "#6B7A99";
+    public string ModFlashcardsText => ModFlashcardsSelectat ? "#FFFFFF" : "#6B7A99";
+    public string ModTastareText => ModTastareSelectat ? "#FFFFFF" : "#6B7A99";
 
     // Nr carduri
     private int _nrCarduri = 10;
@@ -276,26 +276,26 @@ public partial class SesiuneConfigViewModel : ObservableObject
     await Shell.Current.GoToAsync("//VocabularPage");
     private static string CuloareNivel(NivelCuvant n) => n switch
     {
-        NivelCuvant.Elementar => "#4CAF50",   // verde — ușor
-        NivelCuvant.Intermediar => "#FF8C00", // portocaliu — mediu
-        NivelCuvant.Avansat => "#E94560",     // roșu — greu
-        _ => "#556688"
+        NivelCuvant.Elementar => "#6FBF73",   // verde — ușor
+        NivelCuvant.Intermediar => "#F2A65A", // portocaliu — mediu
+        NivelCuvant.Avansat => "#F2685C",     // roșu — greu
+        _ => "#9AA8C2"
     };
 
     private static string CuloareDomeniu(DomeniuCuvant d) => d switch
     {
-        DomeniuCuvant.General => "#556688",
+        DomeniuCuvant.General => "#9AA8C2",
         DomeniuCuvant.Business => "#FFD700",
-        DomeniuCuvant.Tehnologie => "#4A90E2",
-        DomeniuCuvant.Sanatate => "#E94560",
-        DomeniuCuvant.Educatie => "#7B2FBE",
-        DomeniuCuvant.Cultura => "#FF8C00",
-        DomeniuCuvant.Sport => "#4CAF50",
+        DomeniuCuvant.Tehnologie => "#5FA8D3",
+        DomeniuCuvant.Sanatate => "#F2685C",
+        DomeniuCuvant.Educatie => "#8B7FE8",
+        DomeniuCuvant.Cultura => "#F2A65A",
+        DomeniuCuvant.Sport => "#6FBF73",
         DomeniuCuvant.Politica => "#8E44AD",
         DomeniuCuvant.Calatorii => "#16A085",
        
 
-        _ => "#556688"
+        _ => "#9AA8C2"
     };
 }
 
@@ -310,8 +310,8 @@ public partial class ChipFiltruNivelVm : ObservableObject
 
     [ObservableProperty] bool _esteSelectat = false;
 
-    public string BackgroundColor => EsteSelectat ? Culoare : "#16213E";
-    public string TextColor => EsteSelectat ? "#FFFFFF" : "#8899BB";
+    public string BackgroundColor => EsteSelectat ? Culoare : "#FFFFFF";
+    public string TextColor => EsteSelectat ? "#FFFFFF" : "#6B7A99";
     public string BorderColor => Culoare;
 
     public ChipFiltruNivelVm(NivelCuvant valoare, string eticheta, string culoare)
@@ -350,8 +350,8 @@ public partial class ChipFiltruDomeniuVm : ObservableObject
 
     [ObservableProperty] bool _esteSelectat = false;
 
-    public string BackgroundColor => EsteSelectat ? Culoare : "#16213E";
-    public string TextColor => EsteSelectat ? "#FFFFFF" : "#8899BB";
+    public string BackgroundColor => EsteSelectat ? Culoare : "#FFFFFF";
+    public string TextColor => EsteSelectat ? "#FFFFFF" : "#6B7A99";
     public string BorderColor => Culoare;
 
     public ChipFiltruDomeniuVm(DomeniuCuvant valoare, string eticheta, string icon, string culoare)

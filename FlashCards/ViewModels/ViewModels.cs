@@ -261,7 +261,7 @@ public partial class FluxViewModel : ObservableObject
     public string ExempluCurentRevelatHtml =>
     CardCurent == null ? "" :
     (CardCurent.Exemple.ElementAtOrDefault(IndexExemplu) ?? "")
-        .Replace("[TERMEN]", $"<b><font color='#E94560'>{CardCurent.Termen}</font></b>");
+        .Replace("[TERMEN]", $"<b><font color='#F2685C'>{CardCurent.Termen}</font></b>");
 
     public string TermenMascat
     {
@@ -590,9 +590,9 @@ public partial class FluxViewModel : ObservableObject
         };
         ColorFeedback = calitate switch
         {
-            CalitatRaspuns.Stiu_Sigur => "#4CAF50",
-            CalitatRaspuns.Stiu_Ezitare => "#2980B9",
-            _ => "#E94560"
+            CalitatRaspuns.Stiu_Sigur => "#6FBF73",
+            CalitatRaspuns.Stiu_Ezitare => "#5FA8D3",
+            _ => "#F2685C"
         };
 
         if (calitate == CalitatRaspuns.Nu_Stiu)
@@ -669,7 +669,7 @@ public partial class FluxViewModel : ObservableObject
 
         PropozitieRevelata = true;
         MesajFeedback = ok ? "✓ Corect!" : $"✗ Era: {CardCurent.Termen}";
-        ColorFeedback = ok ? "#4CAF50" : "#E94560";
+        ColorFeedback = ok ? "#6FBF73" : "#F2685C";
 
         if (ok)
         {

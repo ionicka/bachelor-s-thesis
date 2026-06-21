@@ -195,16 +195,16 @@ public class CuvantListItemVm
 
     private static string CuloareDomeniu(DomeniuCuvant d) => d switch
     {
-        DomeniuCuvant.General => "#556688",
+        DomeniuCuvant.General => "#9AA8C2",
         DomeniuCuvant.Business => "#FFD700",
-        DomeniuCuvant.Tehnologie => "#4A90E2",
-        DomeniuCuvant.Sanatate => "#E94560",
-        DomeniuCuvant.Educatie => "#7B2FBE",
-        DomeniuCuvant.Cultura => "#FF8C00",
-        DomeniuCuvant.Sport => "#4CAF50",
+        DomeniuCuvant.Tehnologie => "#5FA8D3",
+        DomeniuCuvant.Sanatate => "#F2685C",
+        DomeniuCuvant.Educatie => "#8B7FE8",
+        DomeniuCuvant.Cultura => "#F2A65A",
+        DomeniuCuvant.Sport => "#6FBF73",
         DomeniuCuvant.Politica => "#8E44AD",
         DomeniuCuvant.Calatorii => "#16A085",
   
-        _ => "#556688"
+        _ => "#9AA8C2"
     };
 }

@@ -6,7 +6,7 @@
              x:Class="FlashCards.Views.FluxPage"
              x:DataType="vm:FluxViewModel"
              Shell.NavBarIsVisible="False"
-             BackgroundColor="#0D0D1A">
+             BackgroundColor="#F2F5FA">
 
     <ContentPage.Resources>
         <conv:InvertBoolConverter   x:Key="InvertBool" />
@@ -28,7 +28,7 @@
             <Label Grid.Column="1"
                    Text="{Binding TipCuvantLabel}"
                    FontSize="15" FontAttributes="Bold"
-                   TextColor="#8899BB"
+                   TextColor="#6B7A99"
                    HorizontalOptions="Center" VerticalOptions="Center" />
             <Button Grid.Column="2"
                     Text="🚫"
@@ -41,7 +41,7 @@
                                 Converter={StaticResource InvertBool}}" />
             <Label Grid.Column="3"
                    Text="{Binding ProgressText}"
-                   TextColor="#8899BB" FontSize="13" VerticalOptions="Center" />
+                   TextColor="#6B7A99" FontSize="13" VerticalOptions="Center" />
         </Grid>
 
         <!-- CONTINUT -->
@@ -50,15 +50,15 @@
             <VerticalStackLayout IsVisible="{Binding SeIncarca}"
                                  VerticalOptions="Center" HorizontalOptions="Center"
                                  Spacing="16">
-                <ActivityIndicator IsRunning="True" Color="#E94560"
+                <ActivityIndicator IsRunning="True" Color="#F2685C"
                                    WidthRequest="48" HeightRequest="48" />
-                <Label Text="Se incarca..." TextColor="#8899BB" FontSize="14"
+                <Label Text="Se incarca..." TextColor="#6B7A99" FontSize="14"
                        HorizontalOptions="Center" />
             </VerticalStackLayout>
 
             <ActivityIndicator IsVisible="{Binding SesiuneGoala}"
                                IsRunning="{Binding SesiuneGoala}"
-                               Color="#7B2FBE"
+                               Color="#8B7FE8"
                                VerticalOptions="Center"
                                HorizontalOptions="Center" />
 
@@ -72,7 +72,7 @@
                         <Image Source="{Binding ImagineCurenta}"
                                Aspect="AspectFit"
                                HeightRequest="200"
-                               BackgroundColor="#0F1A2E" />
+                               BackgroundColor="#EEF2F8" />
                         <Button Text="⇄"
                                 Command="{Binding SchimbaImagineCommand}"
                                 IsVisible="{Binding AreDuaImagini}"
@@ -116,23 +116,23 @@
                                 </Grid>
                             </Grid>
                             <Label Text="{Binding CardCurent.Pronuntie}"
-               FontSize="13" TextColor="#8899BB"
+               FontSize="13" TextColor="#6B7A99"
                HorizontalOptions="Center"
                IsVisible="{Binding PropozitieRevelata}" />
                         </VerticalStackLayout>
                     </Frame>
 
                     <!-- DEFINITIE -->
-                    <Frame BackgroundColor="#16213E" CornerRadius="16"
-                           Padding="20" BorderColor="#0F3460">
+                    <Frame BackgroundColor="#FFFFFF" CornerRadius="16"
+                           Padding="20" BorderColor="#D9E2F3">
                         <VerticalStackLayout Spacing="10">
                             <Label Text="{Binding IntrebareSesiune}"
-                                   TextColor="#E94560" FontSize="14"
+                                   TextColor="#F2685C" FontSize="14"
                                    FontAttributes="Bold"
                                    LineBreakMode="WordWrap" />
                             <Grid ColumnDefinitions="*,Auto">
                                 <Label Grid.Column="0"
-                                       Text="DEFINITIE" TextColor="#8899BB"
+                                       Text="DEFINITIE" TextColor="#6B7A99"
                                        FontSize="11" FontAttributes="Bold"
                                        CharacterSpacing="1.5"
                                        VerticalOptions="Center" />
@@ -140,27 +140,27 @@
                                         Text="{Binding BtnTradLabel}"
                                         Command="{Binding ToggleTraducereCommand}"
                                         BackgroundColor="#1A3060"
-                                        TextColor="#8899BB"
+                                        TextColor="#6B7A99"
                                         FontSize="11" FontAttributes="Bold"
                                         CornerRadius="8"
                                         HeightRequest="28" Padding="8,0" />
                             </Grid>
                             <Label Text="{Binding DefinitieAfisata}"
-                                   TextColor="White" FontSize="15"
+                                   TextColor="#1C2541" FontSize="15"
                                    LineHeight="1.5" LineBreakMode="WordWrap" />
                         </VerticalStackLayout>
                     </Frame>
 
                     <!-- EXEMPLU -->
-                    <Frame BackgroundColor="#16213E" CornerRadius="16"
-                           Padding="20" BorderColor="#0F3460">
+                    <Frame BackgroundColor="#FFFFFF" CornerRadius="16"
+                           Padding="20" BorderColor="#D9E2F3">
                         <VerticalStackLayout Spacing="10">
 
                             <Button Text="📖 Sugestie"
                                     Command="{Binding RevelazaExempluCommand}"
                                     IsVisible="{Binding ExempluAscuns}"
                                     BackgroundColor="#1A3060"
-                                    TextColor="#8899BB"
+                                    TextColor="#6B7A99"
                                     CornerRadius="12"
                                     HeightRequest="44"
                                     FontSize="14" />
@@ -171,7 +171,7 @@
                                 <Grid ColumnDefinitions="*,Auto">
                                     <Label Grid.Column="0"
                                            Text="EXEMPLU IN CONTEXT"
-                                           TextColor="#E94560" FontSize="11"
+                                           TextColor="#F2685C" FontSize="11"
                                            FontAttributes="Bold" CharacterSpacing="1.5"
                                            VerticalOptions="Center" />
                                     <StackLayout Grid.Column="1" Orientation="Horizontal" Spacing="4">
@@ -185,7 +185,7 @@
                                         <Button Text="→"
                                                 Command="{Binding SchimbaExempluCommand}"
                                                 BackgroundColor="#1A3060"
-                                                TextColor="#8899BB" FontSize="14"
+                                                TextColor="#6B7A99" FontSize="14"
                                                 CornerRadius="8"
                                                 HeightRequest="28" Padding="8,0" />
                                     </StackLayout>
@@ -208,17 +208,17 @@
                     </Frame>
 
                     <!-- TASTARE -->
-                    <Frame BackgroundColor="#16213E" CornerRadius="16"
-                           Padding="20" BorderColor="#E94560"
+                    <Frame BackgroundColor="#FFFFFF" CornerRadius="16"
+                           Padding="20" BorderColor="#F2685C"
                            IsVisible="{Binding ModTastare}">
                         <VerticalStackLayout Spacing="12">
-                            <Label Text="TASTEAZA CUVANTUL" TextColor="#E94560"
+                            <Label Text="TASTEAZA CUVANTUL" TextColor="#F2685C"
                                    FontSize="11" FontAttributes="Bold"
                                    CharacterSpacing="1.5" />
                             <Entry Text="{Binding TextTastat}"
                                    Placeholder="Scrie cuvantul aici..."
-                                   BackgroundColor="#0F3460" TextColor="White"
-                                   PlaceholderColor="#556688" FontSize="16"
+                                   BackgroundColor="#D9E2F3" TextColor="#1C2541"
+                                   PlaceholderColor="#9AA8C2" FontSize="16"
                                    ReturnCommand="{Binding RaspundeTastareCommand}"
                                    IsEnabled="{Binding AsteaptaMailDeparte,
                                                Converter={StaticResource InvertBool}}" />
@@ -226,7 +226,7 @@
                                     Command="{Binding RaspundeTastareCommand}"
                                     IsEnabled="{Binding AsteaptaMailDeparte,
                                                 Converter={StaticResource InvertBool}}"
-                                    BackgroundColor="#E94560" TextColor="White"
+                                    BackgroundColor="#F2685C" TextColor="White"
                                     CornerRadius="12" HeightRequest="50"
                                     FontAttributes="Bold" />
                         </VerticalStackLayout>
@@ -242,7 +242,7 @@
         <!-- BUTOANE JOS -->
         <Grid Grid.Row="2"
               IsVisible="{Binding SesiuneGoala, Converter={StaticResource InvertBool}}"
-              Padding="16,8,16,24" BackgroundColor="#0D0D1A"
+              Padding="16,8,16,24" BackgroundColor="#F2F5FA"
               RowDefinitions="Auto,Auto" RowSpacing="8">
 
             <Frame Grid.Row="0"
@@ -252,7 +252,7 @@
                    IsVisible="{Binding MesajFeedback,
                                Converter={StaticResource StringToBool}}">
                 <Label Text="{Binding MesajFeedback}"
-                       TextColor="White" FontSize="15"
+                       TextColor="#1C2541" FontSize="15"
                        FontAttributes="Bold"
                        HorizontalOptions="Center" />
             </Frame>
@@ -262,7 +262,7 @@
                 <Button Text="Mai departe →"
                         Command="{Binding MailDeparteCommand}"
                         IsVisible="{Binding AsteaptaMailDeparte}"
-                        BackgroundColor="#2E5A8C"
+                        BackgroundColor="#5FA8D3"
                         TextColor="White"
                         CornerRadius="16"
                         HeightRequest="56"
@@ -325,8 +325,8 @@
         <Grid Grid.RowSpan="3"
               IsVisible="{Binding AratPopupIesire}"
               BackgroundColor="#80000000">
-            <Frame BackgroundColor="#16213E"
-                   BorderColor="#E94560"
+            <Frame BackgroundColor="#FFFFFF"
+                   BorderColor="#F2685C"
                    CornerRadius="24"
                    Padding="28"
                    VerticalOptions="End"
@@ -334,10 +334,10 @@
                 <VerticalStackLayout Spacing="16">
                     <Label Text="⚠️ Ieși din sesiune?"
                            FontSize="20" FontAttributes="Bold"
-                           TextColor="White"
+                           TextColor="#1C2541"
                            HorizontalOptions="Center"/>
                     <Label Text="Progresul sesiunii curente va fi salvat parțial."
-                           FontSize="14" TextColor="#8899BB"
+                           FontSize="14" TextColor="#6B7A99"
                            HorizontalOptions="Center"
                            HorizontalTextAlignment="Center"/>
                     <Grid ColumnDefinitions="*,12,*" Margin="0,8,0,0">
@@ -345,13 +345,13 @@
                                 Text="Continuă"
                                 Command="{Binding AnuleazaIesireCommand}"
                                 BackgroundColor="#1A3060"
-                                TextColor="#8899BB"
+                                TextColor="#6B7A99"
                                 CornerRadius="14"
                                 HeightRequest="52"/>
                         <Button Grid.Column="2"
                                 Text="Da, ieși"
                                 Command="{Binding ConfirmaIesireCommand}"
-                                BackgroundColor="#E94560"
+                                BackgroundColor="#F2685C"
                                 TextColor="White"
                                 FontAttributes="Bold"
                                 CornerRadius="14"
@@ -365,8 +365,8 @@
         <Grid Grid.RowSpan="3"
               IsVisible="{Binding AratPopupIgnorare}"
               BackgroundColor="#80000000">
-            <Frame BackgroundColor="#16213E"
-                   BorderColor="#FF8C00"
+            <Frame BackgroundColor="#FFFFFF"
+                   BorderColor="#F2A65A"
                    CornerRadius="24"
                    Padding="28"
                    VerticalOptions="End"
@@ -374,10 +374,10 @@
                 <VerticalStackLayout Spacing="16">
                     <Label Text="🚫 Ignoră acest cuvânt?"
                            FontSize="20" FontAttributes="Bold"
-                           TextColor="White"
+                           TextColor="#1C2541"
                            HorizontalOptions="Center"/>
                     <Label Text="Cuvântul nu va mai apărea în sesiunile viitoare."
-                           FontSize="14" TextColor="#8899BB"
+                           FontSize="14" TextColor="#6B7A99"
                            HorizontalOptions="Center"
                            HorizontalTextAlignment="Center"/>
                     <Grid ColumnDefinitions="*,12,*" Margin="0,8,0,0">
@@ -385,13 +385,13 @@
                                 Text="Anulează"
                                 Command="{Binding AnuleazaIgnorareaCommand}"
                                 BackgroundColor="#1A3060"
-                                TextColor="#8899BB"
+                                TextColor="#6B7A99"
                                 CornerRadius="14"
                                 HeightRequest="52"/>
                         <Button Grid.Column="2"
                                 Text="Da, ignoră"
                                 Command="{Binding ConfirmaIgnorareaCommand}"
-                                BackgroundColor="#FF8C00"
+                                BackgroundColor="#F2A65A"
                                 TextColor="White"
                                 FontAttributes="Bold"
                                 CornerRadius="14"

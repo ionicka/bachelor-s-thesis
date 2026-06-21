@@ -4,7 +4,7 @@
 
     <!-- Buton principal rosu -->
     <Style x:Key="BtnPrincipal" TargetType="Button">
-        <Setter Property="BackgroundColor" Value="#E94560" />
+        <Setter Property="BackgroundColor" Value="#F2685C" />
         <Setter Property="TextColor" Value="White" />
         <Setter Property="CornerRadius" Value="16" />
         <Setter Property="FontAttributes" Value="Bold" />
@@ -14,7 +14,7 @@
                 <VisualStateGroup x:Name="CommonStates">
                     <VisualState x:Name="Normal">
                         <VisualState.Setters>
-                            <Setter Property="BackgroundColor" Value="#E94560" />
+                            <Setter Property="BackgroundColor" Value="#F2685C" />
                             <Setter Property="Scale" Value="1" />
                         </VisualState.Setters>
                     </VisualState>
@@ -110,7 +110,7 @@
     <Style x:Key="BtnAlbastru" TargetType="Button">
         <Setter Property="BackgroundColor" Value="#1A3A5C" />
         <Setter Property="TextColor" Value="#7FB3D3" />
-        <Setter Property="BorderColor" Value="#2980B9" />
+        <Setter Property="BorderColor" Value="#5FA8D3" />
         <Setter Property="BorderWidth" Value="1" />
         <Setter Property="CornerRadius" Value="16" />
         <Setter Property="FontSize" Value="14" />
@@ -125,7 +125,7 @@
                     </VisualState>
                     <VisualState x:Name="PointerOver">
                         <VisualState.Setters>
-                            <Setter Property="BackgroundColor" Value="#2E5A8C" />
+                            <Setter Property="BackgroundColor" Value="#5FA8D3" />
                             <Setter Property="Scale" Value="1.02" />
                         </VisualState.Setters>
                     </VisualState>

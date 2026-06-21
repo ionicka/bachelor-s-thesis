@@ -6,7 +6,7 @@
              x:Class="FlashCards.Views.FelicitariPage"
              x:DataType="vm:FelicitariViewModel"
              Shell.NavBarIsVisible="False"
-             BackgroundColor="#0D0D1A">
+             BackgroundColor="#F2F5FA">
 
     <Grid RowDefinitions="*,Auto" Padding="24">
 
@@ -14,7 +14,7 @@
             <VerticalStackLayout Spacing="20" Padding="0,32,0,0">
 
                 <!-- Sectiunea sesiune — mereu vizibila -->
-                <Frame BackgroundColor="#16213E" BorderColor="#0F3460"
+                <Frame BackgroundColor="#FFFFFF" BorderColor="#D9E2F3"
                        CornerRadius="24" Padding="28">
                     <VerticalStackLayout Spacing="16">
 
@@ -23,12 +23,12 @@
 
                         <Label Text="{Binding TitluSesiune}"
                                FontSize="32" FontAttributes="Bold"
-                               TextColor="White"
+                               TextColor="#1C2541"
                                HorizontalOptions="Center"
                                HorizontalTextAlignment="Center" />
 
                         <Label Text="Sesiune finalizata!"
-                               FontSize="15" TextColor="#8899BB"
+                               FontSize="15" TextColor="#6B7A99"
                                HorizontalOptions="Center"
                                HorizontalTextAlignment="Center" />
 
@@ -42,12 +42,12 @@
                                 <Label Text="{Binding NrCorect}"
                FontSize="22"
                FontAttributes="Bold"
-               TextColor="#4CAF50"
+               TextColor="#6FBF73"
                HorizontalTextAlignment="Center"
                HorizontalOptions="FillAndExpand" />
                                 <Label Text="Corecte"
                FontSize="12"
-               TextColor="#8899BB"
+               TextColor="#6B7A99"
                HorizontalTextAlignment="Center"
                HorizontalOptions="FillAndExpand" />
                             </VerticalStackLayout>
@@ -63,7 +63,7 @@
                HorizontalOptions="FillAndExpand" />
                                 <Label Text="Rata"
                FontSize="12"
-               TextColor="#8899BB"
+               TextColor="#6B7A99"
                HorizontalTextAlignment="Center"
                HorizontalOptions="FillAndExpand" />
                             </VerticalStackLayout>
@@ -79,7 +79,7 @@
                HorizontalOptions="FillAndExpand" />
                                 <Label Text="Greșite"
                FontSize="12"
-               TextColor="#8899BB"
+               TextColor="#6B7A99"
                HorizontalTextAlignment="Center"
                HorizontalOptions="FillAndExpand" />
                             </VerticalStackLayout>
@@ -91,7 +91,7 @@
 
                 <!-- Sectiunea streak — doar prima sesiune a zilei -->
                 <Frame IsVisible="{Binding AratStreak}"
-                       BackgroundColor="#1A0A40" BorderColor="#7B2FBE"
+                       BackgroundColor="#1A0A40" BorderColor="#8B7FE8"
                        CornerRadius="24" Padding="28">
                     <VerticalStackLayout Spacing="12">
 
@@ -105,11 +105,11 @@
                                HorizontalTextAlignment="Center" />
 
                         <Label Text="{Binding MesajStreak}"
-                               FontSize="15" TextColor="#8899BB"
+                               FontSize="15" TextColor="#6B7A99"
                                HorizontalOptions="Center"
                                HorizontalTextAlignment="Center" />
 
-                        <Frame BackgroundColor="#2A1060" BorderColor="#9B5FDE"
+                        <Frame BackgroundColor="#E8E3FB" BorderColor="#7C6FD4"
                                CornerRadius="14" Padding="16,10"
                                HorizontalOptions="Center">
                             <Label Text="{Binding Streak, StringFormat='🔥 {0} zile consecutive'}"
@@ -123,13 +123,13 @@
 
                 <!-- Cuvinte invatate in aceasta sesiune -->
                 <Frame IsVisible="{Binding AreCuvinte}"
-                       BackgroundColor="#16213E" BorderColor="#0F3460"
+                       BackgroundColor="#FFFFFF" BorderColor="#D9E2F3"
                        CornerRadius="24" Padding="24">
                     <VerticalStackLayout Spacing="12">
 
                         <Label Text="📝 Cuvinte recapitulate"
                                FontSize="16" FontAttributes="Bold"
-                               TextColor="#8899BB"
+                               TextColor="#6B7A99"
                                HorizontalOptions="Center" />
 
                         <VerticalStackLayout
@@ -137,16 +137,16 @@
                             Spacing="8">
                             <BindableLayout.ItemTemplate>
                                 <DataTemplate x:DataType="dto:CuvantInvatat">
-                                    <Frame BackgroundColor="#0F1A2E" BorderColor="#1A3060"
+                                    <Frame BackgroundColor="#EEF2F8" BorderColor="#1A3060"
            CornerRadius="12" Padding="16,10">
                                         <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto">
                                             <Label Grid.Row="0" Grid.Column="0"
                    Text="{Binding Termen}"
                    FontSize="16" FontAttributes="Bold"
-                   TextColor="White" />
+                   TextColor="#1C2541" />
                                             <Label Grid.Row="1" Grid.Column="0"
                    Text="{Binding Definitie}"
-                   FontSize="13" TextColor="#8899BB"
+                   FontSize="13" TextColor="#6B7A99"
                    LineBreakMode="TailTruncation" />
                                             <Frame Grid.Row="0" Grid.Column="1"
                    Grid.RowSpan="2"
@@ -155,11 +155,11 @@
                    VerticalOptions="Center">
                                                 <VerticalStackLayout Spacing="0">
                                                     <Label Text="revizuire"
-                           FontSize="10" TextColor="#8899BB"
+                           FontSize="10" TextColor="#6B7A99"
                            HorizontalOptions="Center"/>
                                                     <Label Text="{Binding ZilePanaLaRevizuire}"
        FontSize="13" FontAttributes="Bold"
-       TextColor="#4A90E2"
+       TextColor="#5FA8D3"
        HorizontalOptions="Center"/>
                                                 </VerticalStackLayout>
                                             </Frame>
@@ -171,43 +171,43 @@
 
                         <!-- Cuvinte incomplete -->
                         <Frame IsVisible="{Binding AreIncomplete}"
-       BackgroundColor="#16213E" BorderColor="#E94560"
+       BackgroundColor="#FFFFFF" BorderColor="#F2685C"
        CornerRadius="24" Padding="24">
                             <VerticalStackLayout Spacing="12">
                                 <Label Text="⏳ Necesită mai multă practică"
                FontSize="16" FontAttributes="Bold"
-               TextColor="#E94560"
+               TextColor="#F2685C"
                HorizontalOptions="Center" />
                                 <VerticalStackLayout
             BindableLayout.ItemsSource="{Binding CuvinteIncomplete}"
             Spacing="8">
                                     <BindableLayout.ItemTemplate>
                                         <DataTemplate x:DataType="dto:CuvantIncomplet">
-                                            <Frame BackgroundColor="#0F1A2E" BorderColor="#E94560"
+                                            <Frame BackgroundColor="#EEF2F8" BorderColor="#F2685C"
                            CornerRadius="12" Padding="16,10">
                                                 <Grid ColumnDefinitions="*,Auto"
                               RowDefinitions="Auto,Auto,Auto">
                                                     <Label Grid.Row="0" Grid.Column="0"
                                    Text="{Binding Termen}"
                                    FontSize="16" FontAttributes="Bold"
-                                   TextColor="White" />
+                                   TextColor="#1C2541" />
                                                     <Label Grid.Row="1" Grid.Column="0"
                                    Text="{Binding Definitie}"
-                                   FontSize="13" TextColor="#8899BB"
+                                   FontSize="13" TextColor="#6B7A99"
                                    LineBreakMode="TailTruncation" />
                                                     <Frame Grid.Row="0" Grid.Column="1"
                                    Grid.RowSpan="2"
                                    BackgroundColor="#2A0A0A"
-                                   BorderColor="#E94560"
+                                   BorderColor="#F2685C"
                                    CornerRadius="10" Padding="10,6"
                                    VerticalOptions="Center">
                                                         <VerticalStackLayout Spacing="0">
                                                             <Label Text="progres"
-                                           FontSize="10" TextColor="#8899BB"
+                                           FontSize="10" TextColor="#6B7A99"
                                            HorizontalOptions="Center"/>
                                                             <Label Text="{Binding Progres, StringFormat='{0}%'}"
                                            FontSize="13" FontAttributes="Bold"
-                                           TextColor="#E94560"
+                                           TextColor="#F2685C"
                                            HorizontalOptions="Center"/>
                                                         </VerticalStackLayout>
                                                     </Frame>
@@ -228,14 +228,14 @@
         <VerticalStackLayout Grid.Row="1" Spacing="10" Margin="0,12,0,20">
             <Button Text="Practica mai mult"
                     Clicked="OnPracticaClicked"
-                    BackgroundColor="#16213E"
-                    TextColor="#8899BB"
-                    BorderColor="#2E3A5C" BorderWidth="1"
+                    BackgroundColor="#FFFFFF"
+                    TextColor="#6B7A99"
+                    BorderColor="#DCE4F0" BorderWidth="1"
                     CornerRadius="16" HeightRequest="50"
                     FontSize="15" />
             <Button Text="Inapoi la meniu →"
                     Clicked="OnContinuaClicked"
-                    BackgroundColor="#7B2FBE"
+                    BackgroundColor="#8B7FE8"
                     TextColor="White"
                     CornerRadius="16" HeightRequest="56"
                     FontSize="17" FontAttributes="Bold" />

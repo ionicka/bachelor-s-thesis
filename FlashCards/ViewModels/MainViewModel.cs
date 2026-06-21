@@ -109,10 +109,10 @@ public partial class MainViewModel : ObservableObject
                 AStudiat = aStudiat,
                 EsteAzi = esteAzi,
                 EsteViitor = esteViitor,
-                Culoare = esteViitor ? "#1E3A5C" :
-                              aStudiat ? "#4CAF50" :
-                              esteAzi ? "#E94560" :
-                                            "#2E3A5C"
+                Culoare = esteViitor ? "#E2E8F2" :
+                              aStudiat ? "#6FBF73" :
+                              esteAzi ? "#F2685C" :
+                                            "#DCE4F0"
             });
         }
 
@@ -145,6 +145,6 @@ public class ZiCalendar
     public bool AStudiat { get; set; }
     public bool EsteAzi { get; set; }
     public bool EsteViitor { get; set; }
-    public string Culoare { get; set; } = "#2E3A5C";
+    public string Culoare { get; set; } = "#DCE4F0";
 
 }
